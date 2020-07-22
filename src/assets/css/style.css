@@ -1,0 +1,62 @@
+.description-5 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
+.description-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.description-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.more-check ~ .more-show {
+  display: none;
+}
+
+.more-check:checked ~ .description,
+.more-check:checked ~ .more-show {
+  display: block;
+}
+
+.more-btn::after {
+  content: "more";
+}
+
+.more-check:checked ~ p > .more-btn::after {
+  content: "less";
+}
+
+.side-check:checked ~ div {
+  transform: translateX(0);
+}
+
+.side-check:checked ~ div aside {
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+.sidebar-item-label {
+  width: 0;
+  transform: scaleX(0);
+  padding-left: 0;
+  padding-right: 0;
+  transform-origin: 0 0;
+  transition: transform 300ms ease-out;
+}
+
+.sidebar-item-icon:hover + .sidebar-item-label {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: auto;
+  transform: scaleX(1);
+  transition: transform 300ms ease-out;
+}

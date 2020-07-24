@@ -4,15 +4,20 @@ import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 
+// Import modules
+import AuthProvider from "./provider/Auth";
+
 // Import static assets
 import "./assets/css/tailwind.css";
 import "./assets/css/style.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <App />
+      </Router>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,11 +1,55 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 // Import static assets
 import { logo } from "../assets";
+import { AuthContext } from "../provider/Auth";
 
+// Internal partial components
+function GuestAuthLink() {
+  return (
+    <>
+      <Link
+        to="/login"
+        className="hover:text-yellow-500 px-4 py-2 md:px-0 md:py-0 md:ml-4 md:my-0 md:mr-0">
+        <i className="fas fa-sign-in-alt mr-2"></i>Login
+      </Link>
+      <Link
+        to="/register"
+        className="hover:text-yellow-500 px-4 py-2 md:px-0 md:py-0 md:ml-4 md:my-0 md:mr-0">
+        <i className="fas fa-edit mr-2"></i>Register
+      </Link>
+    </>
+  );
+}
+
+function UserAuthLink() {
+  return (
+    <>
+      <Link
+        to="/profile"
+        className="hover:text-yellow-500 px-4 py-2 md:px-0 md:py-0 md:ml-4 md:my-0 md:mr-0">
+        <i className="fas fa-user mr-2"></i>Profile
+      </Link>
+      <Link
+        to="/logout"
+        className="hover:text-yellow-500 px-4 py-2 md:px-0 md:py-0 md:ml-4 md:my-0 md:mr-0">
+        <i className="fas fa-sign-out-alt mr-2"></i>Logout
+      </Link>
+    </>
+  );
+}
+
+// Main components
 export default function Header() {
+  const { pathname } = useLocation();
+
+  const [auth] = useContext(AuthContext);
   const [displayMenu, setDislayMenu] = useState("hidden");
+
+  useEffect(() => {
+    setDislayMenu("hidden");
+  }, [pathname]);
 
   return (
     <header className="absolute w-full px-4 bg-black bg-opacity-0 text-gray-400">
@@ -47,16 +91,7 @@ export default function Header() {
           </Link>
 
           <div className="md:ml-auto"></div>
-          <Link
-            to="/login"
-            className="hover:text-yellow-500 px-4 py-2 md:px-0 md:py-0 md:ml-4 md:my-0 md:mr-0">
-            <i className="fas fa-sign-in-alt mr-2"></i>Login
-          </Link>
-          <Link
-            to="/register"
-            className="hover:text-yellow-500 px-4 py-2 md:px-0 md:py-0 md:ml-4 md:my-0 md:mr-0">
-            <i className="fas fa-edit mr-2"></i>Register
-          </Link>
+          {!auth.data ? <GuestAuthLink /> : <UserAuthLink />}
         </nav>
       </section>
     </header>

@@ -4,11 +4,12 @@ import Container from "../../layout/Container";
 import { Link } from "react-router-dom";
 import { useAxiosGet } from "../../hooks/request";
 import Loader from "../../components/Loader";
+import Error from "../../components/Error";
 
 export default function RecruitmentTable() {
   const [recruitments, isLoading, error] = useAxiosGet("/recruitments");
 
-  if (error) return <h1>Error fetching data, please refresh!</h1>;
+  if (error) return <Error error={error} />;
   if (isLoading) return <Loader />;
   if (!recruitments) return <h1>Data not found 404</h1>;
 

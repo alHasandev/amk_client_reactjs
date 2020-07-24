@@ -19,7 +19,7 @@ export function useAxiosGet(url, params) {
       setIsLoading(false);
       // console.log("Iteration resolve");
     } catch (err) {
-      // console.error(err);
+      console.log(err.message);
       setError(err);
       setIsLoading(false);
     }

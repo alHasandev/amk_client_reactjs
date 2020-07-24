@@ -18,6 +18,8 @@ import Employee from "./pages/admin/Employee";
 import User from "./pages/admin/User";
 import { AuthContext } from "./provider/Auth";
 import Background from "./layout/Background";
+import DepartmentForm from "./components/DepartmentForm";
+import PositionForm from "./components/PositionForm";
 
 function App() {
   const [auth] = useContext(AuthContext);
@@ -41,6 +43,23 @@ function App() {
               component={CandidateList}
             />
             <Route exact path="/admin/departments" component={Department} />
+            <Switch>
+              <Route
+                exact
+                path="/admin/departments/create"
+                component={DepartmentForm}
+              />
+              <Route
+                exact
+                path="/admin/departments/:id"
+                component={Department}
+              />
+              <Route
+                exact
+                path="/admin/departments/:id/create"
+                component={PositionForm}
+              />
+            </Switch>
             <Route exact path="/admin/employees" component={Employee} />
             <Route exact path="/admin/users" component={User} />
             <Route exact path="/recruitments" component={RecruitmentList} />

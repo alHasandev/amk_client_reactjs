@@ -1,22 +1,44 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Redirect, useHistory } from "react-router-dom";
 
 // Import components
 import Container from "../layout/Container";
 import { CardLarge } from "../components/Card";
-import { useAxiosGet } from "../hooks/request";
+import { useAxiosGet, useAxios } from "../hooks/request";
 import Loader from "../components/Loader";
+import Error from "../components/Error";
 
 export default function RecruitmentDetail() {
   const params = useParams();
+  const history = useHistory();
   console.log(params);
   const [recruitment, isLoading, error] = useAxiosGet(
     `/recruitments/${params.id}`
   );
-  const applyToRecruitment = async () => {};
 
-  if (error) return <h1>Error fetching data please refresh!...</h1>;
-  if (isLoading) return <Loader />;
+  const [res, status, api] = useAxios("/recruitments/");
+
+  const applyToRecruitment = async (recruitment) => {
+    console.log(res, status, api);
+    if (
+      !window.confirm(
+        `Apakah anda yakin akan melamar untuk posisi: ${recruitment.positionName} ?`
+      )
+    )
+      return;
+
+    api.save({}, `/${params.id}/candidate`);
+  };
+
+  if (error) return <Error error={error} />;
+  if (status === "error" && !!res) {
+    setTimeout(() => {
+      history.push("/login");
+    }, 3000);
+    return <Error error={res} timeout="3000" />;
+  }
+  if (isLoading || status === "requesting") return <Loader />;
+  if (status === "success" && !!res) return <Redirect to="/profile" />;
 
   if (!recruitment) return <h1>Not Data 404</h1>;
   console.log(recruitment);
@@ -43,7 +65,7 @@ export default function RecruitmentDetail() {
           </Link>
           <button
             className="inline-block bg-yellow-500 text-back hover:bg-yellow-600 hover:text-white px-4 py-2 rounded-sm font-bold mt-4 ml-auto"
-            onClick={applyToRecruitment}>
+            onClick={() => applyToRecruitment(recruitment)}>
             Lamar
           </button>
         </div>

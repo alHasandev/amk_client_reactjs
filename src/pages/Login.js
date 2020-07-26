@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 // Import custom modules
@@ -9,6 +9,8 @@ import Container from "../layout/Container";
 import { CardSmall } from "../components/Card";
 import { AuthContext } from "../provider/Auth";
 import { ACTIONS } from "../reducers/auth";
+import Loader from "../components/Loader";
+import Error from "../components/Error";
 
 export default function Login() {
   // const [auth, setAuth] = useLocalStorage("auth", "");
@@ -32,25 +34,42 @@ export default function Login() {
       dispatch({ type: ACTIONS.MAKE_REQUEST });
 
       try {
+        dispatch({
+          type: ACTIONS.MAKE_REQUEST,
+        });
+
         const res = await axios.post("/auth", {
           email: formData.email,
           password: formData.password,
         });
+
         dispatch({
-          type: ACTIONS.LOGIN_SUCCESS,
+          type: ACTIONS.LOGIN,
           payload: { token: res.data.accessToken },
         });
       } catch (err) {
+        setFormData({
+          email: "",
+          password: "",
+        });
         console.log(err);
-        dispatch({ type: ACTIONS.LOGIN_FAIL });
+        dispatch({
+          type: ACTIONS.LOGIN_FAIL,
+          payload: { error: err },
+        });
       }
     } else {
       alert("Please input email or password correctly!!");
     }
   };
 
-  if (auth.data) return <Redirect to="/" />;
-  if (auth.isLoading) return <h1>Loading...</h1>;
+  if (auth.isLoading) return <Loader />;
+  if (auth.error) {
+    setTimeout(() => {
+      dispatch({ type: ACTIONS.REMOVE_ERROR });
+    }, 3000);
+    return <Error error={auth.error} timeout="3000" />;
+  }
 
   return (
     <Container>

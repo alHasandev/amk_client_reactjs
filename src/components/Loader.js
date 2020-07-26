@@ -12,8 +12,8 @@ export default function Loader() {
 
   if (loadTime < 3)
     return (
-      <div className="fixed top-0 left-0 flex w-full justify-center items-center h-full z-40 text-5xl text-white">
-        <i className="fas fa-circle-notch transform rotate-45"></i>
+      <div className="fixed top-0 left-0 flex w-full justify-center items-center h-full z-40 text-5xl text-yellow-400">
+        <i className="fas fa-circle-notch transform loader rotate-45 opacity-25"></i>
       </div>
     );
 

@@ -1,13 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "../layout/Container";
-import { CardMedium, CardSmall } from "./Card";
-import { Link } from "react-router-dom";
+import { CardSmall } from "./Card";
+import { Link, Redirect } from "react-router-dom";
+import { useAxios } from "../hooks/request";
+import Loader from "./Loader";
+import Error from "./Error";
 
 export default function DepartmentForm() {
+  const [res, status, method] = useAxios("/departments");
+
+  const [formData, setFormData] = useState({
+    code: "",
+    name: "",
+    description: "",
+  });
+
+  const changeHandler = (ev) =>
+    setFormData({ ...formData, [ev.target.name]: ev.target.value });
+
+  const submitHandler = (ev) => {
+    ev.preventDefault();
+    console.log(formData);
+    method.save(formData);
+  };
+
+  if (status === "error" && !!res) return <Error error={res} />;
+  if (status === "requesting") return <Loader />;
+  if (status === "success" && !!res)
+    return <Redirect to="/admin/departments" />;
+
   return (
     <Container>
       <CardSmall>
-        <form action="">
+        <form onSubmit={submitHandler}>
           <h1 className="font-bold text-yellow-700 text-2xl">
             Department Form
           </h1>
@@ -17,6 +42,9 @@ export default function DepartmentForm() {
               <label className="block mb-2 font-bold text-gray-700">Code</label>
               <input
                 type="text"
+                name="code"
+                value={formData.code}
+                onChange={changeHandler}
                 className="w-full px-4 py-2 rounded border border-gray-400 text-sm focus:outline-none focus:bg-gray-100 focus:shadow-inner"
                 placeholder="Department code..."
               />
@@ -27,6 +55,9 @@ export default function DepartmentForm() {
               </label>
               <input
                 type="text"
+                name="name"
+                value={formData.name}
+                onChange={changeHandler}
                 className="w-full px-4 py-2 rounded border border-gray-400 text-sm focus:outline-none focus:bg-gray-100 focus:shadow-inner"
                 placeholder="Department name..."
               />
@@ -37,6 +68,9 @@ export default function DepartmentForm() {
               Description
             </label>
             <textarea
+              name="description"
+              value={formData.description}
+              onChange={changeHandler}
               className="w-full px-4 py-2 rounded border border-gray-400 text-sm focus:outline-none focus:bg-gray-100 focus:shadow-inner"
               rows="3"
               placeholder="Describe newly created department..."

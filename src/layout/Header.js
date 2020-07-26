@@ -68,7 +68,7 @@ export default function Header() {
           <i className="fas fa-bars"></i>
         </button>
         <nav
-          className={`${displayMenu} bg-black bg-opacity-100 w-full min-h-screen flex-col items-center z-30 text-center md:flex fixed top-0 right-0 md:bg-opacity-0 md:flex-row md:static md:min-h-0`}>
+          className={`${displayMenu} bg-black bg-opacity-100 w-full min-h-screen flex-col items-center z-30 md:z-0 text-center md:flex fixed top-0 right-0 md:bg-opacity-0 md:flex-row md:static md:min-h-0`}>
           <button
             className="hover:text-yellow-500 mt-4 px-4 py-2 focus:outline-none md:hidden md:px-0 md:py-0 md:ml-4 md:my-0 md:mr-0"
             onClick={(ev) => setDislayMenu("hidden")}>
@@ -91,7 +91,7 @@ export default function Header() {
           </Link>
 
           <div className="md:ml-auto"></div>
-          {!auth.data ? <GuestAuthLink /> : <UserAuthLink />}
+          {!auth.token ? <GuestAuthLink /> : <UserAuthLink />}
         </nav>
       </section>
     </header>

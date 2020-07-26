@@ -8,8 +8,10 @@ import RecruitmentCard from "../components/RecruitmentCard";
 import { useAxiosGet } from "../hooks/request";
 import Loader from "../components/Loader";
 
-export default function RecruitmentList({ location }) {
-  const [recruitments, isLoading, error] = useAxiosGet("/recruitments");
+export default function RecruitmentList() {
+  const [recruitments, isLoading, error] = useAxiosGet("/recruitments", {
+    status: "open",
+  });
 
   if (error) return <h1>Error fetching data...</h1>;
 

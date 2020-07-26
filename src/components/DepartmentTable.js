@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { CardLarge } from "./Card";
 import { Link, useParams } from "react-router-dom";
 import { useAxiosGet } from "../hooks/request";
@@ -6,19 +6,21 @@ import Error from "./Error";
 import Loader from "./Loader";
 
 export default function DepartmentTable() {
+  // const params = useParams();
   const params = useParams();
-  console.log(params);
   const [departments, isLoading, error] = useAxiosGet(
-    `/departments/${params.id ? params.id : ""}`
+    `/departments/${params.id || ""}`
   );
 
   if (error) return <Error error={error} />;
+  console.log(isLoading);
   if (isLoading) return <Loader />;
-  if (!departments) return <h1>Not Data !</h1>;
+  if (!departments)
+    return <Error error={{ message: "Departments not found!" }} />;
 
   return (
     <>
-      <div className="bg-white px-4 py-2 rounded-sm shadow-md">
+      <div className="bg-white px-4 py-2 rounded-sm shadow-md w-full max-w-screen-lg mx-auto">
         <form action="">
           <div className="flex items-center">
             <Link to="/admin/departments" className="mr-4">
@@ -52,7 +54,7 @@ export default function DepartmentTable() {
             </tr>
           </thead>
           <tbody>
-            {(params.id ? [departments] : departments).map(
+            {(!Array.isArray(departments) ? [departments] : departments).map(
               (department, index) => (
                 <tr key={department._id}>
                   <td className="py-2 px-4 border text-center">{index + 1}</td>

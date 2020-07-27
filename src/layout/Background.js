@@ -10,7 +10,7 @@ export default function Background({ children = "", className = "", ...rest }) {
       style={{ backgroundImage: `url(${banner})` }}
       alt="">
       <div
-        className={`bg-black bg-opacity-75 min-h-screen pt-20 pb-8 ${className}`}
+        className={`bg-black bg-opacity-75 min-h-screen pt-20 pb-14 md:pb-8 ${className}`}
         {...rest}>
         {children}
       </div>

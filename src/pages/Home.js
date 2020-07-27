@@ -17,7 +17,7 @@ const DashboardLink = () => (
 
 const ProfileLink = () => (
   <Link
-    to="/profile"
+    to="/user/profile"
     className="inline-block mx-4 px-4 py-2 bg-yellow-600 font-bold text-white">
     PROFILE
   </Link>

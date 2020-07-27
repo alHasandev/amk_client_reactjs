@@ -62,7 +62,7 @@ export default function RecruitmentTable() {
           </div>
         </CardSmall>
       </PopUpWrapper>
-      <Container className="md:ml-10 grid gap-4">
+      <Container className="grid gap-4">
         <div className="bg-white px-4 py-2 rounded-sm shadow-md">
           <form action="">
             <div className="flex items-center">

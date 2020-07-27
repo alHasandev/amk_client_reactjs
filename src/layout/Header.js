@@ -27,7 +27,7 @@ function UserAuthLink() {
   return (
     <>
       <Link
-        to="/profile"
+        to="/user/profile"
         className="hover:text-yellow-500 px-4 py-2 md:px-0 md:py-0 md:ml-4 md:my-0 md:mr-0">
         <i className="fas fa-user mr-2"></i>Profile
       </Link>

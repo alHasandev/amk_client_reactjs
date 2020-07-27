@@ -8,7 +8,7 @@ export default function Department() {
   const params = useParams();
   console.log(params);
   return (
-    <Container className="md:ml-10 grid gap-4">
+    <Container className="grid gap-4">
       <DepartmentTable />
       {params.id && <PositionTable />}
     </Container>

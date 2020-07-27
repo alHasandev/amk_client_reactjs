@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 // Import components
 import { AuthContext } from "./provider/Auth";
 import AdminRouter from "./routes/AdminRouter";
+import UserRouter from "./routes/UserRouter";
 import Header from "./layout/Header";
 import Sidebar from "./layout/Sidebar";
 import Background from "./layout/Background";
@@ -16,8 +17,7 @@ import RegisterPage from "./pages/Register";
 import Restricted from "./pages/Restricted";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
-import ProfilePage from "./pages/Profile";
-import ProfileView from "./components/ProfileView";
+
 function App() {
   const [auth] = useContext(AuthContext);
 
@@ -34,7 +34,10 @@ function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/">
-          <Background className="px-4">
+          <Background
+            className={`px-4 ${
+              auth.user && auth.user.privilege === "admin" && "md:pl-14"
+            }`}>
             <Switch>
               {/* Admin Routes */}
               <ProtectedRoute
@@ -46,15 +49,11 @@ function App() {
 
               {/* User Routes */}
               <ProtectedRoute
-                path="/profile"
+                path="/user"
                 hasAccess={!!auth.token}
-                redirect="/login">
-                <ProfilePage>
-                  <Switch>
-                    <Route exact path="/profile" component={ProfileView} />
-                  </Switch>
-                </ProfilePage>
-              </ProtectedRoute>
+                redirect="/login"
+                component={UserRouter}
+              />
 
               {/* Authroutes */}
               <Route exact path="/logout" component={LogoutPage} />

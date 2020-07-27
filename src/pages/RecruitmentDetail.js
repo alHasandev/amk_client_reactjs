@@ -3,7 +3,7 @@ import { Link, useParams, Redirect, useHistory } from "react-router-dom";
 
 // Import components
 import Container from "../layout/Container";
-import { CardLarge } from "../components/Card";
+import { CardMedium } from "../components/Card";
 import { useAxiosGet, useAxios } from "../hooks/request";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
@@ -43,8 +43,8 @@ export default function RecruitmentDetail() {
   if (!recruitment) return <h1>Not Data 404</h1>;
   console.log(recruitment);
   return (
-    <Container className="md:ml-10">
-      <CardLarge>
+    <Container className="">
+      <CardMedium>
         <h1 className="font-bold text-xl mb-2">{recruitment.title}</h1>
         <h3 className="font-semibold mb-2">
           Posisi: {recruitment.positionName}
@@ -69,7 +69,7 @@ export default function RecruitmentDetail() {
             Lamar
           </button>
         </div>
-      </CardLarge>
+      </CardMedium>
     </Container>
   );
 }

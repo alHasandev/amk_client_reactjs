@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { CardSmall } from "./Card";
 
 export default function usePopUp({ collapse = true }) {
   const [isCollapse, setIsCollapse] = useState(collapse);

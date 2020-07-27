@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function User() {
   return (
-    <Container className="md:ml-10 grid gap-4">
+    <Container className="grid gap-4">
       <div className="bg-white px-4 py-2 rounded-sm shadow-md w-full max-w-screen-lg mx-auto">
         <form action="">
           <div className="flex items-center">

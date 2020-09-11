@@ -18,6 +18,16 @@ export default function Card({
   );
 }
 
+export function CardMini({ children = "", className = "", ...rest }) {
+  return (
+    <div
+      className={`mx-auto bg-white md:px-8 px-4 py-2 shadow rounded-sm ${className}`}
+      {...rest}>
+      {children}
+    </div>
+  );
+}
+
 export function CardSmall({ children = "", className = "", ...rest }) {
   return (
     <Card

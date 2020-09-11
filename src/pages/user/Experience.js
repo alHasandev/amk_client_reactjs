@@ -5,10 +5,21 @@ import { useAxiosGet } from "../../hooks/request";
 import Loader from "../../components/Loader";
 import Error from "../../components/Error";
 import axios from "axios";
-import { reverseNormalDate, normalDate } from "../../utils/time";
+import time, { reverseNormalDate, normalDate } from "../../utils/time";
+import { getProfiles } from "../../apis/profiles";
+import { useQuery } from "react-query";
 
 export default function Experience() {
-  const [profile, isLoading, error] = useAxiosGet("/profiles/me");
+  const profileQuery = useQuery(
+    [
+      "profile",
+      {
+        endpoint: "me",
+      },
+    ],
+    getProfiles
+  );
+
   const [experiences, setExperiences] = useState([]);
   const [formData, setFormData] = useState({
     company: "",
@@ -98,14 +109,12 @@ export default function Experience() {
   };
 
   useEffect(() => {
-    if (profile) {
-      setExperiences(profile.experiences);
+    if (profileQuery.data && profileQuery.data.experiences) {
+      setExperiences(profileQuery.data.experiences);
     }
-  }, [profile]);
+  }, [profileQuery.data]);
 
-  if (error) return <Error error={error} />;
-  if (isLoading) return <Loader />;
-  if (!profile) return <Error error={{ message: "No Profile Found!" }} />;
+  if (profileQuery.isLoading) return <Loader />;
 
   return (
     <div className="grid gap-4 items-start xl:grid-cols-5 xl:grid-flow-row-dense">
@@ -204,12 +213,12 @@ export default function Experience() {
             <button
               type="reset"
               onClick={resetForm}
-              className="inline-block px-4 py-2 rounded-sm shadow-sm bg-gray-200 text-black font-semibold hover:bg-gray-400 ml-auto mr-4">
+              className="inline-block px-4 py-2 rounded-sm shadow-sm bg-gray-200 text-gray-900 font-semibold hover:bg-gray-400 ml-auto mr-4">
               Reset
             </button>
             <button
               type="submit"
-              className="inline-block px-4 py-2 rounded-sm shadow-sm bg-yellow-400 text-black font-semibold hover:bg-yellow-500">
+              className="inline-block px-4 py-2 rounded-sm shadow-sm bg-yellow-400 text-gray-900 font-semibold hover:bg-yellow-500">
               {formData._id ? "Update" : "Simpan"}
             </button>
           </div>
@@ -245,9 +254,9 @@ export default function Experience() {
                   {experience.job}
                 </td>
                 <td className="border px-2 py-2 text-center whitespace-no-wrap">
-                  {reverseNormalDate(experience.from)} ~{" "}
+                  {time.year(experience.from)}-{" "}
                   {!experience.isCurrently
-                    ? reverseNormalDate(experience.to)
+                    ? time.year(experience.to)
                     : "Sekarang"}
                 </td>
                 <td className="border px-2 py-1 text-center">

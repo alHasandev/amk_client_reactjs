@@ -1,23 +1,19 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export function useAxiosGet(url, params = {}) {
-  const [config, setConfig] = useState({
-    params,
-  });
+export function useAxiosGet(url) {
   const [fetchedData, setFetchedData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // console.log("Iteration before");
-  const fetchData = async (url, params, cancelToken) => {
+  const fetchData = async (url, cancelToken) => {
     console.log("Loading");
     try {
       console.log(url);
       setIsLoading(true);
       const res = await axios.get(url, {
         cancelToken: cancelToken.token,
-        params: { ...params },
         timeout: 12000,
       });
 
@@ -35,19 +31,19 @@ export function useAxiosGet(url, params = {}) {
 
   const resync = () => {
     const cancelToken = axios.CancelToken.source();
-    fetchData(url, config.params, cancelToken);
+    fetchData(url, cancelToken);
   };
 
   useEffect(() => {
     const cancelToken = axios.CancelToken.source();
-    fetchData(url, config.params, cancelToken);
+    fetchData(url, cancelToken);
 
     return () => {
       cancelToken.cancel();
     };
-  }, [url, config]);
+  }, [url]);
 
-  return [fetchedData, isLoading, error, { resync, setConfig }];
+  return [fetchedData, isLoading, error, { resync }];
 }
 
 export function useAxios(url, params = {}) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useHistory, Link } from "react-router-dom";
 
 // Import custom modules
@@ -6,14 +6,32 @@ import { useHistory, Link } from "react-router-dom";
 // Import components
 import Container from "../layout/Container";
 import { CardSmall } from "../components/Card";
+import Axios from "axios";
+import { postUser } from "../apis/users";
 
-export default function Login() {
+const registUser = async (data) => {
+  try {
+    const res = await Axios.post("/users", data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export default function Register() {
   const [formData, setFormData] = useState({
+    nik: "",
+    name: "",
     email: "",
     password: "",
+    password2: "",
+    image: "",
   });
 
   const history = useHistory();
+
+  const inputImage = useRef(null);
 
   const handleChange = (ev) =>
     setFormData({
@@ -21,11 +39,35 @@ export default function Login() {
       [ev.target.name]: ev.target.value,
     });
 
-  const handleSubmit = (ev) => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
-    if (formData.email && formData.password) {
-      console.log(formData);
-      history.push("/");
+    if (
+      formData.email &&
+      formData.password &&
+      formData.password === formData.password2
+    ) {
+      // Build form data
+      const formBuild = new FormData();
+      formBuild.append("nik", formData.nik);
+      formBuild.append("name", formData.name);
+      formBuild.append("email", formData.email);
+      formBuild.append("password", formData.password);
+      formBuild.append("image", inputImage.current.files[0], formData.nik);
+
+      if (
+        await postUser(formBuild, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+      ) {
+        alert("Upload Berhasil");
+        console.log(formBuild);
+        history.push("/user/profile");
+      } else {
+        alert("Upload gagal");
+        console.log(formBuild);
+      }
     } else {
       alert("Please input email or password correctly!!");
     }
@@ -44,8 +86,8 @@ export default function Login() {
             <label className="block font-bold text-gray-700 mb-2">NIK</label>
             <input
               type="text"
-              name="name"
-              value={formData.name}
+              name="nik"
+              value={formData.nik}
               onChange={handleChange}
               className="px-4 py-2 text-sm w-full rounded border border-gray-500 outline-none focus:border-yellow-600 hover:border-yellow-700"
               placeholder="Same as your national id card's id..."
@@ -105,6 +147,18 @@ export default function Login() {
                 placeholder="Type your *password again..."
               />
             </div>
+          </div>
+
+          <div className="mb-4">
+            <label className="block font-bold text-gray-700 mb-2">Image</label>
+            <input
+              type="file"
+              name="image"
+              ref={inputImage}
+              value={formData.image}
+              onChange={handleChange}
+              className="px-4 py-2 text-sm w-full rounded border border-gray-500 outline-none focus:border-yellow-600  focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
+            />
           </div>
 
           <div className="flex">

@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "../layout/Container";
 import { CardSmall } from "./Card";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useParams, useHistory } from "react-router-dom";
 import { useAxios } from "../hooks/request";
 import Loader from "./Loader";
 import Error from "./Error";
+import {
+  getDepartments,
+  postDepartment,
+  patchDepartment,
+} from "../apis/departments";
 
 export default function DepartmentForm() {
-  const [res, status, method] = useAxios("/departments");
+  const history = useHistory();
+  const params = useParams();
 
   const [formData, setFormData] = useState({
     code: "",
@@ -18,16 +24,44 @@ export default function DepartmentForm() {
   const changeHandler = (ev) =>
     setFormData({ ...formData, [ev.target.name]: ev.target.value });
 
-  const submitHandler = (ev) => {
+  const submitHandler = async (ev) => {
     ev.preventDefault();
     console.log(formData);
-    method.save(formData);
+    if (formData._id) {
+      if (
+        await patchDepartment(formData, {
+          endpoint: params.departmentId,
+        })
+      ) {
+        alert("Berhasil mengupdate department!");
+        history.push("/admin/departments");
+      } else {
+        alert("Gagal mengupdate department!");
+      }
+    } else {
+      if (await postDepartment(formData)) {
+        alert("Berhasil menambahkan department baru!");
+        history.push("/admin/departments");
+      } else {
+        alert("Gagal menambahkan department baru!");
+      }
+    }
   };
 
-  if (status === "error" && !!res) return <Error error={res} />;
-  if (status === "requesting") return <Loader />;
-  if (status === "success" && !!res)
-    return <Redirect to="/admin/departments" />;
+  useEffect(() => {
+    if (params.departmentId) {
+      getDepartments("departments", {
+        endpoint: params.departmentId,
+      }).then((data) =>
+        setFormData({
+          _id: data._id,
+          code: data.code,
+          name: data.name,
+          description: data.description,
+        })
+      );
+    }
+  }, []);
 
   return (
     <Container>

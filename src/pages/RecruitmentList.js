@@ -5,22 +5,22 @@ import React from "react";
 // Import components
 import Container from "../layout/Container";
 import RecruitmentCard from "../components/RecruitmentCard";
-import { useAxiosGet } from "../hooks/request";
 import Loader from "../components/Loader";
+import { useQuery } from "react-query";
+import { getRecruitments } from "../apis/recruitments";
 
 export default function RecruitmentList() {
-  const [recruitments, isLoading, error] = useAxiosGet("/recruitments", {
-    status: "open",
-  });
+  const recruitments = useQuery(
+    ["recruitments", { status: "open" }],
+    getRecruitments
+  );
 
-  if (error) return <h1>Error fetching data...</h1>;
-
-  if (isLoading) return <Loader />;
+  if (recruitments.isLoading) return <Loader />;
 
   return (
     <Container className="grid row-gap-4">
-      {recruitments &&
-        recruitments.map((recruitment) => (
+      {recruitments.data &&
+        recruitments.data.map((recruitment) => (
           <RecruitmentCard key={recruitment._id} recruitment={recruitment} />
         ))}
     </Container>

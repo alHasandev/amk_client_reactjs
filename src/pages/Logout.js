@@ -10,7 +10,7 @@ export default function Logout() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       dispatch({ type: ACTIONS.LOGOUT });
-    }, 3000);
+    }, 1000);
     return () => clearTimeout(timeout);
   }, [dispatch]);
 

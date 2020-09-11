@@ -1,32 +1,53 @@
 import React from "react";
 import Container from "../../layout/Container";
-import EmployeeTable from "../../components/EmployeeTable";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-export default function Employee() {
+export default function Employee({ children }) {
   return (
     <Container className="grid gap-4">
       <div className="bg-white px-4 py-2 rounded-sm shadow-md w-full max-w-screen-xl mx-auto">
         <form action="">
           <div className="flex items-center">
-            <Link to="/admin/employees" className="mr-4">
+            <NavLink
+              exact
+              to="/admin/employees"
+              activeClassName="text-gray-500 pointer-events-none"
+              className="mr-4">
               <i className="fas fa-arrow-left"></i>
-            </Link>
-            <input
-              type="text"
-              name="search"
-              placeholder="Search..."
-              className="px-4 py-1 bg-gray-200 focus:outline-none rounded-sm w-full"
-            />
-            <Link
-              to={`/admin/employees/create`}
-              className="inline-block whitespace-no-wrap bg-yellow-400 hover:bg-yellow-600 hover:text-white font-semibold text-sm text-black px-4 py-1 rounded-sm ml-4">
-              New Employee
-            </Link>
+            </NavLink>
+            <div className="ml-auto"></div>
+            <NavLink
+              exact
+              to={`/admin/payloads`}
+              activeClassName="hidden"
+              className="inline-block whitespace-no-wrap bg-yellow-600 hover:bg-yellow-700 text-white font-semibold text-sm px-4 py-1 rounded-sm ml-4">
+              Penggajihan
+            </NavLink>
+            <NavLink
+              exact
+              to={`/admin/requests`}
+              activeClassName="hidden"
+              className="inline-block whitespace-no-wrap bg-yellow-600 hover:bg-yellow-700 text-white font-semibold text-sm px-4 py-1 rounded-sm ml-4">
+              Permintaan
+            </NavLink>
+            <NavLink
+              exact
+              to={`/admin/assessments`}
+              activeClassName="hidden"
+              className="inline-block whitespace-no-wrap bg-yellow-600 hover:bg-yellow-700 text-white font-semibold text-sm px-4 py-1 rounded-sm ml-4">
+              Penilaian
+            </NavLink>
+            <NavLink
+              exact
+              to={`/admin/employees/attendances`}
+              activeClassName="hidden"
+              className="inline-block whitespace-no-wrap bg-yellow-600 hover:bg-yellow-700 text-white font-semibold text-sm px-4 py-1 rounded-sm ml-4">
+              Kehadiran
+            </NavLink>
           </div>
         </form>
       </div>
-      <EmployeeTable />
+      {children}
     </Container>
   );
 }

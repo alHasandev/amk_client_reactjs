@@ -8,6 +8,7 @@ module.exports = {
     },
   },
   variants: {
+    textColor: ["responsive", "hover", "focus", "disabled"],
     display: ["responsive", "hover"],
     visibility: ["responsive", "hover"],
   },

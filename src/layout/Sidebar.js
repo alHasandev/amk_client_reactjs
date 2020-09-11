@@ -20,7 +20,7 @@ export default function Sidebar() {
             <i className="fas fa-scroll"></i>
           </div>
           <div className="hidden md:inline-block bg-yellow-400 overflow-hidden text-black px-4 py-2 sidebar-item-label shadow-md">
-            Recruitments
+            Penerimaan
           </div>
         </NavLink>
         <NavLink
@@ -30,7 +30,7 @@ export default function Sidebar() {
             <i className="fas fa-building"></i>
           </div>
           <div className="hidden md:inline-block bg-yellow-400 overflow-hidden text-black px-4 py-2 sidebar-item-label shadow-md">
-            Departments
+            Departemen
           </div>
         </NavLink>
         <NavLink
@@ -40,7 +40,7 @@ export default function Sidebar() {
             <i className="fas fa-user-tie"></i>
           </div>
           <div className="hidden md:inline-block bg-yellow-400 overflow-hidden text-black px-4 py-2 sidebar-item-label shadow-md">
-            Employees
+            Karyawan
           </div>
         </NavLink>
         <NavLink to="/admin/users" className="flex items-center sidebar-item">
@@ -48,7 +48,7 @@ export default function Sidebar() {
             <i className="fas fa-users"></i>
           </div>
           <div className="hidden md:inline-block bg-yellow-400 overflow-hidden text-black px-4 py-2 sidebar-item-label shadow-md">
-            Users
+            Pengguna
           </div>
         </NavLink>
       </nav>

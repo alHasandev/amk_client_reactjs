@@ -10,7 +10,7 @@ import Loader from "../components/Loader";
 const DashboardLink = () => (
   <Link
     to="/admin"
-    className="inline-block mx-4 px-4 py-2 bg-yellow-500 font-bold text-black">
+    className="inline-block my-4 mx-4 px-4 py-2 bg-yellow-500 font-bold text-black">
     DASHBOARD
   </Link>
 );
@@ -18,7 +18,7 @@ const DashboardLink = () => (
 const ProfileLink = () => (
   <Link
     to="/user/profile"
-    className="inline-block mx-4 px-4 py-2 bg-yellow-600 font-bold text-white">
+    className="inline-block my-4 mx-4 px-4 py-2 bg-yellow-600 font-bold text-white">
     PROFILE
   </Link>
 );
@@ -35,7 +35,7 @@ export default function Home() {
           Welcome {auth.user ? `Back ${auth.user.name}` : "to AMK Pyramid"}
         </h1>
         <p className="mb-4">Aplikasi Manajemen Karyawan Pyramid versi 2.0.1</p>
-        <div className="">
+        <div className="flex flex-col md:flex-row justify-center">
           {auth.token ? (
             <>
               {auth.user && auth.user.privilege === "admin" ? (
@@ -48,7 +48,7 @@ export default function Home() {
               )}
               <Link
                 to="/logout"
-                className="inline-block mx-4 px-4 py-2 bg-yellow-500 font-bold text-black">
+                className="inline-block my-4 mx-4 px-4 py-2 bg-yellow-500 font-bold text-black">
                 LOGOUT
               </Link>
             </>
@@ -56,12 +56,12 @@ export default function Home() {
             <>
               <Link
                 to="/login"
-                className="inline-block mx-4 px-4 py-2 bg-yellow-500 font-bold text-black">
+                className="inline-block my-4 mx-4 px-4 py-2 bg-yellow-500 font-bold text-black">
                 SIGN IN
               </Link>
               <Link
                 to="/register"
-                className="inline-block mx-4 px-4 py-2 bg-yellow-600 font-bold">
+                className="inline-block my-4 mx-4 px-4 py-2 bg-yellow-600 font-bold">
                 SIGN UP
               </Link>
             </>

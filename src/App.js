@@ -17,75 +17,85 @@ import RegisterPage from "./pages/Register";
 import Restricted from "./pages/Restricted";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PrintRouter from "./routes/PrintRouter";
 
 function App() {
   const [auth] = useContext(AuthContext);
-
+  console.log(auth);
   // if (auth.isLoading) return <Loader />;
 
   return (
     <>
-      <Header />
-      <ProtectedRoute
-        path="*"
-        hasAccess={auth.user && auth.user.privilege === "admin"}>
-        <Sidebar />
-      </ProtectedRoute>
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route path="/print" component={PrintRouter} />
         <Route path="/">
-          <Background
-            className={`px-4 ${
-              auth.user && auth.user.privilege === "admin" && "md:pl-14"
-            }`}>
-            <Switch>
-              {/* Admin Routes */}
-              <ProtectedRoute
-                path="/admin"
-                hasAccess={auth.user && auth.user.privilege === "admin"}
-                redirect={auth.token ? "/403" : "/login"}
-                component={AdminRouter}
-              />
+          <Header />
+          <ProtectedRoute
+            path="*"
+            hasAccess={auth.user && auth.user.privilege === "admin"}>
+            <Sidebar />
+          </ProtectedRoute>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/">
+              <Background
+                className={`px-4 ${
+                  auth.user && auth.user.privilege === "admin" && "md:pl-14"
+                }`}>
+                <Switch>
+                  {/* Admin Routes */}
+                  <ProtectedRoute
+                    path="/admin"
+                    hasAccess={auth.user && auth.user.privilege === "admin"}
+                    redirect={auth.token ? "/403" : "/login"}
+                    component={AdminRouter}
+                  />
 
-              {/* User Routes */}
-              <ProtectedRoute
-                path="/user"
-                hasAccess={!!auth.token}
-                redirect="/login"
-                component={UserRouter}
-              />
+                  {/* User Routes */}
+                  <ProtectedRoute
+                    path="/user"
+                    hasAccess={!!auth.token}
+                    redirect="/login"
+                    component={UserRouter}
+                  />
 
-              {/* Authroutes */}
-              <Route exact path="/logout" component={LogoutPage} />
-              <ProtectedRoute
-                exact
-                path="/login"
-                hasAccess={!auth.token}
-                redirect="/"
-                component={LoginPage}
-              />
-              <ProtectedRoute
-                exact
-                path="/register"
-                hasAccess={!auth.token}
-                redirect="/"
-                component={RegisterPage}
-              />
+                  {/* Authroutes */}
+                  <Route exact path="/logout" component={LogoutPage} />
+                  <ProtectedRoute
+                    exact
+                    path="/login"
+                    hasAccess={!auth.token}
+                    redirect="/"
+                    component={LoginPage}
+                  />
+                  <ProtectedRoute
+                    exact
+                    path="/register"
+                    hasAccess={!auth.token}
+                    redirect="/"
+                    component={RegisterPage}
+                  />
 
-              {/* Guest routes */}
-              <Route exact path="/recruitments" component={RecruitmentList} />
-              <Route
-                exact
-                path="/recruitments/:id"
-                component={RecruitmentDetail}
-              />
-
-              {/* Forbidden routes */}
-              <Route exact path="/403" component={Restricted} />
-              <Route exact path="*" component={NotFound} />
-            </Switch>
-          </Background>
+                  {/* Guest routes */}
+                  <Route
+                    exact
+                    path="/recruitments"
+                    component={RecruitmentList}
+                  />
+                  <Route
+                    exact
+                    path="/recruitments/:id"
+                    component={RecruitmentDetail}
+                  />
+                </Switch>
+              </Background>
+            </Route>
+          </Switch>
         </Route>
+
+        {/* Forbidden routes */}
+        <Route exact path="/403" component={Restricted} />
+        <Route exact path="*" component={NotFound} />
       </Switch>
     </>
   );

@@ -5,7 +5,9 @@ import { useAxiosGet } from "../../hooks/request";
 import Loader from "../../components/Loader";
 import Error from "../../components/Error";
 import axios from "axios";
-import { reverseNormalDate, normalDate } from "../../utils/time";
+import time, { reverseNormalDate, normalDate } from "../../utils/time";
+import { useQuery } from "react-query";
+import { getProfiles } from "../../apis/profiles";
 
 const schoolDegrees = [
   {
@@ -39,7 +41,16 @@ const schoolDegrees = [
 ];
 
 export default function Education() {
-  const [profile, isLoading, error] = useAxiosGet("/profiles/me");
+  const profileQuery = useQuery(
+    [
+      "profile",
+      {
+        endpoint: "me",
+      },
+    ],
+    getProfiles
+  );
+
   const [educations, setEducations] = useState([]);
   const [formData, setFormData] = useState({
     school: "",
@@ -78,8 +89,8 @@ export default function Education() {
       school: education.school,
       degree: education.degree,
       major: education.major,
-      from: education.from,
-      to: education.to,
+      from: normalDate(education.from),
+      to: normalDate(education.to),
       isCurrently: education.isCurrently,
       description: education.description,
     });
@@ -127,14 +138,12 @@ export default function Education() {
   };
 
   useEffect(() => {
-    if (profile) {
-      setEducations(profile.educations);
+    if (!!profileQuery.data && profileQuery.data.educations) {
+      setEducations(profileQuery.data.educations);
     }
-  }, [profile]);
+  }, [profileQuery.data]);
 
-  if (error) return <Error error={error} />;
-  if (isLoading) return <Loader />;
-  if (!profile) return <Error error={{ message: "No Profile Found!" }} />;
+  if (profileQuery.isLoading) return <Loader />;
 
   return (
     <div className="grid gap-4 items-start xl:grid-cols-5 xl:grid-flow-row-dense">
@@ -187,7 +196,7 @@ export default function Education() {
               <input
                 type="date"
                 name="from"
-                value={normalDate(formData.from)}
+                value={formData.from}
                 onChange={changeHandler}
                 className="w-full block border outline-none px-4 py-2 rounded bg-gray-100 hover:border-yellow-500 focus:bg-gray-200 focus:shadow-inner focus:border-yellow-500"
               />
@@ -197,7 +206,7 @@ export default function Education() {
               <input
                 type="date"
                 name="to"
-                value={normalDate(formData.to)}
+                value={formData.to}
                 onChange={changeHandler}
                 className="w-full block border outline-none px-4 py-2 rounded bg-gray-100 hover:border-yellow-500 focus:bg-gray-200 focus:shadow-inner focus:border-yellow-500"
               />
@@ -237,12 +246,12 @@ export default function Education() {
               type="reset"
               onClick={resetForm}
               to="/user/profile"
-              className="inline-block px-4 py-2 rounded-sm shadow-sm bg-gray-200 text-black font-semibold hover:bg-gray-400 ml-auto mr-4">
+              className="inline-block px-4 py-2 rounded-sm shadow-sm bg-gray-200 text-gray-900 font-semibold hover:bg-gray-400 ml-auto mr-4">
               Reset
             </button>
             <button
               type="submit"
-              className="inline-block px-4 py-2 rounded-sm shadow-sm bg-yellow-400 text-black font-semibold hover:bg-yellow-500">
+              className="inline-block px-4 py-2 rounded-sm shadow-sm bg-yellow-400 text-gray-900 font-semibold hover:bg-yellow-500">
               {formData._id ? "Update" : "Simpan"}
             </button>
           </div>
@@ -278,9 +287,9 @@ export default function Education() {
                   {education.major}
                 </td>
                 <td className="border px-2 py-2 text-center whitespace-no-wrap">
-                  {reverseNormalDate(education.from)} ~{" "}
+                  {time.year(education.from)}-
                   {!education.isCurrently
-                    ? reverseNormalDate(education.to)
+                    ? time.year(education.to)
                     : "Sekarang"}
                 </td>
                 <td className="border px-2 py-2 text-center">

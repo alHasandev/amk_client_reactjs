@@ -80,11 +80,6 @@ export default function Header() {
             <i className="fas fa-scroll mr-2"></i>Recruitments
           </Link>
           <Link
-            to="/announcements"
-            className="hover:text-yellow-500 px-4 py-2 md:px-0 md:py-0 md:ml-4 md:my-0 md:mr-0">
-            <i className="fas fa-volume-up mr-2"></i>Announcements
-          </Link>
-          <Link
             to="/about"
             className="hover:text-yellow-500 px-4 py-2 md:px-0 md:py-0 md:ml-4 md:my-0 md:mr-0">
             <i className="fas fa-stamp mr-2"></i>About

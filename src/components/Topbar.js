@@ -6,10 +6,12 @@ export default function Topbar({
   links = [],
   children,
   menu: Menu,
+  className = "",
 }) {
   const [isTopbarCollapse, setIsTopbarCollapse] = useState(true);
   return (
-    <div className="bg-white flex flex-col md:flex-row md:items-center px-4 py-2 md:px-8 rounded-sm shadow mb-4">
+    <div
+      className={`bg-white flex flex-col md:flex-row md:items-center px-4 py-2 md:px-8 rounded-sm shadow ${className}`}>
       <div className="flex items-center w-full">
         <NavLink
           exact
@@ -35,13 +37,14 @@ export default function Topbar({
         } flex-col md:flex md:flex-row mt-4 md:mt-0`}>
         {Menu && <Menu />}
         {links.length > 0 &&
-          links.map((link, index) => (
+          links.map(({ to, className, label, ...rest }, index) => (
             <NavLink
               key={index}
-              to={link.to}
+              to={to}
+              {...rest}
               activeStyle={{ boxShadow: "0 0 0 2px rgba(26, 32, 44, 1)" }}
-              className={`inline-block px-4 py-1 text-sm rounded-sm shadow-sm whitespace-no-wrap font-semibold mb-4 md:mb-0 md:ml-4 ${link.className}`}>
-              {link.label}
+              className={`inline-block px-4 py-1 text-sm rounded-sm shadow-sm whitespace-no-wrap font-semibold mb-4 md:mb-0 md:ml-4 ${className}`}>
+              {label}
             </NavLink>
           ))}
       </div>

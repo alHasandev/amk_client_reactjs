@@ -3,38 +3,65 @@ import { CardSmall, CardMedium } from "../../components/Card";
 
 // Import static assets
 import { profile as profileImage } from "../../assets";
-import { useAxiosGet } from "../../hooks/request";
-import Error from "../../components/Error";
 import Loader from "../../components/Loader";
 import { Link } from "react-router-dom";
 import time, { calculateAge, reverseNormalDate } from "../../utils/time";
+import { useQuery } from "react-query";
+import { getMyProfile } from "../../apis/users";
+import { getMyCandidate, getCandidates } from "../../apis/candidates";
+import { getProfiles } from "../../apis/profiles";
 
 export default function Profile() {
-  const [user, isUserLoading, userError] = useAxiosGet("/users/me");
+  const { data: user, ...myProfile } = useQuery("myProfile", getProfiles);
+  const candidate = useQuery("myRecruitmentProgess", getCandidates);
 
-  if (userError) return <Error error={userError} />;
-  if (isUserLoading) return <Loader />;
-  if (!user) return <Error error={{ message: "404 User Not Found!" }} />;
+  if (myProfile.isLoading || candidate.isLoading) return <Loader />;
 
-  console.log(user);
+  console.log(candidate.data);
 
   return (
     <>
+      {candidate.data.status && candidate.data.status !== "hired" && (
+        <CardSmall className="mb-4">
+          <h1>
+            Status Lamaran:{" "}
+            <span className="uppercase">{candidate.data.status}</span>
+          </h1>
+        </CardSmall>
+      )}
       <div className="flex items-start flex-col lg:flex-row mb-4">
-        <CardSmall className="lg:mr-4 mb-4 flex items-center flex-col md:flex-row lg:mb-0">
-          <div className="border md:p-2 overflow-auto rounded-full md:rounded bg-gray-100 shadow-inner w-40 mb-4 md:mr-4 md:mb-0">
-            <img src={profileImage} alt="profile" />
+        <CardSmall className="lg:mr-4 mb-4 lg:mb-0">
+          <div className="mb-4">
+            <Link
+              to="/user/update"
+              className="inline-block px-4 py-1 text-sm bg-yellow-400 text-black hover:bg-yellow-500 rounded-sm shadow-sm font-semibold">
+              Update User
+            </Link>
           </div>
-          <div className="border rounded px-4 py-2 w-full text-center md:text-left">
-            <h1 className="font-semibold text-xl text-gray-900 uppercase">
-              [{user.privilege}]
-            </h1>
-            <h3 className="font-semibold text-md text-gray-900">{user.name}</h3>
-            <small className="text-gray-500 mb-4">{user.email}</small>
-            <h2>NIK: {user.nik}</h2>
+          <div className="flex items-center flex-col md:flex-row">
+            <div className="border md:p-2 overflow-auto rounded-full md:rounded bg-gray-100 shadow-inner w-40 mb-4 md:mr-4 md:mb-0">
+              <img src={user.image} alt="profile" />
+            </div>
+            <div className="border rounded px-4 py-2 w-full text-center md:text-left">
+              <h1 className="font-semibold text-xl text-gray-900 uppercase">
+                [{user.privilege}]
+              </h1>
+              <h3 className="font-semibold text-md text-gray-900">
+                {user.name}
+              </h3>
+              <small className="text-gray-500 mb-4">{user.email}</small>
+              <h2>NIK: {user.nik}</h2>
+            </div>
           </div>
         </CardSmall>
         <CardMedium>
+          <div className="mb-4">
+            <Link
+              to="/user/profile/update"
+              className="inline-block px-4 py-1 text-sm bg-yellow-400 text-black hover:bg-yellow-500 rounded-sm shadow-sm font-semibold">
+              Update Profile
+            </Link>
+          </div>
           {user.profile ? (
             <table className="w-full text-gray-800">
               <tbody>
@@ -166,7 +193,7 @@ export default function Profile() {
                     <td className="border px-4 py-2 text-center whitespace-no-wrap">
                       {time.year(experience.from)} ~{" "}
                       {!experience.isCurrent
-                        ? time.year(experience.to )
+                        ? time.year(experience.to)
                         : "Sekarang"}
                     </td>
                   </tr>

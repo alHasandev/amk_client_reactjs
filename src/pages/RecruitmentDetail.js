@@ -7,54 +7,57 @@ import { CardMedium } from "../components/Card";
 import { useAxiosGet, useAxios } from "../hooks/request";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
+import { useQuery } from "react-query";
+import { getRecruitment, getRecruitments } from "../apis/recruitments";
+import { getCandidates, postCandidate } from "../apis/candidates";
 
 export default function RecruitmentDetail() {
   const params = useParams();
   const history = useHistory();
   console.log(params);
-  const [recruitment, isLoading, error] = useAxiosGet(
-    `/recruitments/${params.id}`
-  );
+  // const [recruitment, isLoading, error] = useAxiosGet(
+  //   `/recruitments/${params.id}`
+  // );
 
-  const [res, status, api] = useAxios("/recruitments/");
+  const recruitment = useQuery(["recruitment", params.id], getRecruitments);
+  const candidates = useQuery("candidates", getCandidates);
+  // const [res, status, api] = useAxios("/recruitments/");
 
   const applyToRecruitment = async (recruitment) => {
-    console.log(res, status, api);
+    // console.log(res, status, api);
     if (
       !window.confirm(
-        `Apakah anda yakin akan melamar untuk posisi: ${recruitment.positionName} ?`
+        `Apakah anda yakin akan melamar untuk posisi: ${recruitment.data.positionName} ?`
       )
     )
       return;
 
-    api.save({}, `/${params.id}/candidate`);
+    // api.save({}, `/${params.id}/candidates`);
+    if (
+      postCandidate({
+        recruitment: params.id,
+      })
+    ) {
+      history.push("/user/profile");
+    }
   };
 
-  if (error) return <Error error={error} />;
-  if (status === "error" && !!res) {
-    setTimeout(() => {
-      history.push("/login");
-    }, 3000);
-    return <Error error={res} timeout="3000" />;
-  }
-  if (isLoading || status === "requesting") return <Loader />;
-  if (status === "success" && !!res) return <Redirect to="/profile" />;
+  if (recruitment.isLoading || candidates.isLoading) return <Loader />;
 
-  if (!recruitment) return <h1>Not Data 404</h1>;
   console.log(recruitment);
   return (
     <Container className="">
       <CardMedium>
         <h1 className="font-bold text-xl mb-2">{recruitment.title}</h1>
         <h3 className="font-semibold mb-2">
-          Posisi: {recruitment.positionName}
+          Posisi: {recruitment.data.positionName}
         </h3>
         <h3 className="font-semibold mb-4">
-          Department: {recruitment.departmentName}
+          Department: {recruitment.data.departmentName}
         </h3>
 
         <h3 className="font-semibold">Keterangan: </h3>
-        <p className="mb-4">{recruitment.description}</p>
+        <p className="mb-4">{recruitment.data.description}</p>
 
         <hr />
         <div className="flex">

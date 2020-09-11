@@ -5,6 +5,7 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { useRef } from "react";
 import { postUser, getUsers, patchUser } from "../apis/users";
+import { ChooseOne } from "./ChooseOne";
 
 export default function UserForm() {
   const params = useParams();
@@ -16,6 +17,7 @@ export default function UserForm() {
     password: "",
     image: "",
     privilege: "",
+    isActive: true,
   });
 
   // Get upload image element
@@ -27,6 +29,11 @@ export default function UserForm() {
 
   const changeHandler = (ev) =>
     setFormData({ ...formData, [ev.target.name]: ev.target.value });
+
+  const changeIsActive = (ev) => {
+    let isActive = ev.target.value === "true" ? true : false;
+    setFormData({ ...formData, isActive });
+  };
 
   const submitHandler = async (ev) => {
     ev.preventDefault();
@@ -40,6 +47,7 @@ export default function UserForm() {
     formBuild.append("email", formData.email);
     formBuild.append("password", formData.password);
     formBuild.append("privilege", formData.privilege);
+    formBuild.append("isActive", formData.isActive);
     if (inputImage.current.files.length > 0)
       formBuild.append("image", inputImage.current.files[0], formData.nik);
     if (!formData._id) {
@@ -82,11 +90,13 @@ export default function UserForm() {
         endpoint: params.userId,
       }).then((data) => {
         setFormData({
+          ...formData,
           _id: data._id,
           nik: data.nik,
           name: data.name,
           email: data.email,
           privilege: data.privilege,
+          isActive: data.isActive,
         });
       });
     }
@@ -97,6 +107,29 @@ export default function UserForm() {
       <form onSubmit={submitHandler} encType="multipart/form-data">
         <h1 className="font-bold text-yellow-600 text-2xl">User Form</h1>
         <p className="text-gray-500 text-sm mb-4">Create new user</p>
+
+        <div className="mb-4">
+          <label className="block font-bold text-gray-700 mb-2">Aktif ?</label>
+          <ChooseOne
+            name="isActive"
+            value={formData.isActive}
+            onChange={changeIsActive}
+            choices={[
+              {
+                value: true,
+                label: "YES",
+                className: "",
+                activeClassName: "bg-green-500 text-white",
+              },
+              {
+                value: false,
+                label: "NO",
+                className: "",
+                activeClassName: "bg-red-500 text-white",
+              },
+            ]}
+          />
+        </div>
 
         <div className="mb-4">
           <label className="block font-bold text-gray-700 mb-2">NIK</label>

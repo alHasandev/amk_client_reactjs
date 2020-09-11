@@ -18,7 +18,17 @@ export default function EmployeeForm() {
     position: "",
   });
 
-  const users = useQuery("users", getUsers);
+  const users = useQuery(
+    [
+      "users",
+      {
+        params: {
+          privilege: "candidate",
+        },
+      },
+    ],
+    getUsers
+  );
   const departments = useQuery("departments", getDepartments);
   const positions = useQuery(
     [

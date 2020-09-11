@@ -3,76 +3,169 @@ import { Link, useParams, Redirect, useHistory } from "react-router-dom";
 
 // Import components
 import Container from "../layout/Container";
-import { CardMedium } from "../components/Card";
+import { CardLarge, CardMedium } from "../components/Card";
 import { useAxiosGet, useAxios } from "../hooks/request";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import { useQuery } from "react-query";
 import { getRecruitment, getRecruitments } from "../apis/recruitments";
 import { getCandidates, postCandidate } from "../apis/candidates";
+import time from "../utils/time";
+import { getUsers } from "../apis/users";
+import { IDR } from "../utils/currency";
 
 export default function RecruitmentDetail() {
   const params = useParams();
   const history = useHistory();
-  console.log(params);
-  // const [recruitment, isLoading, error] = useAxiosGet(
-  //   `/recruitments/${params.id}`
-  // );
 
-  const recruitment = useQuery(["recruitment", params.id], getRecruitments);
-  const candidates = useQuery("candidates", getCandidates);
-  // const [res, status, api] = useAxios("/recruitments/");
+  const userQuery = useQuery(
+    [
+      "user",
+      {
+        endpoint: "me",
+      },
+    ],
+    getUsers
+  );
+  const recruitmentQuery = useQuery(
+    [
+      "recruitment",
+      {
+        endpoint: params.id,
+      },
+    ],
+    getRecruitments
+  );
 
   const applyToRecruitment = async (recruitment) => {
-    // console.log(res, status, api);
+    console.log(recruitment);
     if (
-      !window.confirm(
-        `Apakah anda yakin akan melamar untuk posisi: ${recruitment.data.positionName} ?`
+      window.confirm(
+        `Apakah anda yakin akan melamar jabatan / posisi: [${recruitment.position.code}] ${recruitment.position.name} ?`
       )
-    )
-      return;
-
-    // api.save({}, `/${params.id}/candidates`);
-    if (
-      postCandidate({
-        recruitment: params.id,
-      })
     ) {
-      history.push("/user/profile");
+      try {
+        const res = await postCandidate({ recruitment: recruitment._id });
+        if (res)
+          alert(
+            `Berhasil melamar [${recruitment.position.code}] ${recruitment.position.name} !!`
+          );
+        // console.log("response", res);
+      } catch (err) {
+        // console.log("lamaran error", err.response);
+        alert(err.response.data.message);
+      }
     }
   };
 
-  if (recruitment.isLoading || candidates.isLoading) return <Loader />;
+  if (recruitmentQuery.isLoading || userQuery.isLoading) return <Loader />;
+  const user = userQuery.data;
+  console.log("user", user);
+  const recruitment = recruitmentQuery.data ? recruitmentQuery.data : {};
+  const position = recruitment.position ? recruitment.position : {};
+  const department = recruitment.department ? recruitment.department : {};
+  const requirements = recruitment.requirements ? recruitment.requirements : [];
 
   console.log(recruitment);
   return (
     <Container className="">
-      <CardMedium>
-        <h1 className="font-bold text-xl mb-2">{recruitment.title}</h1>
-        <h3 className="font-semibold mb-2">
-          Posisi: {recruitment.data.positionName}
-        </h3>
-        <h3 className="font-semibold mb-4">
-          Department: {recruitment.data.departmentName}
-        </h3>
+      <CardLarge>
+        <h1 className="font-bold text-2xl text-yellow-600 mb-4">
+          {recruitment.title}
+        </h1>
+        <table className="w-full text-sm mb-4">
+          <tbody>
+            <tr>
+              <th className="border px-4 py-2 text-left md:w-64">
+                Jabatan / Posisi
+              </th>
+              <td className="border px-4 py-2 text-left">
+                [{position.code}] {position.name}
+              </td>
+            </tr>
+            <tr>
+              <th className="border px-4 py-2 text-left">Department</th>
+              <td className="border px-4 py-2 text-left">
+                [{department.code}] {department.name}
+              </td>
+            </tr>
+            <tr>
+              <th className="border px-4 py-2 text-left">Gaji Pokok</th>
+              <td className="border px-4 py-2 text-left">
+                {user ? IDR(position.salary) : "Login untuk melihat gaji"}
+              </td>
+            </tr>
+            <tr>
+              <th className="border px-4 py-2 text-left">Jumlah Diperlukan</th>
+              <td className="border px-4 py-2 text-left">
+                {recruitment.numberRequired} orang
+              </td>
+            </tr>
+            <tr>
+              <th className="border px-4 py-2 text-left">Batas Waktu</th>
+              <td className="border px-4 py-2 text-left">
+                {time.getDateString(recruitment.expiredAt)}
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-        <h3 className="font-semibold">Keterangan: </h3>
-        <p className="mb-4">{recruitment.data.description}</p>
+        <table className="w-full text-sm mb-4">
+          <tbody>
+            <tr>
+              <th className="border px-4 py-2 text-left">Keterangan</th>
+            </tr>
+            <tr>
+              <td className="border px-4 py-2 text-left">
+                {recruitment.description}
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-        <hr />
-        <div className="flex">
+        <table className="w-full text-sm mb-4">
+          <tbody>
+            <tr>
+              <th className="border px-4 py-2 text-left" colSpan="2">
+                Persyaratan
+              </th>
+            </tr>
+            {requirements.map((requirement, index) => {
+              return (
+                <tr key={index}>
+                  <td className="border px-4 py-2 text-center md:w-4">
+                    {index + 1}
+                  </td>
+                  <td className="border px-4 py-2 text-left">{requirement}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+
+        <hr className="mb-4" />
+        <div className="flex items-center">
+          <div className="ml-auto"></div>
           <Link
             to="/recruitments"
-            className="inline-block bg-yellow-800 text-white hover:bg-yellow-900 hover:text-white px-4 py-2 rounded-sm font-bold mt-4">
+            className="inline-block bg-yellow-700 text-white hover:bg-yellow-900 hover:text-white px-4 py-2 rounded-sm font-bold">
             Kembali
           </Link>
-          <button
-            className="inline-block bg-yellow-500 text-back hover:bg-yellow-600 hover:text-white px-4 py-2 rounded-sm font-bold mt-4 ml-auto"
-            onClick={() => applyToRecruitment(recruitment)}>
-            Lamar
-          </button>
+          {user ? (
+            <button
+              className="inline-block bg-yellow-600 text-white hover:bg-yellow-800 hover:text-white px-4 py-2 rounded-sm font-semibold ml-4"
+              onClick={(ev) => applyToRecruitment(recruitment)}>
+              Lamar
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="inline-block bg-yellow-600 text-white hover:bg-yellow-800 hover:text-white px-4 py-2 rounded-sm font-semibold ml-4">
+              Login untuk melamar
+            </Link>
+          )}
         </div>
-      </CardMedium>
+      </CardLarge>
     </Container>
   );
 }

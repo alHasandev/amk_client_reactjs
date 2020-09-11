@@ -40,7 +40,7 @@ export default function Dashboard() {
         to="/admin/users"
         className="block px-4 py-4 md:py-2 md:flex justify-around items-center bg-white rounded shadow font-semibold">
         <h1 className="md:mr-4 text-xl text-yellow-600">{users.data.length}</h1>
-        <p>Pengguna</p>
+        <p>Data Pengguna</p>
       </Link>
       <Link
         to="/admin/departments"
@@ -48,7 +48,7 @@ export default function Dashboard() {
         <h1 className="md:mr-4 text-xl text-yellow-600">
           {departments.data.length}
         </h1>
-        <p>Department</p>
+        <p>Data Department</p>
       </Link>
       <Link
         to="/admin/requests"
@@ -72,7 +72,7 @@ export default function Dashboard() {
         <h1 className="md:mr-4 text-xl text-yellow-600">
           {candidates.data.length}
         </h1>
-        <p>[Pending] Calon Karyawan</p>
+        <p>Pelamar / Calon Karyawan</p>
       </Link>
       <Link
         to="/admin/assessments"
@@ -88,7 +88,7 @@ export default function Dashboard() {
         <h1 className="md:mr-4 text-xl text-yellow-600">
           {employees.data.length}
         </h1>
-        <p>Karyawan</p>
+        <p>Data Karyawan</p>
       </Link>
       <Link
         to="/admin/qrview"

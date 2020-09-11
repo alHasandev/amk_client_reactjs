@@ -59,7 +59,6 @@ export default function AdminRouter() {
         </RequestPage>
       </Route>
       <Route exact path="/admin/qrview" component={QRView} />
-      <Route exact path="/admin/candidates" component={CandidateTable} />
       <Route path="/admin/recruitments">
         <RecruitmentPage>
           <Switch>
@@ -109,6 +108,7 @@ export default function AdminRouter() {
       <Route path="/admin/candidates">
         <CandidatePage>
           <Switch>
+            <Route exact path="/admin/candidates" component={CandidateTable} />
             <Route
               exact
               path="/admin/candidates/:candidateId"

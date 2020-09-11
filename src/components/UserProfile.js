@@ -10,12 +10,13 @@ import { useState } from "react";
 import { backLink } from "../utils/url";
 import { getUsers } from "../apis/users";
 import { getEmployees } from "../apis/employees";
+import { IDR } from "../utils/currency";
 
 const statusCandidateColors = {
   pending: "text-black bg-yellow-400 hover:bg-yellow-600",
   accepted: "text-white bg-green-500 hover:bg-green-700",
-  rejected: "text-black bg-red-500 hover:bg-red-700",
-  hired: "text-black bg-blue-500 hover:bg-blue-700",
+  rejected: "text-white bg-red-500 hover:bg-red-700",
+  hired: "text-white bg-blue-500 hover:bg-blue-700",
 };
 
 export default function UserProfile() {
@@ -166,8 +167,8 @@ export default function UserProfile() {
                 <th className="border px-4 py-2 text-left whitespace-no-wrap md:w-64">
                   Gaji Pokok
                 </th>
-                <td className="border px-2 py-1 text-left">
-                  {employee.salary}
+                <td className="border px-4 py-2 text-left">
+                  {IDR(employee.position.salary)}
                 </td>
               </tr>
             </tbody>
@@ -177,8 +178,9 @@ export default function UserProfile() {
       <CardLarge>
         <div className="flex flex-wrap mb-4">
           <h1 className="text-xl font-bold text-yellow-600">
-            {candidateQuery.data && `Profile Calon Karyawan`}
-            {employeeQuery.data && `Profile Karyawan`}
+            {user.privilege === "admin" && "Profile Karyawan (Admin)"}
+            {user.privilege === "employee" && "Profile Karyawan"}
+            {user.privilege === "candidate" && "Profile Calon Karyawan"}
           </h1>
           <div className="ml-auto"></div>
           <Link

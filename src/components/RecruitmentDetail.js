@@ -17,8 +17,8 @@ const statusRecruitmentColors = {
 const statusCandidateColors = {
   pending: "text-black bg-yellow-400 hover:bg-yellow-600",
   accepted: "text-white bg-green-500 hover:bg-green-700",
-  rejected: "text-black bg-red-500 hover:bg-red-700",
-  hired: "text-black bg-blue-500 hover:bg-blue-700",
+  rejected: "text-white bg-red-500 hover:bg-red-700",
+  hired: "text-white bg-blue-500 hover:bg-blue-700",
 };
 
 export default function RecruitmentDetail() {
@@ -228,8 +228,8 @@ export default function RecruitmentDetail() {
                     <td className="border px-4 py-2 md:text-center hidden md:table-cell">
                       {index + 1}
                     </td>
-                    <td className="border px-4 py-2 text-center md:text-left">
-                      foto
+                    <td className="border px-4 py-2 text-center md:text-center md:w-32">
+                      <img src={candidate.user.image} alt="profile" />
                     </td>
                     <td className="border px-4 py-2 text-center font-bold md:text-left md:font-normal">
                       {candidate.user.name}

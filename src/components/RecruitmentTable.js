@@ -1,16 +1,28 @@
 import React from "react";
-import Card from "./Card";
+import Card, { CardMini } from "./Card";
 import Container from "../layout/Container";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
 import { useQuery } from "react-query";
 import { getRecruitments, deleteRecruitment } from "../apis/recruitments";
 import { localDate } from "../utils/time";
+import { useState } from "react";
 
 export default function RecruitmentTable() {
-  // const [recruitments, isLoading, error, handler] = useAxiosGet(
-  //   "/recruitments"
-  // );
+  const [dateRange, setDateRange] = useState({
+    start: "",
+    end: "",
+  });
+
+  const [filter, setFilter] = useState({
+    status: "",
+  });
+
+  const queryObject = {};
+  if (filter.status) queryObject.status = filter.status;
+  if (dateRange.start && dateRange.end) {
+    queryObject.dateRange = `${dateRange.start}:${dateRange.end}`;
+  }
 
   const recruitments = useQuery(
     [
@@ -18,11 +30,23 @@ export default function RecruitmentTable() {
       {
         params: {
           isActive: true,
+          ...queryObject,
         },
       },
     ],
     getRecruitments
   );
+
+  const changeFilter = (ev) =>
+    setFilter({ ...filter, [ev.target.name]: ev.target.value });
+
+  const changeDate = (ev) =>
+    setDateRange({ ...dateRange, [ev.target.name]: ev.target.value });
+
+  const resetDate = (ev) => {
+    ev.preventDefault();
+    setDateRange({ start: "", end: "" });
+  };
 
   console.log(recruitments.data);
 
@@ -36,6 +60,41 @@ export default function RecruitmentTable() {
 
   return (
     <>
+      <CardMini className="w-full text-sm">
+        <form className="flex items-center">
+          <input
+            type="date"
+            name="start"
+            value={dateRange.start}
+            onChange={changeDate}
+            className="border px-2 py-1 rounded outline-none mr-4"
+          />
+          <input
+            type="date"
+            name="end"
+            value={dateRange.end}
+            onChange={changeDate}
+            className="border px-2 py-1 rounded outline-none mr-4"
+          />
+          <button
+            type="reset"
+            onClick={resetDate}
+            className="inline-block whitespace-no-wrap bg-yellow-400 hover:bg-yellow-600 hover:text-white font-semibold text-sm text-black px-4 py-1 rounded-sm focus:outline-none mr-4">
+            Reset
+          </button>
+          <div className="ml-auto"></div>
+          <select
+            name="status"
+            value={filter.status}
+            onChange={changeFilter}
+            className="border px-2 py-1 rounded outline-none ml-4">
+            <option value="">Status Lowongan</option>
+            <option value="pending">Ditunda</option>
+            <option value="open">Dibuka</option>
+            <option value="close">Ditutup</option>
+          </select>
+        </form>
+      </CardMini>
       <Card className="overflow-x-auto">
         <div className="flex mb-4">
           <h1 className="font-bold text-xl text-yellow-600">

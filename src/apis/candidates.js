@@ -11,17 +11,19 @@ export const getCandidates = async (key, options = {}) => {
     return res.data;
   } catch (err) {
     console.error(err);
-    return [];
+    return false;
   }
 };
 
 export const postCandidate = async (data) => {
   try {
     const res = await Axios.post("/candidates", data);
+    // alert("error 1");
     return res.data;
   } catch (err) {
-    console.error(err);
-    return err.responseData;
+    // alert("error 2");
+    // console.error(err);
+    throw err;
   }
 };
 

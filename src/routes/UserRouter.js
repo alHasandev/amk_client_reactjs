@@ -9,7 +9,7 @@ import ProfileUpdate from "../components/UserProfileForm";
 import EducationPage from "../pages/user/Education";
 import ExperiencePage from "../pages/user/Experience";
 import { useQuery } from "react-query";
-import { getMyProfile } from "../apis/users";
+import { getMyProfile, getUsers } from "../apis/users";
 import Loader from "../components/Loader";
 import UserRequest from "../pages/user/Request";
 import UserRequestTable from "../components/UserRequestTable";
@@ -22,50 +22,21 @@ import ScanQR from "../components/ScanQR";
 import UserProfileForm from "../components/UserProfileForm";
 
 export default function UserRouter() {
-  // const { data: user, isLoading } = useQuery("myProfile", getMyProfile);
+  const userQuery = useQuery(
+    [
+      "user",
+      {
+        endpoint: "me",
+      },
+    ],
+    getUsers
+  );
 
-  // const [topbars, setTopbars] = useState([]);
-
-  // useEffect(() => {
-  //   if (user) {
-  //     switch (user.privilege) {
-  //       case "employee":
-  //       case "admin":
-  //         setTopbars([
-  //           {
-  //             to: "/user/requests",
-  //             label: "Permintaan",
-  //             className: BTN_COLOR.YELLOW_LIGHT,
-  //           },
-  //           {
-  //             to: "/user/salaries",
-  //             label: "Slip Gaji",
-  //             className: BTN_COLOR.YELLOW_MEDIUM,
-  //           },
-  //           {
-  //             to: "/user/attendances",
-  //             label: "Kehadiran",
-  //             className: BTN_COLOR.YELLOW_LIGHT,
-  //           },
-  //           {
-  //             to: "/user/print",
-  //             label: "Cetak Profile",
-  //             className: BTN_COLOR.YELLOW_LIGHT,
-  //           },
-  //         ]);
-  //         break;
-
-  //       default:
-  //         break;
-  //     }
-  //   }
-  // }, [user]);
-
-  // if (isLoading) return <Loader />;
+  if (userQuery.isLoading) return <Loader />;
+  const user = userQuery.data;
 
   return (
     <Container className="grid gap-4">
-      {/* <Topbar homeLink="/user/profile" links={topbars} className="mb-4" /> */}
       <div className="bg-white px-4 py-2 rounded-sm shadow-md w-full max-w-screen-lg mx-auto">
         <form action="">
           <div className="flex items-center">
@@ -77,6 +48,34 @@ export default function UserRouter() {
               <i className="fas fa-arrow-left"></i>
             </NavLink>
             <div className="ml-auto"></div>
+            {user.privilege !== "candidate" && (
+              <>
+                <NavLink
+                  to="/user/requests"
+                  activeClassName="pointer-events-none bg-yellow-700"
+                  className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+                  Permintaan
+                </NavLink>
+                <NavLink
+                  to="/user/attendances"
+                  activeClassName="pointer-events-none bg-yellow-700"
+                  className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+                  Kehadiran
+                </NavLink>
+                <NavLink
+                  to="/user/assessments"
+                  activeClassName="pointer-events-none bg-yellow-700"
+                  className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+                  Penilaian
+                </NavLink>
+                <NavLink
+                  to="/user/salaries"
+                  activeClassName="pointer-events-none bg-yellow-700"
+                  className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+                  Slip Gaji
+                </NavLink>
+              </>
+            )}
           </div>
         </form>
       </div>
@@ -86,28 +85,24 @@ export default function UserRouter() {
         <Route exact path="/user/educations" component={EducationPage} />
         <Route exact path="/user/experiences" component={ExperiencePage} />
         <Route path="/user/requests">
-          <UserRequest>
-            <Switch>
-              <Route exact path="/user/requests" component={UserRequestTable} />
-              <Route
-                exact
-                path="/user/requests/create"
-                component={UserRequestForm}
-              />
-            </Switch>
-          </UserRequest>
+          <Switch>
+            <Route exact path="/user/requests" component={UserRequestTable} />
+            <Route
+              exact
+              path="/user/requests/create"
+              component={UserRequestForm}
+            />
+          </Switch>
         </Route>
         <Route path="/user/salaries">
-          <UserRequest>
-            <Switch>
-              <Route exact path="/user/salaries" component={UserSalaryTable} />
-              <Route
-                exact
-                path="/user/salaries/:payloadId"
-                component={UserSalaryDetail}
-              />
-            </Switch>
-          </UserRequest>
+          <Switch>
+            <Route exact path="/user/salaries" component={UserSalaryTable} />
+            <Route
+              exact
+              path="/user/salaries/:payloadId"
+              component={UserSalaryDetail}
+            />
+          </Switch>
         </Route>
         <Route exact path="/user/attendances">
           <UserAttendance />

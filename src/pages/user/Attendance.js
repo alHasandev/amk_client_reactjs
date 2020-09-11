@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
-import { CardSmall } from "../../components/Card";
+import { CardMini, CardSmall } from "../../components/Card";
 
 import time, { normalDate, reverseNormalDate } from "../../utils/time";
 import { useQuery } from "react-query";
@@ -79,7 +79,7 @@ export default function UserAttendance() {
 
   return (
     <>
-      <CardSmall className="mb-4">
+      <CardMini className="w-full max-w-screen-sm text-sm">
         <div className="flex items-center">
           <div className="ml-auto"></div>
           <Link
@@ -88,8 +88,8 @@ export default function UserAttendance() {
             Scan QR Kehadiran
           </Link>
         </div>
-      </CardSmall>
-      <CardSmall className="mb-4">
+      </CardMini>
+      <CardSmall>
         <div className="flex justify-end mb-4">
           <a
             href={`http://localhost:5000/attendances/print/calendar?${url.queryString(
@@ -97,8 +97,8 @@ export default function UserAttendance() {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
-            Report
+            className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+            Cetak
           </a>
         </div>
         <Calendar
@@ -142,7 +142,7 @@ export default function UserAttendance() {
           }}
         />
       </CardSmall>
-      <CardSmall className="flex flex-wrap mb-4">
+      <CardSmall className="flex flex-wrap">
         <div className="mr-4 flex items-center">
           <span className="inline-block mr-2 p-2 bg-red-500"></span>
           <span>Tidak Hadir</span>
@@ -169,8 +169,8 @@ export default function UserAttendance() {
             target="_blank"
             href={`http://localhost:5000/attendances/print/${employee.data._id}`}
             rel="noopener noreferrer"
-            className="inline-block whitespace-no-wrap bg-yellow-400 hover:bg-yellow-600 hover:text-white font-semibold text-sm text-black px-4 py-1 rounded-sm ml-4">
-            Report
+            className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+            Cetak
           </a>
         </div>
         <div className="overflow-x-auto">

@@ -60,14 +60,14 @@ export default function UserSalaryTable() {
             name="start"
             value={dateRange.start}
             onChange={changeHandler}
-            className="px-4 py-2 text-sm rounded border border-gray-500 outline-none focus:border-yellow-600 focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
+            className="px-4 py-1 text-sm rounded border border-gray-500 outline-none focus:border-yellow-600 focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
           />
           <input
             type="month"
             name="end"
             value={dateRange.end}
             onChange={changeHandler}
-            className="px-4 py-2 text-sm rounded border border-gray-500 outline-none focus:border-yellow-600 focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700 ml-4"
+            className="px-4 py-1 text-sm rounded border border-gray-500 outline-none focus:border-yellow-600 focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700 ml-4"
           />
           <div className="ml-auto"></div>
         </form>

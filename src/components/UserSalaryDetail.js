@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CardMedium } from "./Card";
+import Card, { CardLarge, CardMedium } from "./Card";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getPayloads } from "../apis/payloads";
@@ -43,10 +43,10 @@ export default function UserSalaryDetail() {
     payload.data.salary + payload.data.bonus - payload.data.reduction;
 
   return (
-    <CardMedium>
+    <CardLarge>
       <div className="flex flex-wrap md:items-center mb-4">
         <h2 className="font-bold text-xl text-yellow-600">
-          SLIP GAJI KARYAWAN
+          SLIP GAJI KARYAWANs
         </h2>
         <div className="ml-auto"></div>
         <a
@@ -60,7 +60,7 @@ export default function UserSalaryDetail() {
       <table className="w-full text-sm">
         <tbody>
           <tr>
-            <th className="border px-4 py-2 text-left font-semibold w-2/5">
+            <th className="border px-4 py-2 text-left font-semibold md:w-64">
               Bulan
             </th>
             <td className="border px-4 py-2">
@@ -68,19 +68,19 @@ export default function UserSalaryDetail() {
             </td>
           </tr>
           <tr>
-            <th className="border px-4 py-2 text-left font-semibold w-2/5">
+            <th className="border px-4 py-2 text-left font-semibold md:w-64">
               NIK
             </th>
             <td className="border px-4 py-2">{employee.user.nik}</td>
           </tr>
           <tr>
-            <th className="border px-4 py-2 text-left font-semibold w-2/5">
+            <th className="border px-4 py-2 text-left font-semibold md:w-64">
               Nama
             </th>
             <td className="border px-4 py-2">{employee.user.name}</td>
           </tr>
           <tr>
-            <th className="border px-4 py-2 text-left font-semibold w-2/5">
+            <th className="border px-4 py-2 text-left font-semibold md:w-64">
               Jabatan/Posisi
             </th>
             <td className="border px-4 py-2">
@@ -88,7 +88,7 @@ export default function UserSalaryDetail() {
             </td>
           </tr>
           <tr>
-            <th className="border px-4 py-2 text-left font-semibold w-2/5">
+            <th className="border px-4 py-2 text-left font-semibold md:w-64">
               Department
             </th>
             <td className="border px-4 py-2">
@@ -96,7 +96,7 @@ export default function UserSalaryDetail() {
             </td>
           </tr>
           <tr>
-            <th className="border px-4 py-2 text-left font-semibold w-2/5">
+            <th className="border px-4 py-2 text-left font-semibold md:w-64">
               Gaji Pokok
             </th>
             <td className="border px-4 py-2">
@@ -104,25 +104,25 @@ export default function UserSalaryDetail() {
             </td>
           </tr>
           <tr>
-            <th className="border px-4 py-2 text-left font-semibold w-2/5">
+            <th className="border px-4 py-2 text-left font-semibold md:w-64">
               Bonus
             </th>
             <td className="border px-4 py-2">{IDR(payload.data.bonus)}</td>
           </tr>
           <tr>
-            <th className="border px-4 py-2 text-left font-semibold w-2/5">
+            <th className="border px-4 py-2 text-left font-semibold md:w-64">
               Potongan
             </th>
             <td className="border px-4 py-2">{IDR(payload.data.reduction)}</td>
           </tr>
           <tr>
-            <th className="border px-4 py-2 text-left font-semibold w-2/5">
+            <th className="border px-4 py-2 text-left font-semibold md:w-64">
               Peneriamaan Total Gaji
             </th>
-            <td className="border px-4 py-2">{salaryTotal}</td>
+            <td className="border px-4 py-2">{IDR(salaryTotal)}</td>
           </tr>
         </tbody>
       </table>
-    </CardMedium>
+    </CardLarge>
   );
 }

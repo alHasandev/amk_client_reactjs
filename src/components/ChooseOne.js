@@ -1,5 +1,4 @@
-import React from 'react'
-
+import React from "react";
 
 export function ChooseOne({ name, choices = [], value, onChange }) {
   return (
@@ -9,13 +8,13 @@ export function ChooseOne({ name, choices = [], value, onChange }) {
           <input
             type="radio"
             name={name}
-            id={choice.value}
+            id={`${choice.value}`}
             value={choice.value}
             onChange={onChange}
             className="hidden"
           />
           <label
-            htmlFor={choice.value}
+            htmlFor={`${choice.value}`}
             className={`inline-block cursor-pointer px-4 py-2 shadow-sm font-semibold text-sm ${
               value === choice.value ? choice.activeClassName : choice.className
             }`}>

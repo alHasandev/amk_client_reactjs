@@ -103,9 +103,9 @@ export default function RecruitmentTable() {
           </Link>
           <a
             target="_blank"
-            href={`http://localhost:5000/recruitments/print?${url.queryString(
-              queryObject
-            )}`}
+            href={`${
+              process.env.REACT_APP_SERVER_LINK
+            }/recruitments/print?${url.queryString(queryObject)}`}
             rel="noopener noreferrer"
             className="inline-block whitespace-no-wrap bg-yellow-400 hover:bg-yellow-600 hover:text-white font-semibold text-sm text-black px-4 py-1 rounded-sm ml-4">
             Cetak

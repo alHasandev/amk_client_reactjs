@@ -68,7 +68,9 @@ export default function CandidateDetail() {
           <h1 className="text-xl text-yellow-600 font-bold">Form Lamaran</h1>
           <div className="ml-auto"></div>
           <a
-            href={`http://localhost:5000/candidates/print/${candidate._id}`}
+            href={`${
+              process.env.REACT_APP_SERVER_LINK
+            }/candidates/print/${candidate._id}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm bg-yellow-600 text-white font-semibold hover:bg-yellow-700 rounded-sm shadow-sm ml-4">

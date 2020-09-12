@@ -66,7 +66,7 @@ export default function RecruitmentDetail() {
           </h1>
           <div className="ml-auto"></div>
           <a
-            href={`http://localhost:5000/recruitments/print/${recruitment._id}`}
+            href={`${process.env.REACT_APP_SERVER_LINK}/recruitments/print/${recruitment._id}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm bg-yellow-600 text-white font-semibold hover:bg-yellow-700 rounded-sm shadow-sm ml-4">

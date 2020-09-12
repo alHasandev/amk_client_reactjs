@@ -40,10 +40,7 @@ export default function QRView() {
     <Container>
       <CardMedium className="flex">
         <div className="p-2 border-4 border-black">
-          <QRCode
-            value={`${qrcode.data.text}|${qrcode.data.time}`}
-            size={256}
-          />
+          <QRCode value={`${JSON.stringify(qrcode.data)}`} size={256} />
         </div>
         <div className="ml-auto"></div>
         <div className="ml-4">

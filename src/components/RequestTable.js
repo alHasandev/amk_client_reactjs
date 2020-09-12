@@ -99,9 +99,9 @@ export default function RequestTable() {
             Tambah Permintaan
           </Link>
           <a
-            href={`http://localhost:5000/requests/print/?${url.queryString(
-              queryObject
-            )}`}
+            href={`${
+              process.env.REACT_APP_SERVER_LINK
+            }/requests/print/?${url.queryString(queryObject)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm font-semibold

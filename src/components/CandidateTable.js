@@ -13,6 +13,7 @@ import {
   patchCandidate,
 } from "../apis/candidates";
 import { statusColors } from "../assets";
+import url from "../utils/url";
 
 const showAction = (candidate, callback) => {
   switch (candidate.status) {
@@ -192,11 +193,13 @@ export default function CandidateTable() {
             Tambah Calon Karyawan
           </Link>
           <a
-            href="http://localhost:5000/candidates/print"
+            href={`${
+              process.env.REACT_APP_SERVER_LINK
+            }/candidates/print/?${url.queryString(queryObject)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
-            Report
+            Cetak
           </a>
         </div>
         <table className="w-full text-sm">

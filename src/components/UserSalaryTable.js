@@ -77,13 +77,13 @@ export default function UserSalaryTable() {
           <h1 className="font-bold text-xl text-yellow-600">Tabel Slip Gaji</h1>
           <div className="ml-auto"></div>
           <a
-            href={`http://localhost:5000/payloads/me/print?${url.queryString(
-              queryFilter
-            )}`}
+            href={`${
+              process.env.REACT_APP_SERVER_LINK
+            }/payloads/me/print?${url.queryString(queryFilter)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
-            Report
+            Cetak
           </a>
         </div>
         <table className="w-full text-sm">

@@ -297,7 +297,7 @@ export default function UserProfile() {
         </div>
         <table className="w-full text-sm">
           <thead>
-            <tr>
+            <tr className="hidden md:table-row">
               <th className="border px-4 py-2 text-center">Tahun</th>
               <th className="border px-4 py-2 text-left">Nama Sekolah</th>
               <th className="border px-4 py-2 text-center">Jurusan</th>
@@ -308,14 +308,14 @@ export default function UserProfile() {
             {profile.educations &&
               profile.educations.map((education) => {
                 return (
-                  <tr key={education._id}>
+                  <tr key={education._id} className="grid mb-4 md:table-row">
                     <td className="border px-4 py-2 text-center">
                       {time.year(education.from)} -{" "}
                       {education.isCurrently
                         ? "Sekarang"
                         : time.year(education.to)}
                     </td>
-                    <td className="border px-4 py-2 text-left">
+                    <td className="border px-4 py-2 text-center md:text-left">
                       {education.school}
                     </td>
                     <td className="border px-4 py-2 text-center">
@@ -344,7 +344,7 @@ export default function UserProfile() {
         </div>
         <table className="w-full text-sm">
           <thead>
-            <tr>
+            <tr className="hidden md:table-row">
               <th className="border px-4 py-2 text-center">Tahun</th>
               <th className="border px-4 py-2 text-left">Nama Perusahaan</th>
               <th className="border px-4 py-2 text-center">Jabatan</th>
@@ -355,14 +355,14 @@ export default function UserProfile() {
             {profile.experiences &&
               profile.experiences.map((experience) => {
                 return (
-                  <tr key={experience._id}>
+                  <tr key={experience._id} className="grid md:table-row">
                     <td className="border px-4 py-2 text-center">
                       {time.year(experience.from)} -{" "}
                       {experience.isCurrently
                         ? "Sekarang"
                         : time.year(experience.to)}
                     </td>
-                    <td className="border px-4 py-2 text-left">
+                    <td className="border px-4 py-2 text-center md:text-left">
                       {experience.company}
                     </td>
                     <td className="border px-4 py-2 text-center">

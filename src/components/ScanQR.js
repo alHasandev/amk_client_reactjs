@@ -15,13 +15,13 @@ export default function ScanQR() {
       // }, 4000);
       if (!isQrFound) {
         setIsQrFound(true);
-        const [qrtext, time] = data;
-        const attendance = await postAttendance(
-          { qrtext, time },
-          {
-            endpoint: "qrcode",
-          }
-        );
+
+        const qrdata = JSON.parse(data);
+        // console.log(qrdata);
+        // const [qrtext, time] = data.split();
+        const attendance = await postAttendance(qrdata, {
+          endpoint: "qrcode",
+        });
         console.log(attendance);
         if (!attendance.error) {
           alert("Berhasil melakukan scan qrcode kehadiran !!");

@@ -44,7 +44,7 @@ export default function UserRouter() {
     <Container className="grid gap-4">
       <CardMini className="w-full">
         <form action="">
-          <div className="flex items-center">
+          <div className="flex flex-col md:flex-row items-stretch md:items-center">
             <NavLink
               exact
               to={backLink("/user/profile")}
@@ -59,28 +59,32 @@ export default function UserRouter() {
                   exact
                   to="/user/requests"
                   activeClassName="pointer-events-none bg-yellow-700"
-                  className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+                  className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 
+                  rounded-sm shadow-sm my-2 md:my-0 md:ml-4">
                   Permintaan
                 </NavLink>
                 <NavLink
                   exact
                   to="/user/attendances"
                   activeClassName="pointer-events-none bg-yellow-700"
-                  className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+                  className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 
+                  rounded-sm shadow-sm my-2 md:my-0 md:ml-4">
                   Kehadiran
                 </NavLink>
                 <NavLink
                   exact
                   to="/user/assessments"
                   activeClassName="pointer-events-none bg-yellow-700"
-                  className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+                  className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 
+                  rounded-sm shadow-sm my-2 md:my-0 md:ml-4">
                   Penilaian
                 </NavLink>
                 <NavLink
                   exact
                   to="/user/salaries"
                   activeClassName="pointer-events-none bg-yellow-700"
-                  className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+                  className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 
+                  rounded-sm shadow-sm my-2 md:my-0 md:ml-4">
                   Slip Gaji
                 </NavLink>
               </>

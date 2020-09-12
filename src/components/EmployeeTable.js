@@ -146,9 +146,9 @@ export default function EmployeeTable() {
             Tambah Karyawan
           </Link>
           <a
-            href={`http://localhost:5000/employees/print?${url.queryString(
-              queryObject
-            )}`}
+            href={`${
+              process.env.REACT_APP_SERVER_LINK
+            }/employees/print?${url.queryString(queryObject)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">

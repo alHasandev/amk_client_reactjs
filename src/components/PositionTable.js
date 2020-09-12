@@ -66,9 +66,9 @@ export default function PositionTable() {
             Tambah Posisi
           </Link>
           <a
-            href={`http://localhost:5000/positions/print?${url.queryString(
-              queryObject
-            )}`}
+            href={`${
+              process.env.REACT_APP_SERVER_LINK
+            }/positions/print?${url.queryString(queryObject)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-4 py-1 text-sm rounded-sm shadow-sm whitespace-no-wrap font-semibold bg-yellow-600 text-white hover:bg-yellow-700 ml-4">

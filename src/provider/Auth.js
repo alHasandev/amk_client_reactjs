@@ -4,7 +4,8 @@ import authReducer, { ACTIONS, setAuthToken } from "../reducers/auth";
 import { Redirect } from "react-router-dom";
 
 // Set default config for axios
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL =
+  process.env.REACT_APP_SERVER_LINK || "http://localhost:5000";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.patch["Content-Type"] = "application/json";
 axios.defaults.headers.put["Content-Type"] = "application/json";

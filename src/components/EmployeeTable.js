@@ -166,6 +166,7 @@ export default function EmployeeTable() {
                 <th className="border py-2 px-4">Jabatan/Posisi</th>
                 <th className="border py-2 px-4">Departemen</th>
                 <th className="border py-2 px-4">Gaji Pokok</th>
+                <th className="border py-2 px-4">Detail</th>
                 <th className="border py-2 px-4">Action</th>
               </tr>
             </thead>
@@ -196,6 +197,14 @@ export default function EmployeeTable() {
                     </td>
                     <td className="py-2 px-4 border text-center">
                       {IDR(employee.position.salary)}
+                    </td>
+
+                    <td className="py-2 px-4 border text-center">
+                      <Link
+                        to={`/admin/employees/${employee._id}`}
+                        className="inline-block rounded font-bold text-white bg-blue-500 hover:bg-blue-600 py-1 px-2 mr-2">
+                        <i className="fas fa-search"></i>
+                      </Link>
                     </td>
 
                     <td className="py-1 px-4 border text-center whitespace-no-wrap">

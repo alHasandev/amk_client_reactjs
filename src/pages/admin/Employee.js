@@ -18,28 +18,28 @@ export default function Employee({ children }) {
             <div className="ml-auto"></div>
             <NavLink
               exact
-              to={`/admin/requests`}
+              to={`/admin/requests/?backLink=/admin/employees`}
               activeClassName="hidden"
               className="inline-block whitespace-no-wrap bg-yellow-600 hover:bg-yellow-700 text-white font-semibold text-sm px-4 py-1 rounded-sm ml-4">
               Permintaan
             </NavLink>
             <NavLink
               exact
-              to={`/admin/attendances`}
+              to={`/admin/attendances/?backLink=/admin/employees`}
               activeClassName="hidden"
               className="inline-block whitespace-no-wrap bg-yellow-600 hover:bg-yellow-700 text-white font-semibold text-sm px-4 py-1 rounded-sm ml-4">
               Kehadiran
             </NavLink>
             <NavLink
               exact
-              to={`/admin/assessments`}
+              to={`/admin/assessments/?backLink=/admin/employees`}
               activeClassName="hidden"
               className="inline-block whitespace-no-wrap bg-yellow-600 hover:bg-yellow-700 text-white font-semibold text-sm px-4 py-1 rounded-sm ml-4">
               Penilaian
             </NavLink>
             <NavLink
               exact
-              to={`/admin/payloads`}
+              to={`/admin/payloads/?backLink=/admin/employees`}
               activeClassName="hidden"
               className="inline-block whitespace-no-wrap bg-yellow-600 hover:bg-yellow-700 text-white font-semibold text-sm px-4 py-1 rounded-sm ml-4">
               Penggajihan

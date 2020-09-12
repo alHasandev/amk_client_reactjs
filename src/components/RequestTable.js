@@ -6,6 +6,7 @@ import time from "../utils/time";
 import { Link } from "react-router-dom";
 import { getRequests, deleteRequest } from "../apis/requests";
 import { statusColors } from "../assets";
+import url from "../utils/url";
 
 export default function RequestTable() {
   const [dateRange, setDateRange] = useState({
@@ -69,7 +70,8 @@ export default function RequestTable() {
           <button
             type="reset"
             onClick={resetDate}
-            className="inline-block whitespace-no-wrap bg-yellow-400 hover:bg-yellow-600 hover:text-white font-semibold text-sm text-black px-4 py-1 rounded-sm focus:outline-none my-2 lg:my-0 lg:mr-4">
+            className="inline-block whitespace-no-wrap bg-yellow-400 hover:bg-yellow-600 hover:text-white 
+            font-semibold text-sm text-black px-4 py-1 rounded-sm focus:outline-none my-2 lg:my-0 lg:mr-4">
             Resets
           </button>
           <div className="ml-auto"></div>
@@ -97,7 +99,9 @@ export default function RequestTable() {
             Tambah Permintaan
           </Link>
           <a
-            href="http://localhost:5000/requests/print"
+            href={`http://localhost:5000/requests/print/?${url.queryString(
+              queryObject
+            )}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm font-semibold
@@ -155,14 +159,16 @@ export default function RequestTable() {
                     <td className="border px-4 py-2 text-center">
                       <Link
                         to={`/admin/requests/${request._id}`}
-                        className="inline-block rounded font-bold text-white bg-blue-500 hover:bg-blue-600 py-1 px-2">
+                        className="inline-block rounded font-bold text-white bg-blue-500 hover:bg-blue-600 
+                        py-1 px-2">
                         <i className="fas fa-search"></i>
                       </Link>
                     </td>
                     <td className="border px-4 py-2 text-center whitespace-no-wrap">
                       <Link
                         to={`/admin/requests/edit/${request._id}`}
-                        className="inline-block rounded font-bold text-white bg-green-500 hover:bg-green-600 py-1 px-2 focus:outline-none">
+                        className="inline-block rounded font-bold text-white bg-green-500 hover:bg-green-600 
+                        py-1 px-2 focus:outline-none">
                         <i className="fas fa-edit"></i>
                       </Link>
                       <button
@@ -180,7 +186,8 @@ export default function RequestTable() {
                             }
                           }
                         }}
-                        className="inline-block rounded font-bold text-white bg-red-500 hover:bg-red-600 py-1 px-2 focus:outline-none ml-2">
+                        className="inline-block rounded font-bold text-white bg-red-500 hover:bg-red-600 py-1 
+                        px-2 focus:outline-none ml-2">
                         <i className="fas fa-trash-alt"></i>
                       </button>
                     </td>

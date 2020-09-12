@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Container from "../../layout/Container";
+import { backLink } from "../../utils/url";
 
 export default function PayloadPage({ children }) {
   return (
@@ -10,7 +11,7 @@ export default function PayloadPage({ children }) {
           <div className="flex items-center">
             <NavLink
               exact
-              to="/admin/payloads"
+              to={backLink("/admin/payloads")}
               activeClassName="text-gray-500 pointer-events-none"
               className="mr-4">
               <i className="fas fa-arrow-left"></i>

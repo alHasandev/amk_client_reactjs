@@ -96,9 +96,9 @@ export default function Attendance() {
           </select>
           <div className="ml-auto"></div>
           <Link
-            to={`/admin/employees/attendances/new`}
+            to={`/admin/attendances/create`}
             className="inline-block whitespace-no-wrap bg-yellow-600 hover:bg-yellow-700 text-white font-semibold text-sm px-4 py-1 rounded-sm ml-4">
-            New Attendances
+            Tambahkan Kehadiran
           </Link>
         </div>
       </CardMini>

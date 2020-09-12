@@ -25,6 +25,7 @@ import CandidateTable from "../components/CandidateTable";
 import AssessmentPage from "../pages/admin/Assessment";
 import AssessmentTable from "../components/AssessmentTable";
 import AssessmentForm from "../components/AssessmentForm";
+import AssessmentDetail from "../components/AssessmentDetail";
 import UserTable from "../components/UserTable";
 import PayloadPage from "../pages/admin/Payload";
 import PayloadTable from "../components/PayloadTable";
@@ -38,6 +39,7 @@ import CandidateDetail from "../components/CandidateDetail";
 import CandidatePage from "../pages/admin/CandidatePage";
 import RequestDetail from "../components/RequestDetail";
 import AttendancePage from "../pages/admin/AttendancePage";
+import EmployeeDetail from "../components/EmployeeDetail";
 
 export default function AdminRouter() {
   return (
@@ -173,6 +175,11 @@ export default function AdminRouter() {
               path="/admin/employees/edit/:employeeId"
               component={EmployeeForm}
             />
+            <Route
+              exact
+              path="/admin/employees/:employeeId"
+              component={EmployeeDetail}
+            />
           </Switch>
         </EmployeePage>
       </Route>
@@ -222,6 +229,11 @@ export default function AdminRouter() {
               exact
               path="/admin/assessments/edit/:assessmentId"
               component={AssessmentForm}
+            />
+            <Route
+              exact
+              path="/admin/assessments/:assessmentId"
+              component={AssessmentDetail}
             />
           </Switch>
         </AssessmentPage>

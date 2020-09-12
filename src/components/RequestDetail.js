@@ -30,7 +30,7 @@ export default function RequestDetail() {
         <h1 className="text-xl text-yellow-600 font-bold">Detail Permintaan</h1>
         <div className="ml-auto"></div>
         <a
-          href={`http://localhost:5000/requests/${request._id}`}
+          href={`http://localhost:5000/requests/print/${request._id}`}
           target="_blank"
           rel="noopener noreferrer"
           className="px-4 py-1 text-sm bg-yellow-600 text-white font-semibold hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
@@ -41,7 +41,7 @@ export default function RequestDetail() {
         <tbody>
           <tr className="grid md:table-row">
             <th className="px-4 py-2 border text-left text-gray-900 md:w-56 whitespace-no-wrap">
-              Tanggal Dibuat
+              Tanggal Permintaan
             </th>
             <td className="px-4 py-2 border">
               {time.getDateString(request.createdAt)}
@@ -49,7 +49,7 @@ export default function RequestDetail() {
           </tr>
           <tr className="grid md:table-row">
             <th className="px-4 py-2 border text-left text-gray-900 md:w-56 whitespace-no-wrap">
-              Terakhir Diupdate
+              Tanggal Balasan
             </th>
             <td className="px-4 py-2 border">
               {time.getDateString(request.updatedAt)}
@@ -57,15 +57,27 @@ export default function RequestDetail() {
           </tr>
           <tr className="grid md:table-row">
             <th className="px-4 py-2 border text-left text-gray-900 md:w-56 whitespace-no-wrap">
-              Dari
+              NIK
+            </th>
+            <td className="px-4 py-2 border">{from.user.nik}</td>
+          </tr>
+          <tr className="grid md:table-row">
+            <th className="px-4 py-2 border text-left text-gray-900 md:w-56 whitespace-no-wrap">
+              Nama Karyawan
+            </th>
+            <td className="px-4 py-2 border">{from.user.name}</td>
+          </tr>
+          <tr className="grid md:table-row">
+            <th className="px-4 py-2 border text-left text-gray-900 md:w-56 whitespace-no-wrap">
+              Posisi / Jabatan
             </th>
             <td className="px-4 py-2 border">
-              [{from.position.code}] {from.user.name}
+              [{from.position.code}] {from.position.name}
             </td>
           </tr>
           <tr className="grid md:table-row">
             <th className="px-4 py-2 border text-left text-gray-900 md:w-56 whitespace-no-wrap">
-              Status Penerimaan
+              Status Permintaan
             </th>
             <td className="px-4 py-2 border">
               <span

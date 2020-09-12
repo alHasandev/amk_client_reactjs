@@ -24,6 +24,7 @@ import UserAssessmentTable from "../components/UserAssessmentTable";
 import { CardMini } from "../components/Card";
 import RequestDetail from "../components/RequestDetail";
 import { backLink } from "../utils/url";
+import AssessmentDetail from "../components/AssessmentDetail";
 
 export default function UserRouter() {
   const userQuery = useQuery(
@@ -129,6 +130,11 @@ export default function UserRouter() {
               exact
               path="/user/assessments"
               component={UserAssessmentTable}
+            />
+            <Route
+              exact
+              path="/user/assessments/:assessmentId"
+              component={AssessmentDetail}
             />
           </Switch>
         </Route>

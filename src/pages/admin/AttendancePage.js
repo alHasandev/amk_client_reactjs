@@ -1,6 +1,7 @@
 import React from "react";
 import Container from "../../layout/Container";
 import { NavLink } from "react-router-dom";
+import { backLink } from "../../utils/url";
 
 export default function AttendancePage({ children }) {
   return (
@@ -10,7 +11,7 @@ export default function AttendancePage({ children }) {
           <div className="flex items-center">
             <NavLink
               exact
-              to="/admin/attendances"
+              to={backLink("/admin/attendances")}
               activeClassName="text-gray-500 pointer-events-none"
               className="mr-4">
               <i className="fas fa-arrow-left"></i>

@@ -5,10 +5,13 @@ import { useState } from "react";
 import { useRef } from "react";
 import { postUser, getUsers, patchUser } from "../apis/users";
 import { ChooseOne } from "./ChooseOne";
+import Loader from "./Loader";
 
 export default function UserForm() {
   const params = useParams();
   const history = useHistory();
+
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     nik: "",
     name: "",
@@ -49,7 +52,9 @@ export default function UserForm() {
     formBuild.append("isActive", formData.isActive);
     if (inputImage.current.files.length > 0)
       formBuild.append("image", inputImage.current.files[0], formData.nik);
+
     if (!formData._id) {
+      setIsLoading(true);
       if (
         await postUser(formBuild, {
           headers: {
@@ -57,14 +62,17 @@ export default function UserForm() {
           },
         })
       ) {
+        setIsLoading(false);
         alert("Berhasil menambah user");
         console.log(formBuild);
         history.push("/admin/users");
       } else {
+        setIsLoading(false);
         alert("Gagal menambah user");
         console.log(formBuild);
       }
     } else {
+      setIsLoading(true);
       if (
         await patchUser(formBuild, {
           endpoint: formData._id,
@@ -73,10 +81,12 @@ export default function UserForm() {
           },
         })
       ) {
+        setIsLoading(false);
         alert("Berhasil mengupdate user");
         console.log(formBuild);
         history.push("/admin/users");
       } else {
+        setIsLoading(false);
         alert("Gagal mengupdate user");
         console.log(formBuild);
       }
@@ -89,17 +99,19 @@ export default function UserForm() {
         endpoint: params.userId,
       }).then((data) => {
         setFormData({
-          ...formData,
           _id: data._id,
           nik: data.nik,
           name: data.name,
           email: data.email,
           privilege: data.privilege,
           isActive: data.isActive,
+          password: "",
         });
       });
     }
-  }, [params, formData]);
+  }, [params.userId]);
+
+  if (isLoading) return <Loader />;
 
   return (
     <CardSmall>
@@ -184,8 +196,6 @@ export default function UserForm() {
             type="file"
             name="image"
             ref={inputImage}
-            value={formData.image}
-            onChange={changeHandler}
             className="px-4 py-2 text-sm w-full rounded border border-gray-500 outline-none focus:border-yellow-600  focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
           />
         </div>
@@ -200,6 +210,7 @@ export default function UserForm() {
             onChange={changeHandler}
             className="w-full block text-sm border outline-none px-4 py-2 rounded bg-gray-100 hover:border-yellow-500 focus:bg-white">
             <option value="">Pilih Hak Akses</option>
+            <option value="user">Umum/Tamu</option>
             <option value="candidate">Calon Karyawan</option>
             <option value="employee">Karyawan</option>
             <option value="admin">Admin</option>

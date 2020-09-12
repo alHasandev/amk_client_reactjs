@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { CardMedium, CardLarge, CardExtraLarge, CardMini } from "./Card";
-import { profile as profileImage } from "../assets";
+import { CardLarge } from "./Card";
 import { useQuery } from "react-query";
 import { useParams, useHistory } from "react-router-dom";
 import { getCandidates, patchCandidate } from "../apis/candidates";
@@ -53,7 +52,7 @@ export default function CandidateDetail() {
         comment: candidateQuery.data.comment,
       });
     }
-  }, [candidateQuery.isLoading]);
+  }, [candidateQuery]);
 
   if (candidateQuery.isLoading) return <Loader />;
   const candidate = candidateQuery.data;

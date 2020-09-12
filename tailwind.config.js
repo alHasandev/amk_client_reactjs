@@ -1,9 +1,18 @@
 module.exports = {
-  purge: ["./public/**/*.html", "./src/*.js", "./src/components/**/*.js"],
+  purge: [
+    "./public/**/*.html",
+    "./src/*.js",
+    "./src/layout/*.js",
+    "./src/routes/*.js",
+    "./src/pages/*.js",
+    "./src/pages/**/*.js",
+    "./src/components/*.js",
+    "./src/components/**/*.js",
+  ],
   theme: {
     extend: {
       padding: {
-        "14": "3.5rem",
+        14: "3.5rem",
       },
     },
   },

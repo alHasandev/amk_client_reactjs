@@ -32,7 +32,7 @@ export default function QRView() {
     }
 
     return () => clearTimeout(t);
-  }, [limit]);
+  }, [limit, qrcode]);
 
   if (qrcode.isLoading) return <Loader />;
 

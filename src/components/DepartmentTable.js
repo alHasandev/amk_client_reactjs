@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { CardLarge, CardMini } from "./Card";
 import { Link, useHistory, useParams } from "react-router-dom";
-import { useAxiosGet } from "../hooks/request";
 import Error from "./Error";
 import Loader from "./Loader";
 import { useQuery } from "react-query";

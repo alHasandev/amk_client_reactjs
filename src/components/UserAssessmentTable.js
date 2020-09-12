@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { CardExtraLarge, CardLarge, CardMini } from "./Card";
+import { CardLarge, CardMini } from "./Card";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
 
 import { useQuery } from "react-query";
-import { getAssessments, deleteAssessment } from "../apis/assessments";
+import { getAssessments } from "../apis/assessments";
 import time from "../utils/time";
 import { getEmployees } from "../apis/employees";
 import url from "../utils/url";

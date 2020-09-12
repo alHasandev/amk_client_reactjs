@@ -79,7 +79,7 @@ export default function EmployeeForm() {
         });
       });
     }
-  }, []);
+  }, [params.employeeId]);
 
   if (departments.isLoading || positions.isLoading) return <Loader />;
 

@@ -6,18 +6,7 @@ import { useHistory, Link } from "react-router-dom";
 // Import components
 import Container from "../layout/Container";
 import { CardSmall } from "../components/Card";
-import Axios from "axios";
 import { postUser } from "../apis/users";
-
-const registUser = async (data) => {
-  try {
-    const res = await Axios.post("/users", data);
-    return res.data;
-  } catch (err) {
-    console.log(err);
-    return false;
-  }
-};
 
 export default function Register() {
   const [formData, setFormData] = useState({

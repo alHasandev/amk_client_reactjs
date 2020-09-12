@@ -67,11 +67,11 @@ export default function UserProfileForm() {
       .then((data) => {
         if (data) {
           setUser({
-            ...user,
             _id: data._id,
             nik: data.nik,
             name: data.name,
             email: data.email,
+            password: "",
           });
         }
 

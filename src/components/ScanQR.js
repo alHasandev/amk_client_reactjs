@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Container from "../layout/Container";
 import QrReader from "react-qr-reader";
 import { CardSmall } from "./Card";
 import { postAttendance } from "../apis/attendances";
@@ -7,7 +6,6 @@ import { useHistory } from "react-router-dom";
 
 export default function ScanQR() {
   const [isQrFound, setIsQrFound] = useState(false);
-  const [result, setResult] = useState("No Result");
   const history = useHistory();
 
   const handleScan = async (data) => {

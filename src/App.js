@@ -21,7 +21,7 @@ import PrintRouter from "./routes/PrintRouter";
 
 function App() {
   const [auth] = useContext(AuthContext);
-  console.log(auth);
+  // console.log(auth);
   // if (auth.isLoading) return <Loader />;
 
   return (

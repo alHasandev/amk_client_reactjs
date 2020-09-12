@@ -3,8 +3,8 @@ import { CardExtraLarge, CardMini } from "./Card";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
 
-import time, { calculateAge, localDate } from "../utils/time";
-import { useQuery, useMutation } from "react-query";
+import time from "../utils/time";
+import { useQuery } from "react-query";
 import { getEmployees } from "../apis/employees";
 import { getPayloads, deletePayload } from "../apis/payloads";
 import { IDR } from "../utils/currency";
@@ -46,8 +46,11 @@ export default function PayloadTable() {
       const employee = employees.data.find(
         (employee) => employee._id === filter.employee
       );
-      setFilter({ ...filter, department: employee.department._id });
-      console.log(employee);
+      setFilter({
+        employee: filter.employee,
+        department: employee.department._id,
+      });
+      // console.log(employee);
     }
   }, [employees.data, filter.employee]);
 

@@ -3,7 +3,6 @@ import { CardSmall, CardMedium } from "../../components/Card";
 
 // Import static assets
 import { profile as profileImage } from "../../assets";
-import { useAxiosGet } from "../../hooks/request";
 import Error from "../../components/Error";
 import Loader from "../../components/Loader";
 import { Link, useParams, useHistory } from "react-router-dom";

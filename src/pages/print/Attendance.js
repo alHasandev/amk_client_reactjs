@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Calendar from "react-calendar";
 import { CardSmall } from "../../components/Card";
 
-import time, { normalDate, reverseNormalDate } from "../../utils/time";
+import { normalDate } from "../../utils/time";
 import { useQuery } from "react-query";
 import Axios from "axios";
 import { useParams } from "react-router-dom";
 import Loader from "../../components/Loader";
-import { getEmployee, getEmployees } from "../../apis/employees";
+import { getEmployees } from "../../apis/employees";
 import { printScreen } from "../../utils/print";
 
 const getAttendances = async (key, employeeId) => {
@@ -21,11 +21,6 @@ const getAttendances = async (key, employeeId) => {
   }
 };
 
-const statusLabel = {
-  absence: "Tidak Hadir",
-  present: "Hadir",
-  leave: "Cuti/Libur",
-};
 const tileClassNames = ["focus:outline-none py-2 border hover:bg-gray-200"];
 
 const PrevLabel = () => <></>;

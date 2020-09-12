@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { CardSmall } from "./Card";
-import Container from "../layout/Container";
 import { Link, useParams, useHistory } from "react-router-dom";
 import Loader from "./Loader";
 import { normalDate } from "../utils/time";
@@ -8,7 +7,6 @@ import { useQuery } from "react-query";
 import { getPositions } from "../apis/positions";
 import { ChooseOne } from "./ChooseOne";
 import {
-  getRecruitment,
   postRecruitment,
   patchRecruitment,
   getRecruitments,

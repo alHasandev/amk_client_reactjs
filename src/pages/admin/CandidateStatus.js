@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../components/Loader";
-import { useAxios } from "../../hooks/request";
 import { Redirect, useLocation, useParams } from "react-router-dom";
 import Error from "../../components/Error";
 import Axios from "axios";
@@ -63,11 +62,10 @@ export default function CandidateStatus() {
     }
     changeStatus();
 
-    console.log(location, params);
     return () => {
       source.cancel();
     };
-  }, []);
+  }, [location, params]);
 
   if (status === "error")
     return <Error error={{ message: "Gagal mengubah status candidate!!" }} />;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Card, { CardLarge, CardMedium } from "./Card";
+import { CardLarge } from "./Card";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getPayloads } from "../apis/payloads";

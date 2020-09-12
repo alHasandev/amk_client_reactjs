@@ -1,23 +1,19 @@
 import React from "react";
-import { Link, useParams, Redirect, useHistory } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 // Import components
 import Container from "../layout/Container";
-import { CardLarge, CardMedium } from "../components/Card";
-import { useAxiosGet, useAxios } from "../hooks/request";
+import { CardLarge } from "../components/Card";
 import Loader from "../components/Loader";
-import Error from "../components/Error";
 import { useQuery } from "react-query";
-import { getRecruitment, getRecruitments } from "../apis/recruitments";
-import { getCandidates, postCandidate } from "../apis/candidates";
+import { getRecruitments } from "../apis/recruitments";
+import { postCandidate } from "../apis/candidates";
 import time from "../utils/time";
 import { getUsers } from "../apis/users";
 import { IDR } from "../utils/currency";
 
 export default function RecruitmentDetail() {
   const params = useParams();
-  const history = useHistory();
-
   const userQuery = useQuery(
     [
       "user",

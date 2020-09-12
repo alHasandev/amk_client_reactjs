@@ -2,18 +2,17 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 // Import static assets
-import { profile as profileImage, statusColors } from "../assets";
 
 // Import components
-import { CardExtraLarge, CardLarge, CardMini } from "./Card";
+import { CardExtraLarge, CardMini } from "./Card";
 import Loader from "./Loader";
 import { useQuery } from "react-query";
-import { getUsers, deleteUser } from "../apis/users";
 import {
   getCandidates,
   deleteCandidate,
   patchCandidate,
 } from "../apis/candidates";
+import { statusColors } from "../assets";
 
 const showAction = (candidate, callback) => {
   switch (candidate.status) {

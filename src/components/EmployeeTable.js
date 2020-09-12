@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { CardExtraLarge, CardMini } from "./Card";
 import { Link } from "react-router-dom";
-import { profile as profileImage } from "../assets";
 import Loader from "./Loader";
 
-import time, { calculateAge, localDate } from "../utils/time";
+import time, { calculateAge } from "../utils/time";
 import { useQuery } from "react-query";
 import { getEmployees, deleteEmployee } from "../apis/employees";
 import { IDR } from "../utils/currency";
@@ -58,15 +57,17 @@ export default function EmployeeTable() {
   };
 
   useEffect(() => {
-    setFilter({ ...filter, position: "" });
     if (filter.department) {
       getPositions("position", {
         params: {
           department: filter.department,
         },
       }).then((data) => {
+        setFilter({ department: filter.department, position: "" });
         setPositions(data);
       });
+    } else {
+      setPositions([]);
     }
   }, [filter.department]);
 

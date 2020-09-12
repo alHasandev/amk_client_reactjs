@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "../../layout/Container";
-import { NavLink, useLocation } from "react-router-dom";
-import { queryObject, backLink } from "../../utils/url";
+import { NavLink } from "react-router-dom";
+import { backLink } from "../../utils/url";
 
 export default function CandidatePage({ children }) {
   return (

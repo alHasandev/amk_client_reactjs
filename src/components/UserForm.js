@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { CardSmall } from "./Card";
-import Container from "../layout/Container";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { useRef } from "react";
 import { postUser, getUsers, patchUser } from "../apis/users";
@@ -100,7 +99,7 @@ export default function UserForm() {
         });
       });
     }
-  }, []);
+  }, [params, formData]);
 
   return (
     <CardSmall>

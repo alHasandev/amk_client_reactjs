@@ -8,7 +8,7 @@ import RecruitmentCard from "../components/RecruitmentCard";
 import Loader from "../components/Loader";
 import { useQuery } from "react-query";
 import { getRecruitments } from "../apis/recruitments";
-import { CardExtraLarge, CardMini } from "../components/Card";
+import { CardExtraLarge } from "../components/Card";
 import { Link } from "react-router-dom";
 
 export default function RecruitmentList() {

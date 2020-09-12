@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Container from "../layout/Container";
-import { CardSmall, CardMedium } from "./Card";
-import { Link, useParams, Redirect, useHistory } from "react-router-dom";
-import { useAxiosGet, useAxios } from "../hooks/request";
+import { CardSmall } from "./Card";
+import { Link, useParams, useHistory } from "react-router-dom";
 import Loader from "./Loader";
-import Error from "./Error";
 import { useQuery } from "react-query";
 import { getEmployees } from "../apis/employees";
 import { IDR } from "../utils/currency";

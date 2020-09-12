@@ -13,10 +13,10 @@ export const ACTIONS = {
 
 export function setAuthToken(token) {
   if (token) {
-    console.log("create token");
+    // console.log("create token");
     axios.defaults.headers.common["Authorization"] = token;
   } else {
-    console.log("delete token");
+    // console.log("delete token");
     delete axios.defaults.headers.common["Authorization"];
   }
 }
@@ -25,7 +25,7 @@ export default function auth(state, action) {
   switch (action.type) {
     case ACTIONS.LOGIN_SUCCESS:
       // setAuthToken(action.payload.token);
-      console.log("login success");
+      // console.log("login success");
       localStorage.setItem("token", action.payload.token);
       return {
         ...state,
@@ -35,7 +35,7 @@ export default function auth(state, action) {
 
     case ACTIONS.LOGIN:
       // setAuthToken(action.payload.token);
-      console.log("login");
+      // console.log("login");
       localStorage.setItem("token", action.payload.token);
       return {
         ...state,
@@ -44,7 +44,7 @@ export default function auth(state, action) {
       };
 
     case ACTIONS.SET_USER:
-      console.log("set user");
+      // console.log("set user");
       return {
         ...state,
         isLoading: false,
@@ -53,7 +53,7 @@ export default function auth(state, action) {
 
     case ACTIONS.LOGIN_FAIL:
       setAuthToken(false);
-      console.log("login fail");
+      // console.log("login fail");
       localStorage.removeItem("token");
       return {
         error: action.payload.error,
@@ -63,7 +63,7 @@ export default function auth(state, action) {
       };
 
     case ACTIONS.REMOVE_ERROR:
-      console.log("remove error");
+      // console.log("remove error");
       return {
         ...state,
         error: null,
@@ -77,7 +77,7 @@ export default function auth(state, action) {
 
     case ACTIONS.LOGOUT:
       setAuthToken(false);
-      console.log("logout");
+      // console.log("logout");
       localStorage.removeItem("token");
       return { ...state, token: null, user: null, isLoading: false };
 

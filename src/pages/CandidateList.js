@@ -5,11 +5,10 @@ import queryString from "query-string";
 import Container from "../layout/Container";
 import CandidateCard from "../components/CandidateCard";
 import { CardLarge } from "../components/Card";
-import { useAxiosGet } from "../hooks/request";
 import { useParams, Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import CandidateProfile from "./admin/CandidateProfile";
-import { getRecruitment, getRecruitments } from "../apis/recruitments";
+import { getRecruitments } from "../apis/recruitments";
 import { useQuery } from "react-query";
 import { getCandidates } from "../apis/candidates";
 

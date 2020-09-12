@@ -1,6 +1,5 @@
 import React from "react";
 import Card, { CardMini } from "./Card";
-import Container from "../layout/Container";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
 import { useQuery } from "react-query";

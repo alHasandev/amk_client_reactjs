@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Container from "../layout/Container";
 import { CardSmall } from "./Card";
-import { Link, Redirect, useParams, useHistory } from "react-router-dom";
-import { useAxios } from "../hooks/request";
-import Loader from "./Loader";
-import Error from "./Error";
+import { Link, useParams, useHistory } from "react-router-dom";
 import {
   getDepartments,
   postDepartment,
@@ -61,7 +58,7 @@ export default function DepartmentForm() {
         })
       );
     }
-  }, []);
+  }, [params.departmentId]);
 
   return (
     <Container>

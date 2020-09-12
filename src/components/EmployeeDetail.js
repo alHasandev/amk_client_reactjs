@@ -1,22 +1,14 @@
-import React, { useEffect } from "react";
-import { CardMedium, CardLarge, CardExtraLarge, CardMini } from "./Card";
+import React from "react";
+import { CardLarge } from "./Card";
 import { useQuery } from "react-query";
-import { useParams, useHistory } from "react-router-dom";
-import { getCandidates, patchCandidate } from "../apis/candidates";
+import { useParams } from "react-router-dom";
 import Loader from "./Loader";
 import time from "../utils/time";
-import { useState } from "react";
-import { backLink } from "../utils/url";
 import { getEmployees } from "../apis/employees";
 import { IDR } from "../utils/currency";
 
 export default function EmployeeDetail() {
   const params = useParams();
-  const history = useHistory();
-  const [formData, setFormData] = useState({
-    status: "",
-    comment: "",
-  });
 
   const employeeQuery = useQuery(
     [

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 // Import static assets
 import { profile as profileImage } from "../assets";

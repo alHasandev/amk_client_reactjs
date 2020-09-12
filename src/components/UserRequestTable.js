@@ -1,27 +1,12 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import Loader from "./Loader";
-import { CardExtraLarge, CardLarge, CardMini } from "./Card";
-import time, { localDate, normalDate } from "../utils/time";
+import { CardLarge, CardMini } from "./Card";
+import time from "../utils/time";
 import { Link } from "react-router-dom";
 import { getRequests } from "../apis/requests";
 import { getEmployees } from "../apis/employees";
 import { statusColors } from "../assets";
-
-const statusLabel = {
-  pending: {
-    color: "bg-yellow-600 text-white",
-    label: "Pending",
-  },
-  accepted: {
-    color: "bg-green-500 text-white",
-    label: "Diterima",
-  },
-  rejected: {
-    color: "bg-red-500 text-white",
-    label: "Ditolak",
-  },
-};
 
 export default function UserRequestTable() {
   const [dateRange, setDateRange] = useState({

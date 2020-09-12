@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { CardSmall, CardLarge } from "../../components/Card";
-import { Link } from "react-router-dom";
-import { useAxiosGet } from "../../hooks/request";
 import Loader from "../../components/Loader";
-import Error from "../../components/Error";
 import axios from "axios";
-import time, { reverseNormalDate, normalDate } from "../../utils/time";
+import time, { normalDate } from "../../utils/time";
 import { getProfiles } from "../../apis/profiles";
 import { useQuery } from "react-query";
 

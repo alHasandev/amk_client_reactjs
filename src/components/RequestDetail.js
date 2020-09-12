@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getRequests } from "../apis/requests";
 import { statusColors } from "../assets";
 import time from "../utils/time";
-import { CardLarge, CardMedium } from "./Card";
+import { CardMedium } from "./Card";
 import Loader from "./Loader";
 
 export default function RequestDetail() {

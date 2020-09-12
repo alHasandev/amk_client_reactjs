@@ -3,10 +3,10 @@ import { CardExtraLarge, CardMini } from "./Card";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
 
-import time, { calculateAge, localDate } from "../utils/time";
-import { useQuery, useMutation } from "react-query";
+import time from "../utils/time";
+import { useQuery } from "react-query";
 import { getEmployees } from "../apis/employees";
-import { getPayloads, deletePayload } from "../apis/payloads";
+import { getPayloads } from "../apis/payloads";
 import { IDR } from "../utils/currency";
 import { getDepartments } from "../apis/departments";
 import { useState } from "react";
@@ -101,7 +101,6 @@ export default function UserSalaryTable() {
           <tbody>
             {payloads.data &&
               payloads.data.map((payload, index) => {
-                const employee = payload.employee;
                 const salaryTotal =
                   payload.salary + payload.bonus - payload.reduction;
                 return (

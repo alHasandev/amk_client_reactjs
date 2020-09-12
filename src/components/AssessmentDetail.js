@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import Card, { CardLarge, CardMedium } from "./Card";
+import React from "react";
+import { CardLarge } from "./Card";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getPayloads } from "../apis/payloads";
+// import { getPayloads } from "../apis/payloads";
 import Loader from "./Loader";
 import time from "../utils/time";
-import { getDepartments } from "../apis/departments";
-import { IDR } from "../utils/currency";
+// import { getDepartments } from "../apis/departments";
+// import { IDR } from "../utils/currency";
 import { getAssessments } from "../apis/assessments";
 
 export default function AssessmentDetail() {
@@ -30,7 +30,6 @@ export default function AssessmentDetail() {
   const assessment = assessmentQuery.data;
   const employee = assessment.employee;
   const department = employee.department;
-  const position = employee.position;
 
   return (
     <CardLarge>

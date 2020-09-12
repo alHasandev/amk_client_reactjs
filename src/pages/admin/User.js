@@ -1,7 +1,6 @@
 import React from "react";
 import Container from "../../layout/Container";
-import UserTable from "../../components/UserTable";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function UserPage({ children }) {
   return (

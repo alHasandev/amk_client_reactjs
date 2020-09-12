@@ -35,7 +35,10 @@ export default function Home() {
           Selamat Datang{" "}
           {auth.user ? `Kembali ${auth.user.name}` : "di AMK Pyramid"}
         </h1>
-        <p className="mb-4">Aplikasi Manajemen Karyawan Pyramid versi 2.0.1</p>
+        <p className="mb-4">
+          Aplikasi Manajemen , Rekrutmen Dan Seleksi Karyawan Pada Hotel Pyramid
+          Suites Banjarmasin
+        </p>
         <div className="flex flex-col md:flex-row justify-center">
           {auth.token ? (
             <>

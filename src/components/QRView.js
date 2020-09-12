@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Container from "../layout/Container";
 import QRCode from "qrcode.react";
-import { CardMedium } from "./Card";
+import { CardMedium, CardSmall } from "./Card";
 import { useQuery } from "react-query";
 import { getAttendances } from "../apis/attendances";
 import Loader from "../components/Loader";
@@ -18,6 +18,8 @@ export default function QRView() {
     ],
     getAttendances
   );
+
+  console.log("view qrcode", qrcode);
 
   useEffect(() => {
     let t;
@@ -38,12 +40,12 @@ export default function QRView() {
 
   return (
     <Container>
-      <CardMedium className="flex">
-        <div className="p-2 border-4 border-black">
+      <CardSmall className="flex flex-col md:flex-row items-center md:items-start">
+        <div className="p-2 border-4 border-black mb-4 md:mb-0">
           <QRCode value={`${JSON.stringify(qrcode.data)}`} size={256} />
         </div>
         <div className="ml-auto"></div>
-        <div className="ml-4">
+        <div className="md:ml-4">
           <h1 className="font-bold text-2xl text-yellow-600 text-center mb-8">
             Scan QR Kehadiran pada menu Profile, Kehadiran
           </h1>
@@ -52,7 +54,7 @@ export default function QRView() {
           </p>
           <h3 className="font-bold text-6xl text-black text-center">{limit}</h3>
         </div>
-      </CardMedium>
+      </CardSmall>
     </Container>
   );
 }

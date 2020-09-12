@@ -17,7 +17,7 @@ export default function ScanQR() {
         setIsQrFound(true);
 
         const qrdata = JSON.parse(data);
-        // console.log(qrdata);
+        console.log(qrdata);
         // const [qrtext, time] = data.split();
         const attendance = await postAttendance(qrdata, {
           endpoint: "qrcode",

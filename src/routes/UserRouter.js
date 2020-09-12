@@ -20,6 +20,10 @@ import UserSalaryDetail from "../components/UserSalaryDetail";
 import UserDetail from "../components/UserProfile";
 import ScanQR from "../components/ScanQR";
 import UserProfileForm from "../components/UserProfileForm";
+import UserAssessmentTable from "../components/UserAssessmentTable";
+import { CardMini } from "../components/Card";
+import RequestDetail from "../components/RequestDetail";
+import { backLink } from "../utils/url";
 
 export default function UserRouter() {
   const userQuery = useQuery(
@@ -37,12 +41,12 @@ export default function UserRouter() {
 
   return (
     <Container className="grid gap-4">
-      <div className="bg-white px-4 py-2 rounded-sm shadow-md w-full max-w-screen-lg mx-auto">
+      <CardMini className="w-full">
         <form action="">
           <div className="flex items-center">
             <NavLink
               exact
-              to="/user/profile"
+              to={backLink("/user/profile")}
               activeClassName="text-gray-500 pointer-events-none"
               className="mr-4">
               <i className="fas fa-arrow-left"></i>
@@ -51,24 +55,28 @@ export default function UserRouter() {
             {user.privilege !== "candidate" && (
               <>
                 <NavLink
+                  exact
                   to="/user/requests"
                   activeClassName="pointer-events-none bg-yellow-700"
                   className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
                   Permintaan
                 </NavLink>
                 <NavLink
+                  exact
                   to="/user/attendances"
                   activeClassName="pointer-events-none bg-yellow-700"
                   className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
                   Kehadiran
                 </NavLink>
                 <NavLink
+                  exact
                   to="/user/assessments"
                   activeClassName="pointer-events-none bg-yellow-700"
                   className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
                   Penilaian
                 </NavLink>
                 <NavLink
+                  exact
                   to="/user/salaries"
                   activeClassName="pointer-events-none bg-yellow-700"
                   className="px-4 py-1 font-semibold text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
@@ -78,7 +86,7 @@ export default function UserRouter() {
             )}
           </div>
         </form>
-      </div>
+      </CardMini>
       <Switch>
         <Route exact path="/user/profile" component={UserDetail} />
         <Route exact path="/user/profile/edit" component={UserProfileForm} />
@@ -92,6 +100,11 @@ export default function UserRouter() {
               path="/user/requests/create"
               component={UserRequestForm}
             />
+            <Route
+              exact
+              path="/user/requests/:requestId"
+              component={RequestDetail}
+            />
           </Switch>
         </Route>
         <Route path="/user/salaries">
@@ -104,10 +117,21 @@ export default function UserRouter() {
             />
           </Switch>
         </Route>
-        <Route exact path="/user/attendances">
-          <UserAttendance />
+        <Route path="/user/attendances">
+          <Switch>
+            <Route exact path="/user/attendances" component={UserAttendance} />
+            <Route exact path="/user/attendances/scanqr" component={ScanQR} />
+          </Switch>
         </Route>
-        <Route exact path="/user/attendances/scanqr" component={ScanQR} />
+        <Route path="/user/assessments">
+          <Switch>
+            <Route
+              exact
+              path="/user/assessments"
+              component={UserAssessmentTable}
+            />
+          </Switch>
+        </Route>
       </Switch>
     </Container>
   );

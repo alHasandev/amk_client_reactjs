@@ -11,7 +11,7 @@ export const getAssessments = async (key, options = {}) => {
     return res.data;
   } catch (err) {
     console.error(err);
-    return [];
+    return false;
   }
 };
 

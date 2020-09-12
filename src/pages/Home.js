@@ -32,7 +32,8 @@ export default function Home() {
     <Background className="px-4 flex flex-col justify-center items-center text-white text-center">
       <Container className="-mt-32">
         <h1 className="text-4xl font-bold capitalize">
-          Welcome {auth.user ? `Back ${auth.user.name}` : "to AMK Pyramid"}
+          Selamat Datang{" "}
+          {auth.user ? `Kembali ${auth.user.name}` : "di AMK Pyramid"}
         </h1>
         <p className="mb-4">Aplikasi Manajemen Karyawan Pyramid versi 2.0.1</p>
         <div className="flex flex-col md:flex-row justify-center">

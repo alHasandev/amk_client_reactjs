@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
-import { CardSmall } from "../../components/Card";
+import { CardMini, CardSmall } from "../../components/Card";
 
 import time, { normalDate, reverseNormalDate } from "../../utils/time";
 import { useQuery } from "react-query";
@@ -79,7 +79,7 @@ export default function Attendance() {
 
   return (
     <>
-      <CardSmall>
+      <CardMini className="w-full max-w-screen-sm">
         <div className="flex items-center">
           <select
             name="employee"
@@ -101,7 +101,7 @@ export default function Attendance() {
             New Attendances
           </Link>
         </div>
-      </CardSmall>
+      </CardMini>
       <CardSmall>
         <div className="flex justify-end mb-4">
           <a
@@ -110,8 +110,8 @@ export default function Attendance() {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
-            Report
+            className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+            Cetak
           </a>
         </div>
         <Calendar
@@ -189,7 +189,7 @@ export default function Attendance() {
             }}
             rel="noopener noreferrer"
             className="inline-block whitespace-no-wrap bg-yellow-400 hover:bg-yellow-600 hover:text-white font-semibold text-sm text-black px-4 py-1 rounded-sm ml-4">
-            Report
+            Cetak
           </a>
         </div>
         <div className="overflow-x-auto">

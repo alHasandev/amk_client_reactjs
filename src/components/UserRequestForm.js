@@ -18,24 +18,27 @@ export default function UserRequestForm() {
     ev.preventDefault();
     console.log(formData);
 
-    const { _id, ...data } = formData;
-
-    const options = {
-      endpoint: "me",
-    };
-
-    if (_id) {
-      options.endpoint += `/${_id}`;
-      if (await patchRequest(data, _id)) {
+    if (params.requestId) {
+      if (
+        await patchRequest(formData, {
+          endpoint: params.requestId,
+        })
+      ) {
+        alert("Berhasil memperbaharui permintaan!!");
         return history.push("/user/requests");
       } else {
-        alert("Gagal memperbaharui request!");
+        alert("Gagal memperbaharui permintaan!!");
       }
     } else {
-      if (await postRequest(data, options)) {
+      if (
+        await postRequest(formData, {
+          endpoint: "me",
+        })
+      ) {
+        alert("Berhasil menambahkan permintaan baru!!");
         return history.push("/user/requests");
       } else {
-        alert("Gagal menambahkan request!");
+        alert("Gagal menambahkan permintaan baru!");
       }
     }
   };
@@ -48,7 +51,6 @@ export default function UserRequestForm() {
 
       getRequests("request", options).then((data) =>
         setFormData({
-          _id: data._id,
           message: data.message,
         })
       );
@@ -59,8 +61,10 @@ export default function UserRequestForm() {
   return (
     <CardSmall>
       <form onSubmit={submitHandler}>
-        <h1 className="font-bold text-2xl text-yellow-600">Request Form</h1>
-        <p className="text-sm text-gray-500 mb-4">Create or Update Request</p>
+        <h1 className="font-bold text-2xl text-yellow-600">Form Permintaan</h1>
+        <p className="text-sm text-gray-500 mb-4">
+          Tambah atau Edit Permintaan
+        </p>
 
         <div className="mb-4 text-sm">
           <label className="block mb-2 font-semibold">Detail Permintaan</label>

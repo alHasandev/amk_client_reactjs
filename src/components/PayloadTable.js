@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CardExtraLarge, CardMini } from "./Card";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
@@ -14,13 +14,15 @@ import url from "../utils/url";
 
 export default function PayloadTable() {
   const [filter, setFilter] = useState({
-    month: time.yearMonth(new Date(), 1),
+    month: "",
     department: "",
+    employee: "",
   });
 
   const queryFilter = {};
   if (filter.month) queryFilter.month = filter.month;
   if (filter.department) queryFilter.department = filter.department;
+  if (filter.employee) queryFilter.employee = filter.employee;
 
   const payloads = useQuery(
     [
@@ -32,36 +34,71 @@ export default function PayloadTable() {
     getPayloads
   );
   const departments = useQuery("departments", getDepartments);
+  const employees = useQuery("employees", getEmployees);
 
   const changeHandler = (ev) =>
     setFilter({ ...filter, [ev.target.name]: ev.target.value });
 
-  if (payloads.isLoading || departments.isLoading) return <Loader />;
+  const resetMonth = (ev) => setFilter({ ...filter, month: "" });
 
-  console.log(payloads.data);
+  useEffect(() => {
+    if (filter.employee && employees.data) {
+      const employee = employees.data.find(
+        (employee) => employee._id === filter.employee
+      );
+      setFilter({ ...filter, department: employee.department._id });
+      console.log(employee);
+    }
+  }, [employees.data, filter.employee]);
+
+  if (payloads.isLoading || departments.isLoading || employees.isLoading)
+    return <Loader />;
+
+  // console.log(payloads.data);
 
   return (
     <>
       <CardMini className="w-full">
-        <form className="flex flex-wrap">
+        <form className="flex flex-wrap items-stretch flex-col md:flex-row">
           <input
             type="month"
             name="month"
             value={filter.month}
             onChange={changeHandler}
-            className="px-4 py-2 text-sm rounded border border-gray-500 outline-none focus:border-yellow-600 focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
+            className="px-2 py-1 text-sm rounded border border-gray-500 outline-none focus:border-yellow-600 focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700 my-2 md:my-0 md:mr-4"
           />
+          <button
+            type="reset"
+            onClick={resetMonth}
+            className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 
+            rounded-sm shadow md:mr-4">
+            Reset Bulan
+          </button>
           <div className="ml-auto"></div>
+          <select
+            name="employee"
+            value={filter.employee}
+            onChange={changeHandler}
+            className="px-2 py-1 text-sm rounded border border-gray-500 outline-none focus:border-yellow-600 focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700 my-2 md:my-0 md:ml-4">
+            <option value="">Semua Karyawan</option>
+            {employees.data &&
+              employees.data.map((employee) => (
+                <option key={employee._id} value={employee._id}>
+                  [{employee.user.nik}] {employee.user.name}
+                </option>
+              ))}
+          </select>
           <select
             name="department"
             value={filter.department}
             onChange={changeHandler}
-            className="px-4 py-2 text-sm rounded border border-gray-500 outline-none focus:border-yellow-600 focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700">
-            <option value="">Filter Department</option>
+            disabled={!!filter.employee}
+            className="px-2 py-1 text-sm rounded border border-gray-500 outline-none focus:border-yellow-600 focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700 my-2 md:my-0 md:ml-4">
+            <option value="">Semua Departemen</option>
             {departments.data &&
               departments.data.map((department) => (
                 <option key={department._id} value={department._id}>
-                  {department.name}
+                  [{department.code}] {department.name}
                 </option>
               ))}
           </select>
@@ -75,7 +112,7 @@ export default function PayloadTable() {
           <div className="ml-auto"></div>
           <Link
             to="/admin/payloads/create"
-            className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+            className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
             Tambah Perhitungan
           </Link>
           <a
@@ -84,23 +121,23 @@ export default function PayloadTable() {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
-            Report
+            className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+            Cetak
           </a>
         </div>
         <table className="w-full text-sm">
           <thead>
             <tr>
               <th className="border py-2 px-4">NO.</th>
-              <th className="border py-2 px-4">Tanggal</th>
+              <th className="border py-2 px-4">Bulan</th>
               <th className="border py-2 px-4">NIK</th>
-              <th className="border py-2 px-4">NAMA</th>
-              <th className="border py-2 px-4">POSISI</th>
-              <th className="border py-2 px-4">GAJI POKOK</th>
-              <th className="border py-2 px-4">BONUS</th>
-              <th className="border py-2 px-4">POTONGAN</th>
-              <th className="border py-2 px-4">TOTAL</th>
-              <th className="border py-2 px-4">ACTION</th>
+              <th className="border py-2 px-4 text-left">Nama Karyawan</th>
+              <th className="border py-2 px-4">Jabatan</th>
+              <th className="border py-2 px-4">Gaji Pokok</th>
+              <th className="border py-2 px-4">Bonus</th>
+              <th className="border py-2 px-4">Potongan</th>
+              <th className="border py-2 px-4">Total</th>
+              <th className="border py-2 px-4">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -115,9 +152,11 @@ export default function PayloadTable() {
                     <td className="py-2 px-4 border text-center">
                       {time.getMonth(payload.month)}
                     </td>
-                    <td className="py-2 px-4 border">{employee.user.nik}</td>
+                    <td className="py-2 px-4 border text-center">
+                      {employee.user.nik}
+                    </td>
                     <td className="py-2 px-4 border">{employee.user.name}</td>
-                    <td className="py-2 px-4 border uppercase">
+                    <td className="py-2 px-4 border text-center uppercase">
                       {employee.position.code}
                     </td>
                     <td className="py-2 px-4 border text-center">

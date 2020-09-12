@@ -16,6 +16,15 @@ export const SIZE = {
   EXTRA_LARGE: "max-w-screen-xl",
 };
 
+export const statusColors = {
+  open: "text-white bg-green-500 hover:bg-green-700",
+  close: "text-black bg-gray-200 hover:bg-gray-400",
+  pending: "text-black bg-yellow-400 hover:bg-yellow-600",
+  accepted: "text-white bg-green-500 hover:bg-green-700",
+  rejected: "text-white bg-red-500 hover:bg-red-700",
+  hired: "text-white bg-blue-500 hover:bg-blue-700",
+};
+
 export const banner = lobbyImage;
 export const logo = logoImage;
 export const profile = profileImage;

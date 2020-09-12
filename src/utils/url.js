@@ -3,10 +3,6 @@ export const queryString = (queryObject) =>
     .map((key) => key + "=" + queryObject[key])
     .join("&");
 
-const url = {
-  queryString,
-};
-
 export const queryObject = (queryString = false) =>
   queryString
     ? JSON.parse(
@@ -28,6 +24,12 @@ export const backLink = (defaultLink = "") => {
   }
 
   return backLink;
+};
+
+const url = {
+  queryString,
+  queryObject,
+  backLink,
 };
 
 export default url;

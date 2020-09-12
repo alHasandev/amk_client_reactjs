@@ -36,6 +36,8 @@ import RecruitmentPage from "../pages/admin/RecruitmentPage";
 import RecruitmentDetail from "../components/RecruitmentDetail";
 import CandidateDetail from "../components/CandidateDetail";
 import CandidatePage from "../pages/admin/CandidatePage";
+import RequestDetail from "../components/RequestDetail";
+import AttendancePage from "../pages/admin/AttendancePage";
 
 export default function AdminRouter() {
   return (
@@ -54,6 +56,11 @@ export default function AdminRouter() {
               exact
               path="/admin/requests/edit/:requestId"
               component={RequestForm}
+            />
+            <Route
+              exact
+              path="/admin/requests/:requestId"
+              component={RequestDetail}
             />
           </Switch>
         </RequestPage>
@@ -166,18 +173,20 @@ export default function AdminRouter() {
               path="/admin/employees/edit/:employeeId"
               component={EmployeeForm}
             />
+          </Switch>
+        </EmployeePage>
+      </Route>
+      <Route path="/admin/attendances">
+        <AttendancePage>
+          <Switch>
+            <Route exact path="/admin/attendances" component={Attendance} />
             <Route
               exact
-              path="/admin/employees/attendances"
-              component={Attendance}
-            />
-            <Route
-              exact
-              path="/admin/employees/attendances/new"
+              path="/admin/attendances/create"
               component={AttendanceForm}
             />
           </Switch>
-        </EmployeePage>
+        </AttendancePage>
       </Route>
       <Route path="/admin/payloads">
         <PayloadPage>

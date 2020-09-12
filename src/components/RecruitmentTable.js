@@ -7,6 +7,8 @@ import { useQuery } from "react-query";
 import { getRecruitments, deleteRecruitment } from "../apis/recruitments";
 import { localDate } from "../utils/time";
 import { useState } from "react";
+import url from "../utils/url";
+import { statusColors } from "../assets";
 
 export default function RecruitmentTable() {
   const [dateRange, setDateRange] = useState({
@@ -19,6 +21,7 @@ export default function RecruitmentTable() {
   });
 
   const queryObject = {};
+  queryObject.isActive = true;
   if (filter.status) queryObject.status = filter.status;
   if (dateRange.start && dateRange.end) {
     queryObject.dateRange = `${dateRange.start}:${dateRange.end}`;
@@ -29,7 +32,6 @@ export default function RecruitmentTable() {
       "recruitments",
       {
         params: {
-          isActive: true,
           ...queryObject,
         },
       },
@@ -51,12 +53,6 @@ export default function RecruitmentTable() {
   console.log(recruitments.data);
 
   if (recruitments.isLoading) return <Loader />;
-
-  const statusColors = {
-    open: "text-white bg-green-500 hover:bg-green-700",
-    pending: "text-black bg-yellow-400 hover:bg-yellow-600",
-    close: "text-black bg-gray-200 hover:bg-gray-400",
-  };
 
   return (
     <>
@@ -108,10 +104,12 @@ export default function RecruitmentTable() {
           </Link>
           <a
             target="_blank"
-            href="http://localhost:5000/recruitments/print"
+            href={`http://localhost:5000/recruitments/print?${url.queryString(
+              queryObject
+            )}`}
             rel="noopener noreferrer"
             className="inline-block whitespace-no-wrap bg-yellow-400 hover:bg-yellow-600 hover:text-white font-semibold text-sm text-black px-4 py-1 rounded-sm ml-4">
-            Report
+            Cetak
           </a>
         </div>
         <table className="w-full text-sm">
@@ -124,7 +122,7 @@ export default function RecruitmentTable() {
               <th className="py-2 px-2 xl:px-4 border">Ditunda</th>
               <th className="py-2 px-2 xl:px-4 border">Diterima</th>
               <th className="py-2 px-2 xl:px-4 border">Direkrut</th>
-              <th className="py-2 px-2 xl:px-4 border">Deadline</th>
+              <th className="py-2 px-2 xl:px-4 border">Batas Waktu</th>
               <th className="py-2 px-2 xl:px-4 border">Status</th>
               <th className="py-2 px-2 xl:px-4 border">Detail</th>
               <th className="py-2 px-2 xl:px-4 border">Operasi</th>

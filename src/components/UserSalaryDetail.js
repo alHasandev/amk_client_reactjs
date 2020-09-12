@@ -46,7 +46,7 @@ export default function UserSalaryDetail() {
     <CardLarge>
       <div className="flex flex-wrap md:items-center mb-4">
         <h2 className="font-bold text-xl text-yellow-600">
-          SLIP GAJI KARYAWANs
+          SLIP GAJI KARYAWAN
         </h2>
         <div className="ml-auto"></div>
         <a

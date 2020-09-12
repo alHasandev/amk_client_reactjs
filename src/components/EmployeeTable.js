@@ -10,6 +10,7 @@ import { getEmployees, deleteEmployee } from "../apis/employees";
 import { IDR } from "../utils/currency";
 import { getDepartments } from "../apis/departments";
 import { getPositions } from "../apis/positions";
+import url from "../utils/url";
 
 export default function EmployeeTable() {
   const [dateRange, setDateRange] = useState({
@@ -80,25 +81,25 @@ export default function EmployeeTable() {
   return (
     <>
       <CardMini className="w-full text-sm">
-        <form className="flex items-center">
+        <form className="flex flex-col lg:flex-row items-stretch lg:items-center">
           <input
             type="date"
             name="start"
             value={dateRange.start}
             onChange={changeDate}
-            className="border px-2 py-1 rounded outline-none mr-4"
+            className="border px-2 py-1 rounded outline-none my-2 lg:my-0 lg:mr-4"
           />
           <input
             type="date"
             name="end"
             value={dateRange.end}
             onChange={changeDate}
-            className="border px-2 py-1 rounded outline-none mr-4"
+            className="border px-2 py-1 rounded outline-none my-2 lg:my-0 lg:mr-4"
           />
           <button
             type="reset"
             onClick={resetDate}
-            className="inline-block whitespace-no-wrap bg-yellow-400 hover:bg-yellow-600 hover:text-white font-semibold text-sm text-black px-4 py-1 rounded-sm focus:outline-none mr-4">
+            className="inline-block whitespace-no-wrap bg-yellow-400 hover:bg-yellow-600 hover:text-white font-semibold text-sm text-black px-4 py-1 rounded-sm focus:outline-none my-2 lg:my-0 lg:mr-4">
             Resets
           </button>
           <div className="ml-auto"></div>
@@ -106,7 +107,7 @@ export default function EmployeeTable() {
             name="position"
             value={filter.position}
             onChange={changeFilter}
-            className="border px-2 py-1 rounded outline-none ml-4">
+            className="border px-2 py-1 rounded outline-none my-2 lg:my-0 lg:ml-4">
             <option value="">
               {filter.department ? "Semua Jabatan" : "Pilih Departemen Dulu"}
             </option>
@@ -121,7 +122,7 @@ export default function EmployeeTable() {
             name="department"
             value={filter.department}
             onChange={changeFilter}
-            className="border px-2 py-1 rounded outline-none ml-4">
+            className="border px-2 py-1 rounded outline-none my-2 lg:my-0 lg:ml-4">
             <option value="">Semua Departemen</option>
             {departments.data &&
               departments.data.map((department) => (
@@ -140,15 +141,17 @@ export default function EmployeeTable() {
           <div className="ml-auto"></div>
           <Link
             to="/admin/employees/create"
-            className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm">
+            className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm">
             Tambah Karyawan
           </Link>
           <a
-            href="http://localhost:5000/employees/print?"
+            href={`http://localhost:5000/employees/print?${url.queryString(
+              queryObject
+            )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
-            Report
+            className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+            Cetak
           </a>
         </div>
         <div className="w-full overflow-x-auto">

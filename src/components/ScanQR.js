@@ -44,22 +44,20 @@ export default function ScanQR() {
   };
 
   return (
-    <Container>
-      <CardSmall>
-        <div
-          className={`border-4 ${
-            isQrFound ? "border-green-500" : "border-black"
-          }`}>
-          <QrReader
-            delay={300}
-            onLoad={handleLoad}
-            onError={handleError}
-            onScan={handleScan}
-            style={{ width: "100%" }}
-            className="w-64"
-          />
-        </div>
-      </CardSmall>
-    </Container>
+    <CardSmall>
+      <div
+        className={`border-4 ${
+          isQrFound ? "border-green-500" : "border-black"
+        }`}>
+        <QrReader
+          delay={300}
+          onLoad={handleLoad}
+          onError={handleError}
+          onScan={handleScan}
+          style={{ width: "100%" }}
+          className="w-64"
+        />
+      </div>
+    </CardSmall>
   );
 }

@@ -8,7 +8,8 @@ import { profile as profileImage } from "../assets";
 import { CardLarge, CardMini } from "./Card";
 import Loader from "./Loader";
 import { useQuery } from "react-query";
-import { getUsers, deleteUser } from "../apis/users";
+import { getUsers, deleteUser, patchUser } from "../apis/users";
+import url from "../utils/url";
 
 export default function UserTable() {
   const [filter, setFilter] = useState({
@@ -39,7 +40,7 @@ export default function UserTable() {
 
   return (
     <>
-      <CardMini className="w-full text-sm">
+      <CardMini className="w-full max-w-screen-lg text-sm">
         <form className="flex items-center">
           <div className="ml-auto"></div>
           <select
@@ -75,23 +76,25 @@ export default function UserTable() {
             Tambah Pengguna
           </Link>
           <a
-            href="http://localhost:5000/users/print"
+            href={`http://localhost:5000/users/print?${url.queryString(
+              queryObject
+            )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
-            Report
+            className="px-4 py-1 text-sm bg-yellow-600 text-white font-semibold hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+            Cetak
           </a>
         </div>
         <table className="w-full text-sm">
           <thead>
             <tr>
               <th className="py-2 px-4 border">NO.</th>
-              <th className="py-2 px-4 border">IMAGE</th>
-              <th className="py-2 px-4 border">NAME</th>
-              <th className="py-2 px-4 border">EMAIL</th>
-              <th className="py-2 px-4 border">PRIVILEGE</th>
+              <th className="py-2 px-4 border">Foto</th>
+              <th className="py-2 px-4 border text-left">Nama Pengguna</th>
+              <th className="py-2 px-4 border text-left">Email</th>
+              <th className="py-2 px-4 border">Hak Akses</th>
               <th className="py-2 px-4 border">Aktif ?</th>
-              <th className="py-2 px-4 border">ACTION</th>
+              <th className="py-2 px-4 border">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -150,16 +153,24 @@ export default function UserTable() {
                         onClick={async (ev) => {
                           if (
                             window.confirm(
-                              "Apakah anda yakin akan menghapus user ini ?"
+                              "Apakah anda yakin akan mengaktifkan kembali user ini ?"
                             )
                           ) {
+                            // Build form data
+                            const formBuild = new FormData();
+                            formBuild.append("isActive", true);
                             if (
-                              await deleteUser({ endpoint: "soft/" + user._id })
+                              await patchUser(formBuild, {
+                                endpoint: user._id,
+                                headers: {
+                                  "Content-Type": "multipart/form-data",
+                                },
+                              })
                             ) {
                               await users.refetch();
-                              alert("Berhasil menghapus user!");
+                              alert("Berhasil mengaktifkan user!");
                             } else {
-                              alert("Gagal menghapus user!");
+                              alert("Gagal mengaktifkan user!");
                             }
                           }
                         }}

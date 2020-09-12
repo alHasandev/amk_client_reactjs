@@ -36,7 +36,7 @@ export const patchUser = async (data, options = {}) => {
       params: params,
       ...config,
     });
-
+    console.log("patch user");
     return res.data;
   } catch (err) {
     console.error(err);

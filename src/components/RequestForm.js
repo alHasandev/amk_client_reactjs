@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CardSmall } from "./Card";
 import { useQuery } from "react-query";
 import { ChooseOne } from "./ChooseOne";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { getEmployees } from "../apis/employees";
 import { patchRequest, postRequest, getRequests } from "../apis/requests";
 
@@ -14,6 +14,7 @@ export default function RequestForm() {
   const [formData, setFormData] = useState({
     from: "",
     message: "",
+    comment: "",
     status: "pending",
   });
 
@@ -24,11 +25,9 @@ export default function RequestForm() {
     ev.preventDefault();
     console.log(formData);
 
-    const { _id, ...data } = formData;
-
-    if (formData._id) {
+    if (params.requestId) {
       if (
-        await patchRequest(data, {
+        await patchRequest(formData, {
           endpoint: params.requestId,
         })
       ) {
@@ -38,7 +37,7 @@ export default function RequestForm() {
         alert("Gagal memperbaharui request!");
       }
     } else {
-      if (await postRequest(data)) {
+      if (await postRequest(formData)) {
         alert("Berhasil menambah request!");
         history.push("/admin/requests");
       } else {
@@ -53,9 +52,9 @@ export default function RequestForm() {
         endpoint: params.requestId,
       }).then((data) =>
         setFormData({
-          _id: data._id,
           from: data.from ? data.from._id : "",
           message: data.message,
+          comment: data.comment ? data.comment : "",
           status: data.status,
         })
       );
@@ -99,6 +98,18 @@ export default function RequestForm() {
         </div>
 
         <div className="mb-4 text-sm">
+          <label className="block mb-2 font-semibold">Komentar</label>
+          <textarea
+            name="comment"
+            rows="3"
+            value={formData.comment}
+            onChange={changeHandler}
+            className="w-full px-4 py-2 rounded bg-gray-100 border hover:border-yellow-600 focus:border-yellow-600 focus:shadow-inner focus:outline-none"
+            placeholder="Balasan / Komentar ..."
+          />
+        </div>
+
+        <div className="mb-4 text-sm">
           <label className="block mb-2 font-semibold">Status</label>
           <ChooseOne
             name="status"
@@ -129,9 +140,14 @@ export default function RequestForm() {
 
         <div className="flex">
           <div className="ml-auto"></div>
+          <Link
+            to="/admin/requests"
+            className="inline-block px-4 py-2 bg-yellow-700 font-semibold text-white hover:bg-yellow-800 rounded-sm shadow-sm ml-4">
+            Batal
+          </Link>
           <button
             type="submit"
-            className="inline-block px-4 py-2 bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm">
+            className="inline-block px-4 py-2 bg-yellow-500 font-semibold text-black hover:text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
             Kirim
           </button>
         </div>

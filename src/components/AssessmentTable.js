@@ -5,6 +5,7 @@ import Loader from "./Loader";
 
 import { useQuery } from "react-query";
 import { getAssessments, deleteAssessment } from "../apis/assessments";
+import time from "../utils/time";
 
 export default function AssessmentTable() {
   const assessments = useQuery("assesments", getAssessments);
@@ -22,18 +23,6 @@ export default function AssessmentTable() {
 
   return (
     <>
-      <CardExtraLarge>
-        <form>
-          <select name="year">
-            <option value="">Pilih Tahun</option>
-            {getYears().map((year, index) => (
-              <option key={index} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-        </form>
-      </CardExtraLarge>
       <CardExtraLarge className="overflow-x-auto">
         <div className="md:flex items-center mb-4">
           <h1 className="font-bold text-xl text-yellow-600">
@@ -57,13 +46,15 @@ export default function AssessmentTable() {
           <thead>
             <tr>
               <th className="border py-2 px-4">NO.</th>
-              <th className="border py-2 px-4">NAME</th>
-              <th className="border py-2 px-4">SIKAP</th>
-              <th className="border py-2 px-4">KEAHLIAN</th>
-              <th className="border py-2 px-4">KERAJINAN</th>
-              <th className="border py-2 px-4">KERAPIAN</th>
-              <th className="border py-2 px-4">KOMENTAR</th>
-              <th className="border py-2 px-4">AKSI</th>
+              <th className="border py-2 px-4">Bulan</th>
+              <th className="border py-2 px-4">NIK</th>
+              <th className="border py-2 px-4 text-left">Nama Karyawan</th>
+              <th className="border py-2 px-4">Sikap</th>
+              <th className="border py-2 px-4">Keahlian</th>
+              <th className="border py-2 px-4">Kerajian</th>
+              <th className="border py-2 px-4">Kerapian</th>
+              <th className="border py-2 px-4 text-left">Komentar</th>
+              <th className="border py-2 px-4">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -74,6 +65,12 @@ export default function AssessmentTable() {
                   <tr key={assessment._id}>
                     <td className="py-2 px-4 border text-center">
                       {index + 1}
+                    </td>
+                    <td className="py-2 px-4 border whitespace-no-wrap">
+                      {time.getMonth(assessment.month)}
+                    </td>
+                    <td className="py-2 px-4 border">
+                      {employee.user && employee.user.nik}
                     </td>
                     <td className="py-2 px-4 border">
                       {employee.user && employee.user.name}

@@ -7,12 +7,7 @@ import Loader from "./Loader";
 import { localDate, calculateAge } from "../utils/time";
 import { getCandidates } from "../apis/candidates";
 import { useState } from "react";
-
-const statusRecruitmentColors = {
-  open: "text-white bg-green-500 hover:bg-green-700",
-  pending: "text-black bg-yellow-400 hover:bg-yellow-600",
-  close: "text-black bg-gray-200 hover:bg-gray-400",
-};
+import { statusColors } from "../assets";
 
 const statusCandidateColors = {
   pending: "text-black bg-yellow-400 hover:bg-yellow-600",
@@ -71,7 +66,7 @@ export default function RecruitmentDetail() {
           </h1>
           <div className="ml-auto"></div>
           <a
-            href={`http://localhost:5000/recruitments/${recruitment._id}`}
+            href={`http://localhost:5000/recruitments/print/${recruitment._id}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm bg-yellow-600 text-white font-semibold hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
@@ -98,7 +93,9 @@ export default function RecruitmentDetail() {
               <th className="px-4 py-2 border text-left md:w-1/4 whitespace-no-wrap">
                 Jumlah Diperlukan
               </th>
-              <td className="px-4 py-2 border">{recruitment.numberRequired}</td>
+              <td className="px-4 py-2 border">
+                {recruitment.numberRequired} orang
+              </td>
             </tr>
             <tr className="grid md:table-row">
               <th className="px-4 py-2 border text-left md:w-1/4 whitespace-no-wrap">
@@ -108,7 +105,8 @@ export default function RecruitmentDetail() {
                 {recruitment.pending +
                   recruitment.rejected +
                   recruitment.accepted +
-                  recruitment.hired}
+                  recruitment.hired}{" "}
+                orang
               </td>
             </tr>
             <tr className="grid md:table-row">
@@ -135,7 +133,7 @@ export default function RecruitmentDetail() {
                 <span
                   to="/candidates"
                   className={`rounded font-semibold text-xs py-1 px-2 uppercase ${
-                    statusRecruitmentColors[recruitment.status]
+                    statusColors[recruitment.status]
                   }`}>
                   {recruitment.status}
                 </span>

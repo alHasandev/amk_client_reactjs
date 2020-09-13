@@ -11,10 +11,6 @@ import { backLink } from "../utils/url";
 export default function CandidateDetail() {
   const params = useParams();
   const history = useHistory();
-  const [formData, setFormData] = useState({
-    status: "",
-    comment: "",
-  });
 
   const candidateQuery = useQuery(
     [
@@ -25,6 +21,11 @@ export default function CandidateDetail() {
     ],
     getCandidates
   );
+
+  const [formData, setFormData] = useState({
+    status: "",
+    comment: "",
+  });
 
   const changeHandler = (ev) =>
     setFormData({ ...formData, [ev.target.name]: ev.target.value });
@@ -46,13 +47,13 @@ export default function CandidateDetail() {
   };
 
   useEffect(() => {
-    if (!candidateQuery.isLoading) {
+    if (candidateQuery.data) {
       setFormData({
         status: candidateQuery.data.status,
         comment: candidateQuery.data.comment,
       });
     }
-  }, [candidateQuery]);
+  }, [candidateQuery.data]);
 
   if (candidateQuery.isLoading) return <Loader />;
   const candidate = candidateQuery.data;
@@ -68,9 +69,7 @@ export default function CandidateDetail() {
           <h1 className="text-xl text-yellow-600 font-bold">Form Lamaran</h1>
           <div className="ml-auto"></div>
           <a
-            href={`${
-              process.env.REACT_APP_SERVER_LINK
-            }/candidates/print/${candidate._id}`}
+            href={`${process.env.REACT_APP_SERVER_LINK}/candidates/print/${candidate._id}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm bg-yellow-600 text-white font-semibold hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
@@ -149,7 +148,7 @@ export default function CandidateDetail() {
           <div className="ml-auto"></div>
         </div>
         <div className="flex items-center md:items-end flex-col md:flex-row-reverse">
-          <div className="border mb-4 md:ml-4 md:mb-0 w-64 px-4 py-2">
+          <div className="border mb-4 md:ml-4 md:mb-0 max-w-xs md:w-64 px-4 py-2">
             <img src={user.image} alt="profile" />
           </div>
           <div className="w-full">
@@ -242,87 +241,91 @@ export default function CandidateDetail() {
           </tbody>
         </table>
       </CardLarge>
-      <CardLarge>
+      <CardLarge className="overflow-x-auto">
         <div className="flex flex-wrap mb-4">
           <h1 className="text-lg text-yellow-600 font-semibold">
             Riwayat Pendidikan
           </h1>
         </div>
-        <table className="w-full text-sm">
-          <thead>
-            <tr>
-              <th className="border px-4 py-2 text-center">Tahun</th>
-              <th className="border px-4 py-2 text-left">Nama Sekolah</th>
-              <th className="border px-4 py-2 text-center">Jurusan</th>
-              <th className="border px-4 py-2 text-left">Keterangan</th>
-            </tr>
-          </thead>
-          <tbody>
-            {profile.educations &&
-              profile.educations.map((education) => {
-                return (
-                  <tr key={education._id}>
-                    <td className="border px-4 py-2 text-center">
-                      {time.year(education.from)} -{" "}
-                      {education.isCurrently
-                        ? "Sekarang"
-                        : time.year(education.to)}
-                    </td>
-                    <td className="border px-4 py-2 text-left">
-                      {education.school}
-                    </td>
-                    <td className="border px-4 py-2 text-center">
-                      {education.major}
-                    </td>
-                    <td className="border px-4 py-2 text-left">
-                      {education.description}
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
+        <div className="w-full overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr>
+                <th className="border px-4 py-2 text-center">Tahun</th>
+                <th className="border px-4 py-2 text-left">Nama Sekolah</th>
+                <th className="border px-4 py-2 text-center">Jurusan</th>
+                <th className="border px-4 py-2 text-left">Keterangan</th>
+              </tr>
+            </thead>
+            <tbody>
+              {profile.educations &&
+                profile.educations.map((education) => {
+                  return (
+                    <tr key={education._id}>
+                      <td className="border px-4 py-2 text-center">
+                        {time.year(education.from)} -{" "}
+                        {education.isCurrently
+                          ? "Sekarang"
+                          : time.year(education.to)}
+                      </td>
+                      <td className="border px-4 py-2 text-left">
+                        {education.school}
+                      </td>
+                      <td className="border px-4 py-2 text-center">
+                        {education.major}
+                      </td>
+                      <td className="border px-4 py-2 text-left">
+                        {education.description}
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
       </CardLarge>
-      <CardLarge>
+      <CardLarge className="overflow-x-auto">
         <div className="flex flex-wrap mb-4">
           <h1 className="text-lg text-yellow-600 font-semibold">
             Riwayat Pengalaman
           </h1>
         </div>
-        <table className="w-full text-sm">
-          <thead>
-            <tr>
-              <th className="border px-4 py-2 text-center">Tahun</th>
-              <th className="border px-4 py-2 text-left">Nama Perusahaan</th>
-              <th className="border px-4 py-2 text-center">Jabatan</th>
-              <th className="border px-4 py-2 text-left">Keterangan</th>
-            </tr>
-          </thead>
-          <tbody>
-            {profile.experiences &&
-              profile.experiences.map((experience) => {
-                return (
-                  <tr key={experience._id}>
-                    <td className="border px-4 py-2 text-center">
-                      {time.year(experience.from)} -{" "}
-                      {experience.isCurrently
-                        ? "Sekarang"
-                        : time.year(experience.to)}
-                    </td>
-                    <td className="border px-4 py-2 text-left">
-                      {experience.company}
-                    </td>
-                    <td className="border px-4 py-2 text-center">
-                      {experience.job}
-                    </td>
-                    <td className="border px-4 py-2 text-left">
-                      {experience.description}
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
+        <div className="w-full overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr>
+                <th className="border px-4 py-2 text-center">Tahun</th>
+                <th className="border px-4 py-2 text-left">Nama Perusahaan</th>
+                <th className="border px-4 py-2 text-center">Jabatan</th>
+                <th className="border px-4 py-2 text-left">Keterangan</th>
+              </tr>
+            </thead>
+            <tbody>
+              {profile.experiences &&
+                profile.experiences.map((experience) => {
+                  return (
+                    <tr key={experience._id}>
+                      <td className="border px-4 py-2 text-center">
+                        {time.year(experience.from)} -{" "}
+                        {experience.isCurrently
+                          ? "Sekarang"
+                          : time.year(experience.to)}
+                      </td>
+                      <td className="border px-4 py-2 text-left">
+                        {experience.company}
+                      </td>
+                      <td className="border px-4 py-2 text-center">
+                        {experience.job}
+                      </td>
+                      <td className="border px-4 py-2 text-left">
+                        {experience.description}
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
       </CardLarge>
     </>
   );

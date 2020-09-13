@@ -88,7 +88,7 @@ export default function UserAssessmentTable() {
             }/assessments/print/?${url.queryString(queryObject)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+            className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm md:ml-4">
             Cetak
           </a>
         </div>

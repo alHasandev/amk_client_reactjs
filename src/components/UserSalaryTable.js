@@ -54,20 +54,20 @@ export default function UserSalaryTable() {
   return (
     <>
       <CardMini className="w-full">
-        <form className="flex flex-wrap">
+        <form className="flex flex-col md:flex-row items-stretch md:items-center flex-wrap">
           <input
             type="month"
             name="start"
             value={dateRange.start}
             onChange={changeHandler}
-            className="px-4 py-1 text-sm rounded border border-gray-500 outline-none focus:border-yellow-600 focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
+            className="px-4 py-1 text-sm rounded border border-gray-500 outline-none focus:border-yellow-600 focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700 my-2 md:my-0 md:mr-4"
           />
           <input
             type="month"
             name="end"
             value={dateRange.end}
             onChange={changeHandler}
-            className="px-4 py-1 text-sm rounded border border-gray-500 outline-none focus:border-yellow-600 focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700 ml-4"
+            className="px-4 py-1 text-sm rounded border border-gray-500 outline-none focus:border-yellow-600 focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700 my-2 md:my-0 md:mr-4"
           />
           <div className="ml-auto"></div>
         </form>
@@ -82,7 +82,7 @@ export default function UserSalaryTable() {
             }/payloads/me/print?${url.queryString(queryFilter)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+            className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm md:ml-4">
             Cetak
           </a>
         </div>

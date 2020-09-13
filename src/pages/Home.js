@@ -10,7 +10,7 @@ import Loader from "../components/Loader";
 const DashboardLink = () => (
   <Link
     to="/admin"
-    className="inline-block my-4 mx-4 px-4 py-2 bg-yellow-500 font-bold text-black">
+    className="inline-block my-2 mx-4 px-4 py-2 bg-yellow-500 font-bold text-black">
     DASHBOARD
   </Link>
 );
@@ -18,7 +18,7 @@ const DashboardLink = () => (
 const ProfileLink = () => (
   <Link
     to="/user/profile"
-    className="inline-block my-4 mx-4 px-4 py-2 bg-yellow-600 font-bold text-white">
+    className="inline-block my-2 mx-4 px-4 py-2 bg-yellow-600 font-bold text-white">
     PROFILE
   </Link>
 );
@@ -30,7 +30,7 @@ export default function Home() {
 
   return (
     <Background className="px-4 flex flex-col justify-center items-center text-white text-center">
-      <Container className="-mt-32">
+      <Container>
         <h1 className="text-4xl font-bold capitalize">
           Selamat Datang{" "}
           {auth.user ? `Kembali ${auth.user.name}` : "di AMK Pyramid"}
@@ -52,7 +52,7 @@ export default function Home() {
               )}
               <Link
                 to="/logout"
-                className="inline-block my-4 mx-4 px-4 py-2 bg-yellow-500 font-bold text-black">
+                className="inline-block my-2 mx-4 px-4 py-2 bg-yellow-500 font-bold text-black">
                 LOGOUT
               </Link>
             </>
@@ -60,12 +60,12 @@ export default function Home() {
             <>
               <Link
                 to="/login"
-                className="inline-block my-4 mx-4 px-4 py-2 bg-yellow-500 font-bold text-black">
+                className="inline-block my-2 mx-4 px-4 py-2 bg-yellow-500 font-bold text-black">
                 SIGN IN
               </Link>
               <Link
                 to="/register"
-                className="inline-block my-4 mx-4 px-4 py-2 bg-yellow-600 font-bold">
+                className="inline-block my-2 mx-4 px-4 py-2 bg-yellow-600 font-bold">
                 SIGN UP
               </Link>
             </>

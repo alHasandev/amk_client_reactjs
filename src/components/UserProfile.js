@@ -73,7 +73,7 @@ export default function UserProfile() {
             <h1 className="text-xl text-yellow-600 font-bold">Form Lamaran</h1>
             <div className="ml-auto"></div>
             <a
-              href={`http://localhost:5000/candidates/print/${candidate._id}`}
+              href={`${process.env.REACT_APP_SERVER_LINK}/candidates/print/${candidate._id}`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-1 text-sm bg-yellow-600 text-white font-semibold hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
@@ -130,7 +130,7 @@ export default function UserProfile() {
             <h1 className="text-xl text-yellow-600 font-bold">Form Karyawan</h1>
             <div className="ml-auto"></div>
             <a
-              href={`http://localhost:5000/employees/print/${employee._id}`}
+              href={`${process.env.REACT_APP_SERVER_LINK}/employees/print/${employee._id}`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-1 text-sm bg-yellow-600 text-white font-semibold hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
@@ -176,8 +176,8 @@ export default function UserProfile() {
         </CardLarge>
       )}
       <CardLarge>
-        <div className="flex flex-wrap mb-4">
-          <h1 className="text-xl font-bold text-yellow-600">
+        <div className="flex flex-col md:flex-row items-center flex-wrap mb-4">
+          <h1 className="text-xl text-center font-bold text-yellow-600">
             {user.privilege === "admin" && "Profile Karyawan (Admin)"}
             {user.privilege === "employee" && "Profile Karyawan"}
             {user.privilege === "candidate" && "Profile Calon Karyawan"}
@@ -185,12 +185,12 @@ export default function UserProfile() {
           <div className="ml-auto"></div>
           <Link
             to="/user/profile/edit"
-            className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm">
+            className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm max-w-xs md:w-48">
             Edit Profile Pengguna
           </Link>
         </div>
         <div className="flex items-center md:items-end flex-col md:flex-row-reverse">
-          <div className="border mb-4 md:ml-4 md:mb-0 w-64 px-4 py-2">
+          <div className="border mb-4 md:ml-4 md:mb-0 max-w-xs md:w-64 px-4 py-2">
             <img src={user.image} alt="profile" />
           </div>
           <div className="w-full">

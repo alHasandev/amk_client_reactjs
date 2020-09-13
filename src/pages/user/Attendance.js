@@ -92,9 +92,9 @@ export default function UserAttendance() {
       <CardSmall>
         <div className="flex justify-end mb-4">
           <a
-            href={`http://localhost:5000/attendances/print/calendar?${url.queryString(
-              queryFilter
-            )}`}
+            href={`${
+              process.env.REACT_APP_SERVER_LINK
+            }/attendances/print/calendar?${url.queryString(queryFilter)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
@@ -167,7 +167,7 @@ export default function UserAttendance() {
           <div className="ml-auto"></div>
           <a
             target="_blank"
-            href={`http://localhost:5000/attendances/print/${employee.data._id}`}
+            href={`${process.env.REACT_APP_SERVER_LINK}/attendances/print/${employee.data._id}`}
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
             Cetak

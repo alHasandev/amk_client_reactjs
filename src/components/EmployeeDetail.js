@@ -42,9 +42,7 @@ export default function EmployeeDetail() {
           <h1 className="text-xl text-yellow-600 font-bold">Form Karyawan</h1>
           <div className="ml-auto"></div>
           <a
-            href={`${
-              process.env.REACT_APP_SERVER_LINK
-            }/employees/print/${employee._id}`}
+            href={`${process.env.REACT_APP_SERVER_LINK}/employees/print/${employee._id}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm bg-yellow-600 text-white font-semibold hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
@@ -94,7 +92,7 @@ export default function EmployeeDetail() {
           <div className="ml-auto"></div>
         </div>
         <div className="flex items-center md:items-end flex-col md:flex-row-reverse">
-          <div className="border mb-4 md:ml-4 md:mb-0 w-64 px-4 py-2">
+          <div className="border mb-4 md:ml-4 md:mb-0 max-w-xs md:w-64 px-4 py-2">
             <img src={user.image} alt="profile" />
           </div>
           <div className="w-full">

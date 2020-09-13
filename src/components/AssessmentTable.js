@@ -50,18 +50,18 @@ export default function AssessmentTable() {
   return (
     <>
       <CardMini className="w-full text-sm">
-        <form className="flex items-center">
+        <form className="flex flex-col md:flex-row items-stretch md:items-center">
           <input
             type="month"
             name="month"
             value={filter.month}
             onChange={changeFilter}
-            className="border px-2 py-1 rounded outline-none mr-4"
+            className="border px-2 py-1 rounded outline-none my-2 md:my-0 md:mr-4"
           />
           <button
             type="reset"
             onClick={resetMonth}
-            className="inline-block whitespace-no-wrap bg-yellow-400 hover:bg-yellow-600 hover:text-white font-semibold text-sm text-black px-4 py-1 rounded-sm focus:outline-none mr-4">
+            className="inline-block whitespace-no-wrap bg-yellow-400 hover:bg-yellow-600 hover:text-white font-semibold text-sm text-black px-4 py-1 rounded-sm focus:outline-none my-2 md:my-0 md:mr-4">
             Reset
           </button>
           <div className="ml-auto"></div>
@@ -69,7 +69,7 @@ export default function AssessmentTable() {
             name="employee"
             value={filter.employee}
             onChange={changeFilter}
-            className="border px-2 py-1 rounded outline-none ml-4">
+            className="border px-2 py-1 rounded outline-none my-2 md:my-0 md:ml-4">
             <option value="">Filter Karyawan</option>
             {employees.data &&
               employees.data.map((employee) => (
@@ -97,7 +97,7 @@ export default function AssessmentTable() {
             }/assessments/print/?${url.queryString(queryObject)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
+            className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm my-2 md:my-0 ml-4">
             Cetak
           </a>
         </div>

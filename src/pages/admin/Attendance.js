@@ -80,7 +80,7 @@ export default function Attendance() {
   return (
     <>
       <CardMini className="w-full max-w-screen-sm">
-        <div className="flex items-center">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center">
           <select
             name="employee"
             value={selectedEmployee}
@@ -97,7 +97,7 @@ export default function Attendance() {
           <div className="ml-auto"></div>
           <Link
             to={`/admin/attendances/create`}
-            className="inline-block whitespace-no-wrap bg-yellow-600 hover:bg-yellow-700 text-white font-semibold text-sm px-4 py-1 rounded-sm ml-4">
+            className="inline-block whitespace-no-wrap bg-yellow-600 hover:bg-yellow-700 text-white font-semibold text-sm px-4 py-1 rounded-sm my-2 md:my-0 md:ml-4">
             Tambahkan Kehadiran
           </Link>
         </div>
@@ -105,9 +105,9 @@ export default function Attendance() {
       <CardSmall>
         <div className="flex justify-end mb-4">
           <a
-            href={`http://localhost:5000/attendances/print/calendar?${url.queryString(
-              queryFilter
-            )}`}
+            href={`${
+              process.env.REACT_APP_SERVER_LINK
+            }/attendances/print/calendar?${url.queryString(queryFilter)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">
@@ -155,7 +155,7 @@ export default function Attendance() {
           }}
         />
       </CardSmall>
-      <CardSmall className="flex flex-wrap">
+      <CardMini className="w-full max-w-screen-sm flex flex-wrap">
         <div className="mr-4 flex items-center">
           <span className="inline-block mr-2 p-2 bg-red-500"></span>
           <span>Tidak Hadir</span>
@@ -168,9 +168,9 @@ export default function Attendance() {
           <span className="inline-block mr-2 p-2 bg-yellow-600"></span>
           <span>Cuti/Libur</span>
         </div>
-      </CardSmall>
+      </CardMini>
       <CardSmall className="overflow-hidden">
-        <div className="flex items-center mb-4">
+        <div className="flex flex-wrap items-center mb-4">
           <input
             type="month"
             value={selectedMonth}
@@ -180,7 +180,7 @@ export default function Attendance() {
           <div className="ml-auto"></div>
           <a
             target="_blank"
-            href={`http://localhost:5000/attendances/print/${selectedEmployee}`}
+            href={`${process.env.REACT_APP_SERVER_LINK}/attendances/print/${selectedEmployee}`}
             onClick={(ev) => {
               if (!selectedEmployee) {
                 ev.preventDefault();
@@ -195,7 +195,7 @@ export default function Attendance() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr>
+              <tr className="hidden md:table-row">
                 <th className="border px-2 md:px-4 py-2">Tanggal</th>
                 <th className="border px-2 md:px-4 py-2">Hari</th>
                 <th className="border px-2 md:px-4 py-2">Status</th>
@@ -210,7 +210,9 @@ export default function Attendance() {
                       time.yearMonth(attendance.date, 1) === selectedMonth
                   )
                   .map((attendance) => (
-                    <tr key={attendance.date}>
+                    <tr
+                      key={attendance.date}
+                      className="grid mb-4 md:table-row">
                       <td className="border px-2 md:px-4 py-2 text-center whitespace-no-wrap">
                         {reverseNormalDate(attendance.date)}
                       </td>
@@ -220,7 +222,7 @@ export default function Attendance() {
                       <td className="border px-2 md:px-4 py-2 text-center">
                         {statusLabel[attendance.status]}
                       </td>
-                      <td className="border px-2 md:px-4 py-2">
+                      <td className="border px-2 md:px-4 py-2 text-center md:text-left">
                         {attendance.dayLeave && `${attendance.dayLeave} Hari, `}
                         {attendance.description}
                       </td>

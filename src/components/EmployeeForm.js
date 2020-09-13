@@ -34,7 +34,9 @@ export default function EmployeeForm() {
     [
       "positions",
       {
-        department: formData.department,
+        params: {
+          department: formData.department,
+        },
       },
     ],
     getPositions

@@ -7,8 +7,10 @@ import { useHistory, Link } from "react-router-dom";
 import Container from "../layout/Container";
 import { CardSmall } from "../components/Card";
 import { postUser } from "../apis/users";
+import Loader from "../components/Loader";
 
 export default function Register() {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     nik: "",
     name: "",
@@ -35,6 +37,7 @@ export default function Register() {
       formData.password &&
       formData.password === formData.password2
     ) {
+      setIsLoading(true);
       // Build form data
       const formBuild = new FormData();
       formBuild.append("nik", formData.nik);
@@ -48,19 +51,24 @@ export default function Register() {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          timeout: 30000,
         })
       ) {
-        alert("Upload Berhasil");
+        setIsLoading(false);
+        alert("Akun berhasil dibuat, silahkan login");
         console.log(formBuild);
         history.push("/user/profile");
       } else {
-        alert("Upload gagal");
+        setIsLoading(false);
+        alert("Gagal melakukan registrasi, silahkan coba beberapa saat lagi!");
         console.log(formBuild);
       }
     } else {
-      alert("Please input email or password correctly!!");
+      alert("Tolong masukan email dan password dengan benar!!");
     }
   };
+
+  if (isLoading) return <Loader />;
 
   return (
     <Container>
@@ -144,8 +152,6 @@ export default function Register() {
               type="file"
               name="image"
               ref={inputImage}
-              value={formData.image}
-              onChange={handleChange}
               className="px-4 py-2 text-sm w-full rounded border border-gray-500 outline-none focus:border-yellow-600  focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
             />
           </div>

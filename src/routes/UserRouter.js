@@ -53,7 +53,7 @@ export default function UserRouter() {
               <i className="fas fa-arrow-left"></i>
             </NavLink>
             <div className="ml-auto"></div>
-            {user.privilege !== "candidate" && (
+            {user.privilege === "employee" && (
               <>
                 <NavLink
                   exact

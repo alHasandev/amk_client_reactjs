@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Container from "../layout/Container";
 import QRCode from "qrcode.react";
-import { CardMedium, CardSmall } from "./Card";
+import { CardSmall } from "./Card";
 import { useQuery } from "react-query";
 import { getAttendances } from "../apis/attendances";
 import Loader from "../components/Loader";

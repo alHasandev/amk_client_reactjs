@@ -58,12 +58,16 @@ export default function UserProfile() {
     return <Loader />;
   const user = userQuery.data;
   const candidate = candidateQuery.data ? candidateQuery.data : {};
-  const employee = employeeQuery.data ? employeeQuery.data : {};
+  const employee = employeeQuery.data
+    ? employeeQuery.data
+    : { position: {}, department: {} };
 
   const profile = user.profile ? user.profile : {};
   const skills = profile.skills ? profile.skills : [];
 
-  const recruitment = candidate.recruitment ? candidate.recruitment : {};
+  const recruitment = candidate.recruitment
+    ? candidate.recruitment
+    : { department: {}, position: {} };
 
   return (
     <>
@@ -181,12 +185,13 @@ export default function UserProfile() {
             {user.privilege === "admin" && "Profile Karyawan (Admin)"}
             {user.privilege === "employee" && "Profile Karyawan"}
             {user.privilege === "candidate" && "Profile Calon Karyawan"}
+            {user.privilege === "user" && "Profile Pengguna"}
           </h1>
           <div className="ml-auto"></div>
           <Link
             to="/user/profile/edit"
             className="px-4 py-1 text-sm bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm max-w-xs md:w-48">
-            Edit Profile Pengguna
+            Edit Profile
           </Link>
         </div>
         <div className="flex items-center md:items-end flex-col md:flex-row-reverse">

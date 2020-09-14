@@ -67,7 +67,7 @@ export default function UserProfile() {
 
   return (
     <>
-      {candidateQuery.data && (
+      {user.privilege === "candidate" && (
         <CardLarge className="w-full max-w-screen-lg">
           <div className="flex items-center mb-4">
             <h1 className="text-xl text-yellow-600 font-bold">Form Lamaran</h1>
@@ -124,7 +124,7 @@ export default function UserProfile() {
           </table>
         </CardLarge>
       )}
-      {employeeQuery.data && (
+      {user.privilege === "employee" && (
         <CardLarge className="w-full max-w-screen-lg">
           <div className="flex items-center mb-4">
             <h1 className="text-xl text-yellow-600 font-bold">Form Karyawan</h1>

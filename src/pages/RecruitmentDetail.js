@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 
 // Import components
 import Container from "../layout/Container";
@@ -14,6 +14,7 @@ import { IDR } from "../utils/currency";
 
 export default function RecruitmentDetail() {
   const params = useParams();
+  const history = useHistory();
   const userQuery = useQuery(
     [
       "user",
@@ -46,6 +47,7 @@ export default function RecruitmentDetail() {
           alert(
             `Berhasil melamar [${recruitment.position.code}] ${recruitment.position.name} !!`
           );
+        history.push("/user/profile");
         // console.log("response", res);
       } catch (err) {
         // console.log("lamaran error", err.response);
@@ -56,6 +58,7 @@ export default function RecruitmentDetail() {
 
   if (recruitmentQuery.isLoading || userQuery.isLoading) return <Loader />;
   const user = userQuery.data;
+  const profile = user.profile;
   console.log("user", user);
   const recruitment = recruitmentQuery.data ? recruitmentQuery.data : {};
   const position = recruitment.position ? recruitment.position : {};
@@ -147,17 +150,25 @@ export default function RecruitmentDetail() {
             className="inline-block bg-yellow-700 text-white hover:bg-yellow-900 hover:text-white px-4 py-2 rounded-sm font-bold">
             Kembali
           </Link>
-          {user ? (
+          {user && profile && (
             <button
               className="inline-block bg-yellow-600 text-white hover:bg-yellow-800 hover:text-white px-4 py-2 rounded-sm font-semibold ml-4"
               onClick={(ev) => applyToRecruitment(recruitment)}>
               Lamar
             </button>
-          ) : (
+          )}
+          {!user && (
             <Link
               to="/login"
               className="inline-block bg-yellow-600 text-white hover:bg-yellow-800 hover:text-white px-4 py-2 rounded-sm font-semibold ml-4">
-              Login untuk melamar
+              Login untuk melamar!
+            </Link>
+          )}
+          {user && !profile && (
+            <Link
+              to="/user/profile/edit"
+              className="inline-block bg-yellow-600 text-white hover:bg-yellow-800 hover:text-white px-4 py-2 rounded-sm font-semibold ml-4">
+              Lengkapi Profile Anda Untuk Melamar!
             </Link>
           )}
         </div>

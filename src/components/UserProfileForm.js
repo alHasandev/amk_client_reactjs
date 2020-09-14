@@ -41,20 +41,25 @@ export default function UserProfileForm() {
     ev.preventDefault();
     console.log("user", user);
     console.log("profile", profile);
+    setIsLoading(true);
     if (user._id) {
       await patchUser(user, {
         endpoint: "me",
       });
+      // setIsLoading(false);
     } else {
       await postUser(user, {
         enpoint: "me",
       });
+      // setIsLoading(false);
     }
 
     if (await postProfile(profile)) {
+      setIsLoading(false);
       alert("Berhasil mengupdate profil pengguna !!");
       history.push("/user/profile");
     } else {
+      setIsLoading(false);
       alert("Gagal mengupdate profil pengguna !!");
     }
   };
@@ -115,6 +120,7 @@ export default function UserProfileForm() {
             name="nik"
             value={user.nik}
             onChange={changeUser}
+            required={true}
             className="px-4 py-2 text-sm text-gray-700 w-full rounded border border-gray-500 outline-none focus:border-yellow-600  focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
             placeholder="Isi sesuai ktp anda..."
           />
@@ -129,6 +135,7 @@ export default function UserProfileForm() {
             name="name"
             value={user.name}
             onChange={changeUser}
+            required={true}
             className="px-4 py-2 text-sm text-gray-700 w-full rounded border border-gray-500 outline-none focus:border-yellow-600  focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
             placeholder="Isi sesuai ktp anda..."
           />
@@ -143,6 +150,7 @@ export default function UserProfileForm() {
             name="password"
             value={user.email}
             onChange={changeUser}
+            required={true}
             className="px-4 py-2 text-sm text-gray-700 w-full rounded border border-gray-500 outline-none focus:border-yellow-600  focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
             placeholder="Email aktif anda..."
           />
@@ -181,6 +189,7 @@ export default function UserProfileForm() {
             name="bio"
             value={profile.bio}
             onChange={changeProfile}
+            required={true}
             className="px-4 py-2 text-sm text-gray-700 w-full rounded border border-gray-500 outline-none focus:border-yellow-600  focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
             placeholder="Deskripsikan tentang diri anda..."
           />
@@ -221,6 +230,7 @@ export default function UserProfileForm() {
               name="birthPlace"
               value={profile.birthPlace}
               onChange={changeProfile}
+              required={true}
               className="px-4 py-2 text-sm text-gray-700 w-full rounded border border-gray-500 outline-none focus:border-yellow-600  focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
               placeholder="Tempat lahir anda..."
             />
@@ -229,7 +239,9 @@ export default function UserProfileForm() {
               name="birthDate"
               value={profile.birthDate}
               onChange={changeProfile}
+              required={true}
               className="px-4 py-2 text-sm text-gray-700 w-full rounded border border-gray-500 outline-none focus:border-yellow-600  focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
+              placeholder="Tanggal Lahir"
             />
           </div>
         </div>
@@ -243,6 +255,7 @@ export default function UserProfileForm() {
             name="contact"
             value={profile.contact}
             onChange={changeProfile}
+            required={true}
             className="px-4 py-2 text-sm text-gray-700 w-full rounded border border-gray-500 outline-none focus:border-yellow-600  focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
             placeholder="No telpon / HP anda..."
           />
@@ -256,6 +269,7 @@ export default function UserProfileForm() {
             name="religion"
             value={profile.religion}
             onChange={changeProfile}
+            required={true}
             className="px-4 py-2 text-sm text-gray-700 w-full rounded border border-gray-500 outline-none focus:border-yellow-600 focus:shadow-inner hover:border-yellow-700">
             <option value="">Pilih Agama</option>
             <option value="Islam">Islam</option>
@@ -306,6 +320,7 @@ export default function UserProfileForm() {
             name="nationality"
             value={profile.nationality}
             onChange={changeProfile}
+            required={true}
             className="px-4 py-2 text-sm text-gray-700 w-full rounded border border-gray-500 outline-none focus:border-yellow-600  focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
             placeholder="Isi sesuai ktp anda..."
           />
@@ -319,6 +334,7 @@ export default function UserProfileForm() {
             name="address"
             value={profile.address}
             onChange={changeProfile}
+            required={true}
             className="px-4 py-2 text-sm text-gray-700 w-full rounded border border-gray-500 outline-none focus:border-yellow-600  focus:bg-gray-100 focus:shadow-inner hover:border-yellow-700"
             placeholder="Isi sesuai ktp anda..."
           />

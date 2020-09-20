@@ -25,7 +25,7 @@ export default function Employee({ children }) {
           </NavLink>
           <NavLink
             exact
-            to={`/admin/attendances/?backLink=/admin/employees`}
+            to={`/admin/attendances/monthly/?backLink=/admin/employees`}
             activeClassName="hidden"
             className="inline-block whitespace-no-wrap bg-yellow-600 hover:bg-yellow-700 text-white font-semibold text-sm px-4 py-1 rounded-sm my-2 md:my-0 md:ml-4">
             Kehadiran

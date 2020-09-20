@@ -17,6 +17,16 @@ export default function AttendancePage({ children }) {
               <i className="fas fa-arrow-left"></i>
             </NavLink>
             <div className="ml-auto"></div>
+            <NavLink
+              to="/admin/attendances/daily"
+              className="inline-block px-4 py-1 text-sm rounded-sm shadow-sm whitespace-no-wrap font-semibold bg-yellow-600 text-white hover:bg-yellow-700 mb-4 md:mb-0 md:ml-4">
+              Harian
+            </NavLink>
+            <NavLink
+              to="/admin/attendances/monthly"
+              className="inline-block px-4 py-1 text-sm rounded-sm shadow-sm whitespace-no-wrap font-semibold bg-yellow-600 text-white hover:bg-yellow-700 mb-4 md:mb-0 md:ml-4">
+              Bulanan
+            </NavLink>
           </div>
         </form>
       </div>

@@ -17,10 +17,13 @@ export const SIZE = {
 };
 
 export const statusColors = {
+  present: "text-white bg-green-500 hover:bg-green-700",
   open: "text-white bg-green-500 hover:bg-green-700",
   close: "text-black bg-gray-200 hover:bg-gray-400",
+  leave: "text-black bg-yellow-400 hover:bg-yellow-600",
   pending: "text-black bg-yellow-400 hover:bg-yellow-600",
   accepted: "text-white bg-green-500 hover:bg-green-700",
+  absence: "text-white bg-red-500 hover:bg-red-700",
   rejected: "text-white bg-red-500 hover:bg-red-700",
   hired: "text-white bg-blue-500 hover:bg-blue-700",
 };

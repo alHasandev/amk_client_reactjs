@@ -166,10 +166,10 @@ export default function PayloadTable() {
                       {IDR(payload.salary)}
                     </td>
                     <td className="py-2 px-4 border text-center">
-                      {payload.bonus}
+                      {IDR(payload.bonus)}
                     </td>
                     <td className="py-2 px-4 border text-center">
-                      {payload.reduction}
+                      {IDR(payload.reduction)}
                     </td>
                     <td className="py-2 px-4 border text-center">
                       {IDR(salaryTotal)}

@@ -40,6 +40,9 @@ import CandidatePage from "../pages/admin/CandidatePage";
 import RequestDetail from "../components/RequestDetail";
 import AttendancePage from "../pages/admin/AttendancePage";
 import EmployeeDetail from "../components/EmployeeDetail";
+import AttendanceTableMonthly from "../components/AttendanceTableMonthly";
+import AttendanceTableDaily from "../components/AttendanceTableDaily";
+import AttendanceCalendar from "../components/AttendanceCalendar";
 
 export default function AdminRouter() {
   return (
@@ -186,7 +189,21 @@ export default function AdminRouter() {
       <Route path="/admin/attendances">
         <AttendancePage>
           <Switch>
-            <Route exact path="/admin/attendances" component={Attendance} />
+            <Route
+              exact
+              path="/admin/attendances/daily"
+              component={AttendanceTableDaily}
+            />
+            <Route
+              exact
+              path="/admin/attendances/monthly"
+              component={AttendanceTableMonthly}
+            />
+            <Route
+              exact
+              path="/admin/attendances/calendar/:attendanceGroupId"
+              component={AttendanceCalendar}
+            />
             <Route
               exact
               path="/admin/attendances/create"

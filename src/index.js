@@ -12,13 +12,13 @@ import "./assets/css/tailwind.css";
 import "./assets/css/style.css";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <AuthProvider>
-      <Router>
-        <App />
-      </Router>
-    </AuthProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <AuthProvider>
+    <Router>
+      <App />
+    </Router>
+  </AuthProvider>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 

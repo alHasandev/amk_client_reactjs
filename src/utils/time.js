@@ -25,6 +25,7 @@ class Time {
   };
 
   yearMonth = (date, adjustment = 0) => {
+    if (!date) date = new Date();
     if (this.month(date) < 10)
       return `${this.year(date)}-0${this.month(date, adjustment)}`;
     return `${this.year(date)}-${this.month(date)}`;
@@ -36,7 +37,7 @@ class Time {
   };
 
   getMonth = (date) => {
-    const [year, month] = date.split("-");
+    const [year, month] = Array.isArray(date) ? date : date.split("-");
 
     return `${this.moonnames[Number(month) - 1]} ${year}`;
   };

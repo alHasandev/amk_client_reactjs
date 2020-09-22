@@ -11,7 +11,7 @@ export default function AttendancePage({ children }) {
           <div className="flex items-center">
             <NavLink
               exact
-              to={backLink("/admin/attendances")}
+              to={backLink("/admin/attendances/daily")}
               activeClassName="text-gray-500 pointer-events-none"
               className="mr-4">
               <i className="fas fa-arrow-left"></i>
@@ -19,11 +19,13 @@ export default function AttendancePage({ children }) {
             <div className="ml-auto"></div>
             <NavLink
               to="/admin/attendances/daily"
+              activeClassName="bg-yellow-800"
               className="inline-block px-4 py-1 text-sm rounded-sm shadow-sm whitespace-no-wrap font-semibold bg-yellow-600 text-white hover:bg-yellow-700 mb-4 md:mb-0 md:ml-4">
               Harian
             </NavLink>
             <NavLink
               to="/admin/attendances/monthly"
+              activeClassName="bg-yellow-800"
               className="inline-block px-4 py-1 text-sm rounded-sm shadow-sm whitespace-no-wrap font-semibold bg-yellow-600 text-white hover:bg-yellow-700 mb-4 md:mb-0 md:ml-4">
               Bulanan
             </NavLink>

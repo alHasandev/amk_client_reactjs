@@ -4,8 +4,9 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import Select from "react-select";
 
-import { getAttendances } from "../apis/attendances";
+import { deleteAttendance, getAttendances } from "../apis/attendances";
 import { getEmployees } from "../apis/employees";
+import { statusColors, statusLabels } from "../assets";
 import { reverseNormalDate } from "../utils/time";
 import url from "../utils/url";
 import { CardLarge, CardMini } from "./Card";
@@ -83,7 +84,7 @@ export default function AttendanceTableDaily() {
             type="reset"
             onClick={resetDate}
             className="inline-block whitespace-no-wrap bg-yellow-400 hover:bg-yellow-600 hover:text-white font-semibold text-sm text-black px-4 py-2 rounded-sm focus:outline-none my-2 lg:my-0 lg:mr-4">
-            Resets
+            Reset
           </button>
           <div className="ml-auto"></div>
           <Select
@@ -102,16 +103,6 @@ export default function AttendanceTableDaily() {
                 return null;
               }
             })()}
-            // inputValue={(() => {
-            //   if (filter.employee) {
-            //     const employee = employees.data.find(
-            //       (employee) => employee._id === filter.employee
-            //     );
-            //     return `[${employee.user.nik}] ${employee.user.name}`;
-            //   } else {
-            //     return "";
-            //   }
-            // })()}
             onChange={changeEmployee}
             className="border rounded outline-none w-full my-2 lg:my-0 lg:ml-4"
             isClearable={true}
@@ -190,7 +181,12 @@ export default function AttendanceTableDaily() {
                           {user.name}
                         </td>
                         <td className="border px-4 py-2 text-center">
-                          {attendance.status}
+                          <span
+                            className={`px-2 py-1 rounded-sm text-xs ${
+                              statusColors[attendance.status]
+                            }`}>
+                            {statusLabels[attendance.status]}
+                          </span>
                         </td>
                         <td className="border px-4 py-2 text-left">
                           {attendance.description}
@@ -199,22 +195,31 @@ export default function AttendanceTableDaily() {
                           <Link
                             to={`/admin/attendances/edit/${attendance._id}`}
                             className="inline-block rounded font-bold text-white bg-green-500 hover:bg-green-600 
-                            py-1 px-2 mr-2">
+                            py-1 px-2">
                             <i className="fas fa-edit"></i>
                           </Link>
                           <button
-                            onClick={(e) => {
+                            onClick={async (e) => {
                               if (
                                 window.confirm(
                                   "Apakah anda yakin akan menghapus absensi ?"
                                 )
                               ) {
-                                alert("Abensi berhasil dihapus !");
+                                if (
+                                  await deleteAttendance({
+                                    endpoint: `${attendance._id}`,
+                                  })
+                                ) {
+                                  await attendances.refetch();
+                                  alert("Abensi berhasil dihapus !");
+                                } else {
+                                  alert("Gagal menghapus absensi");
+                                }
                               }
                             }}
                             className="inline-block rounded font-bold text-white bg-red-500 hover:bg-red-600 
-                            py-1 px-2 mr-2">
-                            <i className="fas fa-trash"></i>
+                            py-1 px-2 ml-2">
+                            <i className="fas fa-trash-alt"></i>
                           </button>
                         </td>
                       </tr>

@@ -28,6 +28,18 @@ export const statusColors = {
   hired: "text-white bg-blue-500 hover:bg-blue-700",
 };
 
+export const statusLabels = {
+  present: "HADIR",
+  leave: "IZIN/CUTI",
+  absence: "TIDAK HADIR",
+  open: "BUKA",
+  pending: "TUNDA",
+  close: "TUTUP",
+  rejected: "DITOLAK",
+  accepted: "DITERIMA",
+  hired: "DIREKRUT",
+};
+
 export const banner = lobbyImage;
 export const logo = logoImage;
 export const profile = profileImage;

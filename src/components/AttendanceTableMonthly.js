@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import Select from "react-select";
 import { getAttendances } from "../apis/attendances";
 import { getEmployees } from "../apis/employees";
 import time from "../utils/time";
+import url from "../utils/url";
 import { CardLarge, CardMini } from "./Card";
 import Loader from "./Loader";
 
 export default function AttendanceTableMonthly() {
   const [filter, setFilter] = useState({
     employee: "",
-    status: "",
   });
 
-  const [dateRange, setDateRange] = useState({
+  const [monthRange, setMonthRange] = useState({
     start: "",
     end: "",
   });
@@ -21,10 +22,9 @@ export default function AttendanceTableMonthly() {
   const queryObject = {};
 
   if (filter.employee) queryObject.employee = filter.employee;
-  if (filter.status) queryObject.status = filter.status;
 
-  if (dateRange.start && dateRange.end)
-    queryObject.dateRange = `${dateRange.start}:${dateRange.end}`;
+  if (monthRange.start && monthRange.end)
+    queryObject.monthRange = `${monthRange.start}:${monthRange.end}`;
 
   const monthlyAttendances = useQuery(
     [
@@ -39,13 +39,20 @@ export default function AttendanceTableMonthly() {
 
   const employees = useQuery(["employees"], getEmployees);
 
-  const changeFilter = (ev) =>
-    setFilter({ ...filter, [ev.target.name]: ev.target.value });
+  const changeEmployee = (select) =>
+    setFilter((filter) => {
+      console.log(select);
+      if (select && select.value) {
+        return { ...filter, employee: select.value };
+      } else {
+        return { ...filter, employee: null };
+      }
+    });
 
   const changeDate = (ev) =>
-    setDateRange({ ...dateRange, [ev.target.name]: ev.target.value });
+    setMonthRange({ ...monthRange, [ev.target.name]: ev.target.value });
 
-  const resetDate = (ev) => setDateRange({ start: "", end: "" });
+  const resetDate = (ev) => setMonthRange({ start: "", end: "" });
 
   if (monthlyAttendances.isLoading || employees.isLoading) return <Loader />;
 
@@ -56,14 +63,14 @@ export default function AttendanceTableMonthly() {
           <input
             type="month"
             name="start"
-            value={dateRange.start}
+            value={monthRange.start}
             onChange={changeDate}
             className="border px-2 py-2 rounded outline-none my-2 lg:my-0 lg:mr-4"
           />
           <input
             type="month"
             name="end"
-            value={dateRange.end}
+            value={monthRange.end}
             onChange={changeDate}
             className="border px-2 py-2 rounded outline-none my-2 lg:my-0 lg:mr-4"
           />
@@ -74,13 +81,48 @@ export default function AttendanceTableMonthly() {
             Reset
           </button>
           <div className="ml-auto"></div>
+          <Select
+            name="employee"
+            placeholder="Semua Karyawan"
+            value={(() => {
+              if (filter.employee) {
+                const employee = employees.data.find(
+                  (employee) => employee._id === filter.employee
+                );
+                return {
+                  value: employee._id,
+                  label: `[${employee.user.nik}] ${employee.user.name}`,
+                };
+              } else {
+                return null;
+              }
+            })()}
+            onChange={changeEmployee}
+            className="border rounded outline-none w-full my-2 lg:my-0 lg:ml-4"
+            isClearable={true}
+            options={employees.data.map((employee) => ({
+              value: employee._id,
+              label: `[${employee.user.nik}] ${employee.user.name}`,
+            }))}
+          />
         </form>
       </CardMini>
       <CardLarge className="overflow-x-auto">
         <div className="flex mb-4">
-          <h1>Tabel Kehadiran Bulanan</h1>
+          <h1 className="font-bold text-xl text-yellow-600 mb-4 md:mb-0 md:mr-4">
+            Tabel Kehadiran Bulanan
+          </h1>
           <div className="ml-auto"></div>
-          <Link to={``}>Cetak</Link>
+          <a
+            href={`${
+              process.env.REACT_APP_SERVER_LINK
+            }/attendances/print/monthly/?${url.queryString(queryObject)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-1 text-sm bg-yellow-600 text-white font-semibold hover:bg-yellow-700 rounded-sm 
+            shadow-sm mb-4 md:mb-0 md:ml-4">
+            Cetak
+          </a>
         </div>
         <div className="w-full overflow-x-auto">
           <table className="w-full text-sm">
@@ -134,7 +176,7 @@ export default function AttendanceTableMonthly() {
                           <i className="far fa-calendar-alt"></i>
                         </Link>
                         <Link
-                          to={`/admin/attendances/calendar/?employee=${employee._id}&month=${attendance.month}`}
+                          to={`/admin/attendances/table/${attendance._id}/?backLink=/admin/attendances/monthly`}
                           className="inline-block rounded font-bold text-white bg-blue-500 hover:bg-blue-600 
                             py-1 px-2 ml-4">
                           <i className="fas  fa-table"></i>

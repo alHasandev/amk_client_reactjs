@@ -29,3 +29,33 @@ export const postAttendance = async (data, options = {}) => {
     return err.response.data;
   }
 };
+
+export const patchAttendance = async (data, options = {}) => {
+  const { endpoint = "", params = {}, ...config } = options;
+  try {
+    const res = await Axios.patch("/attendances/" + endpoint, data, {
+      params: params,
+      ...config,
+    });
+
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err.response.data;
+  }
+};
+
+export const deleteAttendance = async (options = {}) => {
+  const { endpoint = "", params = {}, ...config } = options;
+  try {
+    const res = await Axios.delete("/attendances/" + endpoint, {
+      params: params,
+      ...config,
+    });
+
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};

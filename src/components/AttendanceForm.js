@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CardSmall } from "./Card";
 import { useQuery } from "react-query";
 import Axios from "axios";
 import { normalDate } from "../utils/time";
 import Loader from "./Loader";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import { getAttendances, patchAttendance } from "../apis/attendances";
 
 const getEmployees = async () => {
   try {
@@ -27,7 +28,9 @@ const postAttendance = async (data) => {
 };
 
 export default function AttendanceForm() {
+  const params = useParams();
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     employee: "",
     date: normalDate(new Date()),
@@ -51,23 +54,73 @@ export default function AttendanceForm() {
   const changeHandler = (ev) =>
     setFormData({ ...formData, [ev.target.name]: ev.target.value });
 
-  const submitHandler = async (ev) => {
-    ev.preventDefault();
-    console.log(formData);
-    if (await postAttendance(formData)) {
-      history.push("/admin/employees/attendances");
+  const saveAttendance = async (data) => {
+    setIsLoading(true);
+    if (await postAttendance(data)) {
+      setIsLoading(false);
+      alert("Berhasil menambah kehadiran !");
+      history.push("/admin/attendances/daily");
     } else {
+      setIsLoading(false);
       alert("Gagal menambahkan absensi");
     }
   };
 
-  if (employees.isLoading || !employees.data) return <Loader />;
+  const updateAttendance = async (data) => {
+    setIsLoading(true);
+    if (
+      await patchAttendance(data, {
+        endpoint: params.attendanceId,
+      })
+    ) {
+      setIsLoading(false);
+      alert("Berhasil mengupdate kehadiran !");
+      history.push("/admin/attendances/daily");
+    } else {
+      setIsLoading(false);
+      alert("Gagal mengupdate absensi");
+    }
+  };
+
+  const submitHandler = (ev) => {
+    ev.preventDefault();
+    console.log(formData);
+
+    if (!params.attendanceId) {
+      saveAttendance(formData);
+    } else {
+      updateAttendance(formData);
+    }
+  };
+
+  useEffect(() => {
+    if (params.attendanceId) {
+      setIsLoading(true);
+      getAttendances("attendance", {
+        endpoint: `one/${params.attendanceId}`,
+      }).then((data) => {
+        setFormData({
+          employee: data.employee,
+          date: data.date,
+          status: data.status,
+          dayLeave: data.dayLeave,
+          description: data.description,
+        });
+
+        setIsLoading(false);
+      });
+    }
+  }, [params]);
+
+  if ((isLoading, employees.isLoading || !employees.data)) return <Loader />;
 
   return (
     <CardSmall>
       <form onSubmit={submitHandler}>
-        <h1 className="font-bold text-2xl text-yellow-600">Attendance Form</h1>
-        <p className="text-sm text-gray-500 mb-4">Add new attendance</p>
+        <h1 className="font-bold text-2xl text-yellow-600">Form Kehadiran</h1>
+        <p className="text-sm text-gray-500 mb-4">
+          Tambah atau Update Kehadiran
+        </p>
 
         <div className="mb-4 text-sm text-gray-800">
           <label className="block font-semibold mb-2">Karyawan</label>
@@ -144,7 +197,7 @@ export default function AttendanceForm() {
           <button
             type="submit"
             className="inline-block px-4 py-2 rounded-sm shadow-sm bg-yellow-400 text-black font-semibold hover:bg-yellow-500">
-            {formData._id ? "Update" : "Simpan"}
+            {!!params.attendanceId ? "Update" : "Simpan"}
           </button>
         </div>
       </form>

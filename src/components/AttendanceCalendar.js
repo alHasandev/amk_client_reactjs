@@ -16,6 +16,7 @@ const statusLabel = {
 
 export default function AttendanceCalendar() {
   const params = useParams();
+  const attdGroupIds = params.attendanceGroupId.split("-");
   const calendarQuery = useQuery(
     [
       "calendar",
@@ -52,7 +53,7 @@ export default function AttendanceCalendar() {
           </h1>
           <div className="ml-auto"></div>
           <a
-            href={`${process.env.REACT_APP_SERVER_LINK}/attendances/print/?`}
+            href={`${process.env.REACT_APP_SERVER_LINK}/attendances/print/calendar/?month=${attdGroupIds[0]}-${attdGroupIds[1]}&employee=${attdGroupIds[2]}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-1 text-sm font-semibold bg-yellow-600 text-white hover:bg-yellow-700 rounded-sm shadow-sm ml-4">

@@ -43,6 +43,7 @@ import EmployeeDetail from "../components/EmployeeDetail";
 import AttendanceTableMonthly from "../components/AttendanceTableMonthly";
 import AttendanceTableDaily from "../components/AttendanceTableDaily";
 import AttendanceCalendar from "../components/AttendanceCalendar";
+import AttendanceTable from "../components/AttendanceTable";
 
 export default function AdminRouter() {
   return (
@@ -206,7 +207,17 @@ export default function AdminRouter() {
             />
             <Route
               exact
+              path="/admin/attendances/table/:attendanceGroupId"
+              component={AttendanceTable}
+            />
+            <Route
+              exact
               path="/admin/attendances/create"
+              component={AttendanceForm}
+            />
+            <Route
+              exact
+              path="/admin/attendances/edit/:attendanceId"
               component={AttendanceForm}
             />
           </Switch>

@@ -13,7 +13,7 @@ export default function Calendar({ yearMonth, override = {} }) {
 
   const dates = [];
   for (let i = 1; i < skipIndex - 2; i++) {
-    dates.push({ value: "", label: "", className: "" });
+    dates.push({ value: "", label: "", className: "bg-gray-200" });
   }
 
   for (let i = 1; i <= lastIndex; i++) {
@@ -36,7 +36,7 @@ export default function Calendar({ yearMonth, override = {} }) {
   }
 
   for (let i = 1; i <= remainIndex; i++) {
-    dates.push({ value: "", label: "", className: "" });
+    dates.push({ value: "", label: "", className: "bg-gray-200" });
   }
 
   return (
